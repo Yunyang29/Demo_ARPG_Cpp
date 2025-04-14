@@ -7,9 +7,10 @@
 #include "DataAssets/Input/DataAsset_InputConfig.h"
 #include "Components/Input/MainInputComponent.h"
 #include "MainGameplayTags.h"
+#include "AbilitySystem/MainAbilitySystemComponent.h"
+#include "DataAssets/StartUp/DataAsset_PlayerStartUp.h"
 
 #include "DebugHelper.h"
-#include "AbilitySystem/MainAbilitySystemComponent.h"
 
 
 void APlayerCharacter::BeginPlay()
@@ -22,14 +23,21 @@ void APlayerCharacter::BeginPlay()
 void APlayerCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-	if(CharacterAbilitySystemComponent && CharacterAttributeSet)
+
+	if (!CharacterStartUpData.IsNull())
 	{
-		const FString ASCText = FString::Printf(TEXT("Owner Actor: %p, AvatarActor: %s"),
-		                                        *CharacterAbilitySystemComponent->GetOwnerActor()->GetActorLabel(),
-		                                        *CharacterAbilitySystemComponent->GetAvatarActor()->GetActorLabel());
-		Debug::Print(TEXT("Ability system component valid. ") + ASCText, FColor::Green);
-		Debug::Print(TEXT("Attribute system component valid. ") + ASCText, FColor::Green);
+		if (UDataAsset_StartUp* LoadedData = CharacterStartUpData.LoadSynchronous())
+		{
+			LoadedData->GiveToAbilitySystemComponent(CharacterAbilitySystemComponent);
+		}
 	}
+
+	//if (CharacterAbilitySystemComponent && CharacterAttributeSet)
+	//{
+	//	const FString ASCText = FString::Printf(TEXT("Owner Actor: %p, AvatarActor: %s"), *CharacterAbilitySystemComponent->GetOwnerActor()->GetActorLabel(), *CharacterAbilitySystemComponent->GetAvatarActor()->GetActorLabel());
+	//	Debug::Print(TEXT("Ability system component valid. ") + ASCText, FColor::Green);
+	//	Debug::Print(TEXT("Attribute system component valid. ") + ASCText, FColor::Green);
+	//}
 }
 
 APlayerCharacter::APlayerCharacter()
@@ -58,16 +66,16 @@ APlayerCharacter::APlayerCharacter()
 
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-	checkf(InputConfigDataAsset, TEXT("Forget to assign a valid data asset as input config"));
-	ULocalPlayer*                       LocalPlayer = GetController<APlayerController>()->GetLocalPlayer();
+	checkf(InputConfigData, TEXT("Forget to assign a valid data asset as input config"));
+	ULocalPlayer* LocalPlayer = GetController<APlayerController>()->GetLocalPlayer();
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer);
 
 	check(Subsystem);
-	Subsystem->AddMappingContext(InputConfigDataAsset->DefaultMappingContext, 0);
+	Subsystem->AddMappingContext(InputConfigData->DefaultMappingContext, 0);
 
 	UMainInputComponent* MainInputComponent = CastChecked<UMainInputComponent>(PlayerInputComponent);
-	MainInputComponent->BindNativeInputAction(InputConfigDataAsset, MainGameplayTags::InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
-	MainInputComponent->BindNativeInputAction(InputConfigDataAsset, MainGameplayTags::InputTag_Look, ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
+	MainInputComponent->BindNativeInputAction(InputConfigData, MainGameplayTags::InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
+	//MainInputComponent->BindNativeInputAction(InputConfigDataAsset, MainGameplayTags::InputTag_Look, ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
 }
 
 void APlayerCharacter::Input_Move(const FInputActionValue& InputActionValue)
@@ -75,13 +83,13 @@ void APlayerCharacter::Input_Move(const FInputActionValue& InputActionValue)
 	const FVector2D MovementVector = InputActionValue.Get<FVector2D>();
 	const FRotator  MovementRotation(0.f, Controller->GetControlRotation().Yaw, 0.f);
 
-	if(MovementVector.Y != 0.f)
+	if (MovementVector.Y != 0.f)
 	{
 		const FVector ForwardDirection = MovementRotation.RotateVector(FVector::ForwardVector);
 		AddMovementInput(ForwardDirection, MovementVector.Y);
 	}
 
-	if(MovementVector.X != 0.f)
+	if (MovementVector.X != 0.f)
 	{
 		const FVector RightDirection = MovementRotation.RotateVector(FVector::RightVector);
 		AddMovementInput(RightDirection, MovementVector.X);
@@ -91,12 +99,12 @@ void APlayerCharacter::Input_Move(const FInputActionValue& InputActionValue)
 void APlayerCharacter::Input_Look(const FInputActionValue& InputActionValue)
 {
 	const FVector2D LookAxisVector = InputActionValue.Get<FVector2D>();
-	if(LookAxisVector.X != 0.f)
+	if (LookAxisVector.X != 0.f)
 	{
 		AddControllerYawInput(LookAxisVector.X);
 	}
 
-	if(LookAxisVector.Y != 0.f)
+	if (LookAxisVector.Y != 0.f)
 	{
 		AddControllerPitchInput(LookAxisVector.Y);
 	}

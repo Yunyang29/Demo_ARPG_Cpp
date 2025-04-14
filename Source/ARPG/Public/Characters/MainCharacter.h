@@ -7,6 +7,7 @@
 
 class UMainAbilitySystemComponent;
 class UMainAttributeSet;
+class UDataAsset_StartUp;
 
 UCLASS()
 class ARPG_API AMainCharacter : public ACharacter, public IAbilitySystemInterface
@@ -26,13 +27,16 @@ protected:
 	virtual void PossessedBy(AController* NewController) override;
 	//~ End APawn Interface
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category ="AbilitySystem")
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "AbilitySystem")
 	UMainAbilitySystemComponent* CharacterAbilitySystemComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category ="AbilitySystem")
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "AbilitySystem")
 	UMainAttributeSet* CharacterAttributeSet;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadonly, Category = "CharacterData")
+	TSoftObjectPtr<UDataAsset_StartUp> CharacterStartUpData;
 
 public:
 	FORCEINLINE UMainAbilitySystemComponent* GetCharacterAbilitySystemComponent() const { return CharacterAbilitySystemComponent; }
-	FORCEINLINE UMainAttributeSet*           GetCharacterAttributeSet() const { return CharacterAttributeSet; }
+	FORCEINLINE UMainAttributeSet* GetCharacterAttributeSet() const { return CharacterAttributeSet; }
 };
