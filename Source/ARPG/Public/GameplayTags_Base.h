@@ -3,7 +3,7 @@
 #include "CoreMinimal.h"
 #include "NativeGameplayTags.h"
 
-namespace MainGameplayTags
+namespace GameplayTags_Base
 {
 	/**Input Tags**/
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Move)	// 移动输入标签

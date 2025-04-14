@@ -3,14 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Engine/GameInstance.h"
-#include "MainAnimInstance.generated.h"
+#include "GameFramework/PlayerController.h"
+#include "PlayerController_Base.generated.h"
 
 /**
- *
+ * 
  */
 UCLASS()
-class ARPG_API UMainAnimInstance : public UAnimInstance
+class ARPG_API APlayerController_Base : public APlayerController
 {
 	GENERATED_BODY()
+	
 };

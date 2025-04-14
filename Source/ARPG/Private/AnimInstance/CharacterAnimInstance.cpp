@@ -1,11 +1,11 @@
 #include "AnimInstance/CharacterAnimInstance.h"
-#include "Characters/MainCharacter.h"
+#include "Characters/Character_Base.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 
 void UCharacterAnimInstance::NativeInitializeAnimation()
 {
-	OwningCharacter = Cast<AMainCharacter>(TryGetPawnOwner());
+	OwningCharacter = Cast<ACharacter_Base>(TryGetPawnOwner());
 	if(OwningCharacter)
 	{
 		OwningMovementComponent = OwningCharacter->GetCharacterMovement();

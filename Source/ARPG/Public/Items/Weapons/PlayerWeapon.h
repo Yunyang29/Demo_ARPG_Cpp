@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Items/Weapons/MainWeapon.h"
+#include "Items/Weapons/Weapon_Base.h"
 #include "PlayerWeapon.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ARPG_API APlayerWeapon : public AMainWeapon
+class ARPG_API APlayerWeapon : public AWeapon_Base
 {
 	GENERATED_BODY()
 	

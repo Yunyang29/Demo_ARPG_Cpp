@@ -3,13 +3,13 @@
 #include "CoreMinimal.h"
 #include "EnhancedInputComponent.h"
 #include "DataAssets/Input/DataAsset_InputConfig.h"
-#include "MainInputComponent.generated.h"
+#include "InputComponent_Base.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ARPG_API UMainInputComponent : public UEnhancedInputComponent
+class ARPG_API UInputComponent_Base : public UEnhancedInputComponent
 {
 	GENERATED_BODY()
 
@@ -19,7 +19,7 @@ public:
 };
 
 template <class UserObject, typename CallbackFunc>
-inline void UMainInputComponent::BindNativeInputAction(
+inline void UInputComponent_Base::BindNativeInputAction(
 	const UDataAsset_InputConfig* InInputConfig,
 	const FGameplayTag&           InInputTag,
 	ETriggerEvent                 TriggerEvent,

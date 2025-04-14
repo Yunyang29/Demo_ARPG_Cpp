@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Characters/MainCharacter.h"
+#include "Characters/Character_Base.h"
 #include "PlayerCharacter.generated.h"
 
 class USpringArmComponent;
@@ -14,7 +14,7 @@ struct FInputActionValue;
  *
  */
 UCLASS()
-class ARPG_API APlayerCharacter : public AMainCharacter
+class ARPG_API APlayerCharacter : public ACharacter_Base
 {
 	GENERATED_BODY() // 生成类
 

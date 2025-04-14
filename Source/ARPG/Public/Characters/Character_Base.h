@@ -3,20 +3,20 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
-#include "MainCharacter.generated.h"
+#include "Character_Base.generated.h"
 
-class UMainAbilitySystemComponent;
-class UMainAttributeSet;
+class UAbilitySystemComponent_Base;
+class UAttributeSet_Base;
 class UDataAsset_StartUp;
 
 UCLASS()
-class ARPG_API AMainCharacter : public ACharacter, public IAbilitySystemInterface
+class ARPG_API ACharacter_Base : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
-	AMainCharacter();
+	ACharacter_Base();
 
 	//~ Begin IAbilitySystemInterface Interface
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
@@ -28,15 +28,15 @@ protected:
 	//~ End APawn Interface
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "AbilitySystem")
-	UMainAbilitySystemComponent* CharacterAbilitySystemComponent;
+	UAbilitySystemComponent_Base* CharacterASC;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "AbilitySystem")
-	UMainAttributeSet* CharacterAttributeSet;
+	UAttributeSet_Base* CharacterAS;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadonly, Category = "CharacterData")
 	TSoftObjectPtr<UDataAsset_StartUp> CharacterStartUpData;
 
 public:
-	FORCEINLINE UMainAbilitySystemComponent* GetCharacterAbilitySystemComponent() const { return CharacterAbilitySystemComponent; }
-	FORCEINLINE UMainAttributeSet* GetCharacterAttributeSet() const { return CharacterAttributeSet; }
+	FORCEINLINE UAbilitySystemComponent_Base* GetCharacterAbilitySystemComponent() const { return CharacterASC; }
+	FORCEINLINE UAttributeSet_Base* GetCharacterAttributeSet() const { return CharacterAS; }
 };

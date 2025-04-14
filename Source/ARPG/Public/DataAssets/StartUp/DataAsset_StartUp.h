@@ -5,8 +5,8 @@
 #include "Engine/DataAsset.h"
 #include "DataAsset_StartUp.generated.h"
 
-class UMainGameplayAbility;
-class UMainAbilitySystemComponent;
+class UGameplayAbility_Base;
+class UAbilitySystemComponent_Base;
 /**
  *
  */
@@ -16,14 +16,14 @@ class ARPG_API UDataAsset_StartUp : public UDataAsset
 	GENERATED_BODY()
 
 public:
-	virtual void GiveToAbilitySystemComponent(UMainAbilitySystemComponent* InASCToGive, int32 ApplyLevel = 1);
+	virtual void GiveToAbilitySystemComponent(UAbilitySystemComponent_Base* InASCToGive, int32 ApplyLevel = 1);
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "StartUpData")
-	TArray<TSubclassOf<UMainGameplayAbility>> ActivateOnGivenAbilities;
+	TArray<TSubclassOf<UGameplayAbility_Base>> ActivateOnGivenAbilities;
 
 	UPROPERTY(EditDefaultsOnly, Category = "StartUpData")
-	TArray<TSubclassOf<UMainGameplayAbility>> ReactiveAbilities;
+	TArray<TSubclassOf<UGameplayAbility_Base>> ReactiveAbilities;
 
-	void GrantAbilities(const TArray<TSubclassOf<UMainGameplayAbility>>& InAbilitiesToGive, UMainAbilitySystemComponent* InASCToGive, int32 ApplyLevel = 1);
+	void GrantAbilities(const TArray<TSubclassOf<UGameplayAbility_Base>>& InAbilitiesToGive, UAbilitySystemComponent_Base* InASCToGive, int32 ApplyLevel = 1);
 };

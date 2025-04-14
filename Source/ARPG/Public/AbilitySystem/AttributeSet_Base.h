@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/PlayerController.h"
-#include "MainPlayerController.generated.h"
+#include "AttributeSet.h"
+#include "AttributeSet_Base.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ARPG_API AMainPlayerController : public APlayerController
+class ARPG_API UAttributeSet_Base : public UAttributeSet
 {
 	GENERATED_BODY()
 	

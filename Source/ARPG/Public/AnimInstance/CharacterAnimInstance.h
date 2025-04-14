@@ -3,17 +3,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AnimInstance/MainAnimInstance.h"
+#include "AnimInstance/AnimInstance_Base.h"
 #include "CharacterAnimInstance.generated.h"
 
-class AMainCharacter;
+class ACharacter_Base;
 class UCharacterMovementComponent;
 
 /**
  * 
  */
 UCLASS()
-class ARPG_API UCharacterAnimInstance : public UMainAnimInstance
+class ARPG_API UCharacterAnimInstance : public UAnimInstance_Base
 {
 	GENERATED_BODY()
 
@@ -23,7 +23,7 @@ public:
 
 protected:
 	UPROPERTY()
-	AMainCharacter* OwningCharacter;
+	ACharacter_Base* OwningCharacter;
 
 	UPROPERTY()
 	UCharacterMovementComponent* OwningMovementComponent;

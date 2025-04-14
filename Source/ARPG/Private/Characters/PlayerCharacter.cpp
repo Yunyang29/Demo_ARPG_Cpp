@@ -5,9 +5,9 @@
 #include "EnhancedInputSubsystems.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "DataAssets/Input/DataAsset_InputConfig.h"
-#include "Components/Input/MainInputComponent.h"
-#include "MainGameplayTags.h"
-#include "AbilitySystem/MainAbilitySystemComponent.h"
+#include "Components/Input/InputComponent_Base.h"
+#include "GameplayTags_Base.h"
+#include "AbilitySystem/AbilitySystemComponent_Base.h"
 #include "DataAssets/StartUp/DataAsset_PlayerStartUp.h"
 
 #include "DebugHelper.h"
@@ -28,7 +28,7 @@ void APlayerCharacter::PossessedBy(AController* NewController)
 	{
 		if (UDataAsset_StartUp* LoadedData = CharacterStartUpData.LoadSynchronous())
 		{
-			LoadedData->GiveToAbilitySystemComponent(CharacterAbilitySystemComponent);
+			LoadedData->GiveToAbilitySystemComponent(CharacterASC);
 		}
 	}
 
@@ -73,9 +73,9 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	check(Subsystem);
 	Subsystem->AddMappingContext(InputConfigData->DefaultMappingContext, 0);
 
-	UMainInputComponent* MainInputComponent = CastChecked<UMainInputComponent>(PlayerInputComponent);
-	MainInputComponent->BindNativeInputAction(InputConfigData, MainGameplayTags::InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
-	//MainInputComponent->BindNativeInputAction(InputConfigDataAsset, MainGameplayTags::InputTag_Look, ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
+	UInputComponent_Base* MainInputComponent = CastChecked<UInputComponent_Base>(PlayerInputComponent);
+	MainInputComponent->BindNativeInputAction(InputConfigData, GameplayTags_Base::InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
+	MainInputComponent->BindNativeInputAction(InputConfigData, GameplayTags_Base::InputTag_Look, ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
 }
 
 void APlayerCharacter::Input_Move(const FInputActionValue& InputActionValue)

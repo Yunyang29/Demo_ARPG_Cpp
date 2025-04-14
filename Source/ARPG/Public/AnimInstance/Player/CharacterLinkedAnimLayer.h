@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AnimInstance/MainAnimInstance.h"
+#include "AnimInstance/AnimInstance_Base.h"
 #include "CharacterLinkedAnimLayer.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ARPG_API UCharacterLinkedAnimLayer : public UMainAnimInstance
+class ARPG_API UCharacterLinkedAnimLayer : public UAnimInstance_Base
 {
 	GENERATED_BODY()
 	

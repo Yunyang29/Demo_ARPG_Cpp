@@ -3,15 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AttributeSet.h"
-#include "MainAttributeSet.generated.h"
+#include "Engine/GameInstance.h"
+#include "AnimInstance_Base.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
-class ARPG_API UMainAttributeSet : public UAttributeSet
+class ARPG_API UAnimInstance_Base : public UAnimInstance
 {
 	GENERATED_BODY()
-	
 };

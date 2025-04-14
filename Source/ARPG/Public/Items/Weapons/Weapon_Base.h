@@ -4,18 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "MainWeapon.generated.h"
+#include "Weapon_Base.generated.h"
 
 class UBoxComponent;
 
 UCLASS()
-class ARPG_API AMainWeapon : public AActor
+class ARPG_API AWeapon_Base : public AActor
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this actor's properties
-	AMainWeapon();
+	AWeapon_Base();
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Weapons")
