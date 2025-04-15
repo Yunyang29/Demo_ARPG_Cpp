@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "AnimInstance/CharacterAnimInstance.h"
-#include "Characters/PlayerCharacter.h"
+#include "Characters/Character_Player.h"
 #include "PlayerAnimInstance.generated.h"
 
 /**
@@ -19,7 +19,7 @@ public:
 
 protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="AnimData|References")
-	APlayerCharacter* OwningPlayerCharacter;
+	ACharacter_Player* OwningCharacter_Player;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="AnimData|LocomotionData")
 	bool bShouldEnterRelaxState;

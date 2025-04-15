@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Characters/Character_Base.h"
-#include "PlayerCharacter.generated.h"
+#include "Character_Player.generated.h"
 
 class USpringArmComponent;
 class UCameraComponent;
@@ -15,12 +15,12 @@ struct FInputActionValue;
  *
  */
 UCLASS()
-class ARPG_API APlayerCharacter : public ACharacter_Base
+class ARPG_API ACharacter_Player : public ACharacter_Base
 {
 	GENERATED_BODY() // 生成类
 
 public:
-	APlayerCharacter(); // 构造函数
+	ACharacter_Player(); // 构造函数
 
 protected:
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override; // 设置玩家输入组件

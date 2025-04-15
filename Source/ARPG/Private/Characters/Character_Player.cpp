@@ -1,4 +1,4 @@
-#include "Characters/PlayerCharacter.h"
+#include "Characters/Character_Player.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -14,14 +14,14 @@
 #include "DebugHelper.h"
 
 
-void APlayerCharacter::BeginPlay()
+void ACharacter_Player::BeginPlay()
 {
 	Super::BeginPlay();
 
 	Debug::Print(TEXT("Working"));
 }
 
-void APlayerCharacter::PossessedBy(AController* NewController)
+void ACharacter_Player::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 
@@ -41,7 +41,7 @@ void APlayerCharacter::PossessedBy(AController* NewController)
 	//}
 }
 
-APlayerCharacter::APlayerCharacter()
+ACharacter_Player::ACharacter_Player()
 {
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.f);
 
@@ -67,7 +67,7 @@ APlayerCharacter::APlayerCharacter()
 	CombatComponent = CreateDefaultSubobject<UCombatComponent_Player>(TEXT("CharCombatComp"));
 }
 
-void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void ACharacter_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	checkf(InputConfigData, TEXT("Forget to assign a valid data asset as input config"));
 	ULocalPlayer* LocalPlayer = GetController<APlayerController>()->GetLocalPlayer();
@@ -81,7 +81,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	MainInputComponent->BindNativeInputAction(InputConfigData, GameplayTags_Base::InputTag_Look, ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
 }
 
-void APlayerCharacter::Input_Move(const FInputActionValue& InputActionValue)
+void ACharacter_Player::Input_Move(const FInputActionValue& InputActionValue)
 {
 	const FVector2D MovementVector = InputActionValue.Get<FVector2D>();
 	const FRotator  MovementRotation(0.f, Controller->GetControlRotation().Yaw, 0.f);
@@ -99,7 +99,7 @@ void APlayerCharacter::Input_Move(const FInputActionValue& InputActionValue)
 	}
 }
 
-void APlayerCharacter::Input_Look(const FInputActionValue& InputActionValue)
+void ACharacter_Player::Input_Look(const FInputActionValue& InputActionValue)
 {
 	const FVector2D LookAxisVector = InputActionValue.Get<FVector2D>();
 	if (LookAxisVector.X != 0.f)

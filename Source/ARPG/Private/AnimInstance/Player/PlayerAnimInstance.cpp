@@ -6,7 +6,7 @@ void UPlayerAnimInstance::NativeInitializeAnimation()
 
 	if(OwningCharacter)
 	{
-		OwningPlayerCharacter = Cast<APlayerCharacter>(OwningCharacter);
+		OwningCharacter_Player = Cast<ACharacter_Player>(OwningCharacter);
 	}
 }
 
