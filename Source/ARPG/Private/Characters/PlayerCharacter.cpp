@@ -64,7 +64,7 @@ APlayerCharacter::APlayerCharacter()
 	GetCharacterMovement()->MaxWalkSpeed = 400.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 
-	CombatComponent = CreateDefaultSubobject<UCombatComponent_Player>(TEXT("CombatComponent"));
+	CombatComponent = CreateDefaultSubobject<UCombatComponent_Player>(TEXT("CharCombatComp"));
 }
 
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

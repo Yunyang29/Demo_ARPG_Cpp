@@ -9,8 +9,8 @@ ACharacter_Base::ACharacter_Base()
 
 	GetMesh()->bReceivesDecals = false;
 
-	CharacterASC = CreateDefaultSubobject<UAbilitySystemComponent_Base>(TEXT("AbilitySystemComponent"));
-	CharacterAS = CreateDefaultSubobject<UAttributeSet_Base>(TEXT("AttributeSet"));
+	CharacterASC = CreateDefaultSubobject<UAbilitySystemComponent_Base>(TEXT("CharAbilitySystemComp"));
+	CharacterAS = CreateDefaultSubobject<UAttributeSet_Base>(TEXT("CharAttributeSet"));
 }
 
 UAbilitySystemComponent* ACharacter_Base::GetAbilitySystemComponent() const
