@@ -9,6 +9,7 @@
 #include "GameplayTags_Base.h"
 #include "AbilitySystem/AbilitySystemComponent_Base.h"
 #include "DataAssets/StartUp/DataAsset_PlayerStartUp.h"
+#include "Components/Combat/CombatComponent_Player.h"
 
 #include "DebugHelper.h"
 
@@ -62,6 +63,8 @@ APlayerCharacter::APlayerCharacter()
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 500.f, 0.f);
 	GetCharacterMovement()->MaxWalkSpeed = 400.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
+
+	CombatComponent = CreateDefaultSubobject<UCombatComponent_Player>(TEXT("CombatComponent"));
 }
 
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

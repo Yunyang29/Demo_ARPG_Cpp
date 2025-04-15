@@ -6,7 +6,7 @@
 #include "InputComponent_Base.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class ARPG_API UInputComponent_Base : public UEnhancedInputComponent
