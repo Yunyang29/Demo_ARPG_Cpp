@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "DataAssets/StartUp/DataAsset_StartUp.h"
-#include "DataAsset_PlayerStartUp.generated.h"
+#include "DataAsset_StartUp_Player.generated.h"
 
 /**
  * 

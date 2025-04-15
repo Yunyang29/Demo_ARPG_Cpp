@@ -1,5 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Items/Weapons/PlayerWeapon.h"
+#include "..\..\..\Public\Components\Combat\CombatComponent_Base.h"
 

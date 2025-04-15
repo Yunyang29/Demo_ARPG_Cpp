@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Items/Weapons/Weapon_Base.h"
-#include "PlayerWeapon.generated.h"
+#include "Weapon_Player.generated.h"
 
 /**
  * 

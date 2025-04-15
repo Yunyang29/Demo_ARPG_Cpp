@@ -1,9 +1,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AnimInstance/CharacterAnimInstance.h"
+#include "..\AnimInstance_Character.h"
 #include "Characters/Character_Player.h"
-#include "PlayerAnimInstance.generated.h"
+#include "AnimInstance_Player.generated.h"
 
 /**
  * 

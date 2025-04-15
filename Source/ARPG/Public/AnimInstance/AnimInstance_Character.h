@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AnimInstance/AnimInstance_Base.h"
-#include "CharacterAnimInstance.generated.h"
+#include "AnimInstance_Character.generated.h"
 
 class ACharacter_Base;
 class UCharacterMovementComponent;

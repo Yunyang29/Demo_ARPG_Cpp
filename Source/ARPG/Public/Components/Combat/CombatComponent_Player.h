@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/Combat/PawnCombatComponent.h"
+#include "CombatComponent_Base.h"
 #include "CombatComponent_Player.generated.h"
 
 /**

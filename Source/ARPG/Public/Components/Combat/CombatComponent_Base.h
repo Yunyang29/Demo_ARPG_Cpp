@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/PawnExtensionComponent_Base.h"
-#include "PawnCombatComponent.generated.h"
+#include "CombatComponent_Base.generated.h"
 
 /**
  * 

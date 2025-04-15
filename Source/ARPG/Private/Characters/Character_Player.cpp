@@ -8,7 +8,7 @@
 #include "Components/Input/InputComponent_Base.h"
 #include "GameplayTags_Base.h"
 #include "AbilitySystem/AbilitySystemComponent_Base.h"
-#include "DataAssets/StartUp/DataAsset_PlayerStartUp.h"
+#include "..\..\Public\DataAssets\StartUp\DataAsset_StartUp_Player.h"
 #include "Components/Combat/CombatComponent_Player.h"
 
 #include "DebugHelper.h"
