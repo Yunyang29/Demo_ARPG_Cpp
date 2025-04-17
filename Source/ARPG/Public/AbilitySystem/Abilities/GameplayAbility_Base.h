@@ -1,10 +1,12 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
 #include "GameplayAbility_Base.generated.h"
+
+class UCombatComponent_Pawn;
+class UAbilitySystemComponent_Base;
+
 
 UENUM(BlueprintType)
 enum class EAbilityActivationPolicy_Base : uint8
@@ -29,4 +31,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "MainAbility")
 	EAbilityActivationPolicy_Base AbilityActivationPolicy = EAbilityActivationPolicy_Base::OnTriggered;
+	
+	UFUNCTION(BlueprintPure, Category = "Char|Ability")
+	UCombatComponent_Pawn* GetPawnCombatCompFromActorInfo() const;
+	
+	UFUNCTION(BlueprintPure, Category = "Char|Ability")
+	UAbilitySystemComponent_Base* GetASCompFromActorInfo() const;
 };

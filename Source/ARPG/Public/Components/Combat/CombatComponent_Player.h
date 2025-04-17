@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CombatComponent_Base.h"
+#include "CombatComponent_Pawn.h"
 #include "CombatComponent_Player.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ARPG_API UCombatComponent_Player : public UPawnCombatComponent
+class ARPG_API UCombatComponent_Player : public UCombatComponent_Pawn
 {
 	GENERATED_BODY()
 	

@@ -1,6 +1,7 @@
 #include "AbilitySystem/Abilities/GameplayAbility_Base.h"
 #include "AbilitySystemComponent.h"
-#include "DebugHelper.h"
+#include "AbilitySystem/AbilitySystemComponent_Base.h"
+#include "Components/Combat/CombatComponent_Pawn.h"
 
 void UGameplayAbility_Base::OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec)
 {
@@ -24,4 +25,14 @@ void UGameplayAbility_Base::EndAbility(const FGameplayAbilitySpecHandle Handle, 
 			ActorInfo->AbilitySystemComponent->ClearAbility(Handle);
 		}
 	}
+}
+
+UCombatComponent_Pawn* UGameplayAbility_Base::GetPawnCombatCompFromActorInfo() const
+{
+	return GetAvatarActorFromActorInfo()->FindComponentByClass<UCombatComponent_Pawn>();
+}
+
+UAbilitySystemComponent_Base* UGameplayAbility_Base::GetASCompFromActorInfo() const
+{
+	return Cast<UAbilitySystemComponent_Base>(CurrentActorInfo->AbilitySystemComponent);
 }
