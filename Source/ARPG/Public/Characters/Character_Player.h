@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Characters/Character_Base.h"
+#include "GameplayTagContainer.h"
 #include "Character_Player.generated.h"
 
 class USpringArmComponent;
@@ -47,9 +48,11 @@ private:
 
 	void Input_Move(const FInputActionValue& InputActionValue);
 	void Input_Look(const FInputActionValue& InputActionValue);
+	void Input_AbilityInputPressed(FGameplayTag InInputTag);
+	void Input_AbilityInputReleased(FGameplayTag InInputTag);
 
 #pragma endregion
 
 public:
-	FORCEINLINE UCombatComponent_Player* GetCombatComponent() const { return CombatComponent; }
+	FORCEINLINE UCombatComponent_Player* GetPlayerCombatComp() const { return CombatComponent; }
 };

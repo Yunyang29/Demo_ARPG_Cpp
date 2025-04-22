@@ -20,7 +20,7 @@ APlayerController_Base* UGameplayAbility_Player::GetPlayerControllerFromActorInf
 	return CachedPlayerController.IsValid() ? CachedPlayerController.Get() : nullptr;
 }
 
-UCombatComponent_Player* UGameplayAbility_Player::GetCombatComponentFromActorInfo()
+UCombatComponent_Player* UGameplayAbility_Player::GetPlayerCombatCompFromActorInfo()
 {
-	return GetPlayerFromActorInfo()->GetCombatComponent();
+	return GetPlayerFromActorInfo()->GetPlayerCombatComp();
 }

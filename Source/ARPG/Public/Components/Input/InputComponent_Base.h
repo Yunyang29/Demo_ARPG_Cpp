@@ -32,6 +32,7 @@ inline void UInputComponent_Base::BindNativeInputAction(const UDataAsset_InputCo
 	}
 }
 
+
 template <class UserObject, typename CallbackFunc>
 inline void UInputComponent_Base::BindAbilityInputAction(const UDataAsset_InputConfig* InInputConfig, UserObject* ContextObject, CallbackFunc InputPressedFunc, CallbackFunc InputReleasedFunc)
 {

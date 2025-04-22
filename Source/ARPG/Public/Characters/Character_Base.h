@@ -28,15 +28,15 @@ protected:
 	//~ End APawn Interface
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "AbilitySystem")
-	UAbilitySystemComponent_Base* CharacterASC;
+	UAbilitySystemComponent_Base* ASC;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "AbilitySystem")
-	UAttributeSet_Base* CharacterAS;
+	UAttributeSet_Base* AS;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadonly, Category = "CharacterData")
-	TSoftObjectPtr<UDataAsset_StartUp> CharacterStartUpData;
+	TSoftObjectPtr<UDataAsset_StartUp> StartUpData;
 
 public:
-	FORCEINLINE UAbilitySystemComponent_Base* GetCharacterAbilitySystemComponent() const { return CharacterASC; }
-	FORCEINLINE UAttributeSet_Base* GetCharacterAttributeSet() const { return CharacterAS; }
+	FORCEINLINE UAbilitySystemComponent_Base* GetCharacterAbilitySystemComponent() const { return ASC; }
+	FORCEINLINE UAttributeSet_Base* GetCharacterAttributeSet() const { return AS; }
 };

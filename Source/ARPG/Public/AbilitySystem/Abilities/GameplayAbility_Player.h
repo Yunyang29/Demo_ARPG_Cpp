@@ -25,7 +25,7 @@ public:
 	APlayerController_Base* GetPlayerControllerFromActorInfo();
 	
 	UFUNCTION(BlueprintPure, Category = "Char|Ability")
-	UCombatComponent_Player* GetCombatComponentFromActorInfo();
+	UCombatComponent_Player* GetPlayerCombatCompFromActorInfo();
 
 private:
 	// smart pointer holds reference
