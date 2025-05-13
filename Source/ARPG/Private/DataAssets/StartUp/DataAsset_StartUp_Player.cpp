@@ -19,7 +19,7 @@ void UDataAsset_StartUp_Player::GiveToAbilitySystemComponent(UAbilitySystemCompo
 		FGameplayAbilitySpec AbilitySpec(AbilitySet.AbilityToGrant);
 		AbilitySpec.SourceObject = InASCToGive->GetAvatarActor();
 		AbilitySpec.Level = ApplyLevel;
-		AbilitySpec.DynamicAbilityTags.AddTag(AbilitySet.InputTag);
+		AbilitySpec.DynamicAbilityTags.AddTag(AbilitySet.InputTag); // 这里的DynamicAbilityTags是一个GameplayTagContainer，用于存储动态的能力标签
 		// AbilitySpec.DynamicAbilityTags.AddTag(AbilitySet.InputTag);
 
 		InASCToGive->GiveAbility(AbilitySpec);

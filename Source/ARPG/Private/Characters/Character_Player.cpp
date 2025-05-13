@@ -13,18 +13,21 @@
 #include "DebugHelper.h"
 #include "AbilitySystem/AbilitySystemComponent_Base.h"
 
-
+/// @brief 玩家角色类
 void ACharacter_Player::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Debug::Print(TEXT("Working"));
+	Debug::Print(TEXT("Init Player"));
 }
 
+/// @brief 角色被控制器占有时调用
+/// @param NewController
 void ACharacter_Player::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 
+	// 根据startup数据资产赋予能力
 	if(!StartUpData.IsNull())
 	{
 		if(UDataAsset_StartUp* LoadedData = StartUpData.LoadSynchronous())
@@ -41,6 +44,7 @@ void ACharacter_Player::PossessedBy(AController* NewController)
 	//}
 }
 
+/// @brief 构造函数
 ACharacter_Player::ACharacter_Player()
 {
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.f);
@@ -67,21 +71,27 @@ ACharacter_Player::ACharacter_Player()
 	CombatComponent = CreateDefaultSubobject<UCombatComponent_Player>(TEXT("CharCombatComp"));
 }
 
+/// @brief 设置玩家输入组件
+/// @param PlayerInputComponent
 void ACharacter_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
+	// 输入配置数据检查
 	checkf(InputConfigData, TEXT("Forget to assign a valid data asset as input config"));
+	// 获取本地玩家和输入子系统
 	ULocalPlayer*                       LocalPlayer = GetController<APlayerController>()->GetLocalPlayer();
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer);
-
 	check(Subsystem);
+	// 添加输入映射上下文
 	Subsystem->AddMappingContext(InputConfigData->DefaultMappingContext, 0);
-
+	// 绑定具体输入动作
 	UInputComponent_Base* InputComp = CastChecked<UInputComponent_Base>(PlayerInputComponent);
 	InputComp->BindNativeInputAction(InputConfigData, GameplayTags_Base::InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
 	InputComp->BindNativeInputAction(InputConfigData, GameplayTags_Base::InputTag_Look, ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
 	InputComp->BindAbilityInputAction(InputConfigData, this, &ThisClass::Input_AbilityInputPressed, &ThisClass::Input_AbilityInputReleased);
 }
 
+/// @brief 玩家输入移动事件
+/// @param InputActionValue
 void ACharacter_Player::Input_Move(const FInputActionValue& InputActionValue)
 {
 	const FVector2D MovementVector = InputActionValue.Get<FVector2D>();
@@ -100,6 +110,8 @@ void ACharacter_Player::Input_Move(const FInputActionValue& InputActionValue)
 	}
 }
 
+/// @brief 玩家输入视角事件
+/// @param InputActionValue
 void ACharacter_Player::Input_Look(const FInputActionValue& InputActionValue)
 {
 	const FVector2D LookAxisVector = InputActionValue.Get<FVector2D>();
@@ -114,11 +126,15 @@ void ACharacter_Player::Input_Look(const FInputActionValue& InputActionValue)
 	}
 }
 
+/// @brief 玩家输入能力按下事件
+/// @param InInputTag
 void ACharacter_Player::Input_AbilityInputPressed(FGameplayTag InInputTag)
 {
 	ASC->OnAbilityInputPressed(InInputTag);
 }
 
+/// @brief 玩家输入能力释放事件
+/// @param InInputTag
 void ACharacter_Player::Input_AbilityInputReleased(FGameplayTag InInputTag)
 {
 	ASC->OnAbilityInputReleased(InInputTag);

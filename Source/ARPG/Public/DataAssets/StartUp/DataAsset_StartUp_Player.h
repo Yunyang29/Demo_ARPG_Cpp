@@ -7,6 +7,7 @@
 
 class UGameplayAbility_Player;
 
+/// @brief 玩家能力的预设数据结构
 USTRUCT(Blueprintable)
 struct FAbilitySet_Player
 {
@@ -21,9 +22,8 @@ struct FAbilitySet_Player
 	bool IsValid() const;
 };
 
-/**
- * 
- */
+
+/// @brief 玩家角色的启动数据资产类
 UCLASS()
 class ARPG_API UDataAsset_StartUp_Player : public UDataAsset_StartUp
 {

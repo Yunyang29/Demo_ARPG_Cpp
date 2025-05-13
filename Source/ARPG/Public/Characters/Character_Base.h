@@ -28,15 +28,15 @@ protected:
 	//~ End APawn Interface
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "AbilitySystem")
-	UAbilitySystemComponent_Base* ASC;
+	UAbilitySystemComponent_Base* ASC; /// Character's Ability System Component
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "AbilitySystem")
-	UAttributeSet_Base* AS;
+	UAttributeSet_Base* AS; /// Character's Attribute Set
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadonly, Category = "CharacterData")
-	TSoftObjectPtr<UDataAsset_StartUp> StartUpData;
+	TSoftObjectPtr<UDataAsset_StartUp> StartUpData; /// Character's Start Up Data
 
 public:
-	FORCEINLINE UAbilitySystemComponent_Base* GetCharacterAbilitySystemComponent() const { return ASC; }
-	FORCEINLINE UAttributeSet_Base* GetCharacterAttributeSet() const { return AS; }
+	FORCEINLINE UAbilitySystemComponent_Base* GetCharacterAbilitySystemComponent() const { return ASC; } /// 获取角色的能力系统组件
+	FORCEINLINE UAttributeSet_Base* GetCharacterAttributeSet() const { return AS; } /// 获取角色的属性集
 };

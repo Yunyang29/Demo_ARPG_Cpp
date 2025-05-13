@@ -18,27 +18,27 @@ struct FInputActionValue;
 UCLASS()
 class ARPG_API ACharacter_Player : public ACharacter_Base
 {
-	GENERATED_BODY() // 生成类
+	GENERATED_BODY()
 
 public:
-	ACharacter_Player(); // 构造函数
+	ACharacter_Player();
 
 protected:
-	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override; // 设置玩家输入组件
-	virtual void BeginPlay() override; // 开始播放
-	virtual void PossessedBy(AController* NewController) override; // 被控制
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
+	virtual void BeginPlay() override;
+	virtual void PossessedBy(AController* NewController) override;
 
 private:
 #pragma region Components
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "Camera", meta = (ALLowPrivateAccess = "true"))
-	USpringArmComponent* CameraBoom;
+	USpringArmComponent* CameraBoom; /// 相机弹簧臂
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "Camera", meta = (ALLowPrivateAccess = "true"))
-	UCameraComponent* FollowCamera;
+	UCameraComponent* FollowCamera; /// 相机组件
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "Combat", meta = (ALLowPrivateAccess = "true"))
-	UCombatComponent_Player* CombatComponent;
+	UCombatComponent_Player* CombatComponent; /// 角色的战斗组件
 #pragma endregion
 
 #pragma region Inputs
