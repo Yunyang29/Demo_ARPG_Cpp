@@ -14,23 +14,17 @@ void UCombatComponent_Base::RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegi
 	}
 
 	// 并不是解引用指针的操作，而是 FString 类型的 operator* 重载，用于获取 FString 对象的内部字符数组（TCHAR*）
-	if(CarriedWeaponMap.Contains(InWeaponTagToRegister))
-	{
-		const FString WeaponString = FString::Printf(TEXT("A weapon named %s has been registered using the tag %s"), *InWeaponToRegister->GetName(), *InWeaponTagToRegister.ToString());
-		Debug::Print(WeaponString);
-	}
+	const FString WeaponString = FString::Printf(TEXT("A weapon named %s has been registered using the tag %s"), *InWeaponToRegister->GetName(), *InWeaponTagToRegister.ToString());
+	Debug::Print(WeaponString);
 }
 
 
 AWeapon_Base* UCombatComponent_Base::GetCharacterCarriedWeaponByTag(FGameplayTag InWeaponTagToGet) const
 {
-	Debug::Print(InWeaponTagToGet.ToString());
 	if(CarriedWeaponMap.Contains(InWeaponTagToGet))
 	{
-		Debug::Print("CarriedWeaponMap.Contains(InWeaponTagToGet)");
 		if(AWeapon_Base* const* Result = CarriedWeaponMap.Find(InWeaponTagToGet))
 		{
-			Debug::Print("Find");
 			return *Result;
 		}
 	}

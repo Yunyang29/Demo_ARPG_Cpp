@@ -5,7 +5,5 @@
 
 AWeapon_Player* UCombatComponent_Player::GetPlayerCarriedWeaponByTag(FGameplayTag InWeaponTag) const
 {
-	Debug::Print(TEXT("Inquiry"));
-
 	return Cast<AWeapon_Player>(GetCharacterCarriedWeaponByTag(InWeaponTag));
 }
