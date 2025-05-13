@@ -4,7 +4,7 @@
 #include "Abilities/GameplayAbility.h"
 #include "GameplayAbility_Base.generated.h"
 
-class UCombatComponent_Pawn;
+class UCombatComponent_Base;
 class UAbilitySystemComponent_Base;
 
 
@@ -32,9 +32,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "MainAbility")
 	EAbilityActivationPolicy_Base AbilityActivationPolicy = EAbilityActivationPolicy_Base::OnTriggered;
 	
-	UFUNCTION(BlueprintPure, Category = "Char|Ability")
-	UCombatComponent_Pawn* GetPawnCombatCompFromActorInfo() const;
+	UFUNCTION(BlueprintPure, Category = "Character|Ability")
+	UCombatComponent_Base* GetPawnCombatCompFromActorInfo() const;
 	
-	UFUNCTION(BlueprintPure, Category = "Char|Ability")
+	UFUNCTION(BlueprintPure, Category = "Character|Ability")
 	UAbilitySystemComponent_Base* GetASCompFromActorInfo() const;
 };

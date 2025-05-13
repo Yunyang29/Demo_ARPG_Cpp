@@ -1,6 +1,6 @@
-#include "..\..\..\Public\AnimInstance\Player\AnimInstance_Player.h"
+#include <AnimInstance/Player/AnimInstance_Player.h>
 
-void UPlayerAnimInstance::NativeInitializeAnimation()
+void UAnimInstance_Player::NativeInitializeAnimation()
 {
 	Super::NativeInitializeAnimation();
 
@@ -10,7 +10,7 @@ void UPlayerAnimInstance::NativeInitializeAnimation()
 	}
 }
 
-void UPlayerAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
+void UAnimInstance_Player::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeThreadSafeUpdateAnimation(DeltaSeconds);
 

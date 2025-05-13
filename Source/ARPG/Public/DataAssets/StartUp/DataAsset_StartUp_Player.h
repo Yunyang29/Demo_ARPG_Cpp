@@ -25,7 +25,7 @@ struct FAbilitySet_Player
  * 
  */
 UCLASS()
-class ARPG_API UDataAsset_PlayerStartUp : public UDataAsset_StartUp
+class ARPG_API UDataAsset_StartUp_Player : public UDataAsset_StartUp
 {
 	GENERATED_BODY()
 

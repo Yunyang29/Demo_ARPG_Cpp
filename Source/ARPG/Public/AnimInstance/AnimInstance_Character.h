@@ -13,7 +13,7 @@ class UCharacterMovementComponent;
  * 
  */
 UCLASS()
-class ARPG_API UCharacterAnimInstance : public UAnimInstance_Base
+class ARPG_API UAnimInstance_Character : public UAnimInstance_Base
 {
 	GENERATED_BODY()
 

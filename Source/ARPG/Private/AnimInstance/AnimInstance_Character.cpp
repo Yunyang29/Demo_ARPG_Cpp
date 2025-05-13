@@ -3,7 +3,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 
 
-void UCharacterAnimInstance::NativeInitializeAnimation()
+void UAnimInstance_Character::NativeInitializeAnimation()
 {
 	OwningCharacter = Cast<ACharacter_Base>(TryGetPawnOwner());
 	if(OwningCharacter)
@@ -12,7 +12,7 @@ void UCharacterAnimInstance::NativeInitializeAnimation()
 	}
 }
 
-void UCharacterAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
+void UAnimInstance_Character::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
 {
 	if(!OwningCharacter || !OwningMovementComponent)
 	{

@@ -9,7 +9,7 @@
  * 
  */
 UCLASS()
-class ARPG_API UPlayerAnimInstance : public UCharacterAnimInstance
+class ARPG_API UAnimInstance_Player : public UAnimInstance_Character
 {
 	GENERATED_BODY()
 

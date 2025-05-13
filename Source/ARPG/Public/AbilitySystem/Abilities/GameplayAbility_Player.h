@@ -18,13 +18,13 @@ class ARPG_API UGameplayAbility_Player : public UGameplayAbility_Base
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Char|Ability")
+	UFUNCTION(BlueprintPure, Category = "Player|Ability")
 	ACharacter_Player* GetPlayerFromActorInfo();
 
-	UFUNCTION(BlueprintPure, Category = "Char|Ability")
+	UFUNCTION(BlueprintPure, Category = "Player|Ability")
 	APlayerController_Base* GetPlayerControllerFromActorInfo();
 	
-	UFUNCTION(BlueprintPure, Category = "Char|Ability")
+	UFUNCTION(BlueprintPure, Category = "Player|Ability")
 	UCombatComponent_Player* GetPlayerCombatCompFromActorInfo();
 
 private:
