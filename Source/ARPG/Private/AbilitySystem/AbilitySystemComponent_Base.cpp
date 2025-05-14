@@ -41,3 +41,20 @@ void UAbilitySystemComponent_Base::GrantWeaponAbilities(const TArray<FAbilitySet
 		OutGrantedAbilitySpecHandles.AddUnique(GiveAbility(AbilitySpec));
 	}
 }
+
+void UAbilitySystemComponent_Base::RemoveGrantedWeaponAbilities(UPARAM(ref) TArray<FGameplayAbilitySpecHandle>& InSpecHandlesToRemove)
+{
+	if(InSpecHandlesToRemove.IsEmpty())
+	{
+		return;
+	}
+
+	for(const FGameplayAbilitySpecHandle& SpecHandle : InSpecHandlesToRemove)
+	{
+		if(!SpecHandle.IsValid()) continue;
+
+		ClearAbility(SpecHandle);
+	}
+
+	InSpecHandlesToRemove.Empty();
+}

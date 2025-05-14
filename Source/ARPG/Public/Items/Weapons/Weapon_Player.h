@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayAbilitySpecHandle.h"
 #include "Items/Weapons/Weapon_Base.h"
 #include "Types/StructType_Base.h"
 #include "Weapon_Player.generated.h"
@@ -18,4 +19,13 @@ class ARPG_API AWeapon_Player : public AWeapon_Base
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="WeaponData")
 	FWeaponData_Player WeaponData;
+
+	UFUNCTION(BlueprintCallable)
+	void AssignGrantedAbilitySpecHandles(const TArray<FGameplayAbilitySpecHandle>& InSpecHandles);
+
+	UFUNCTION(BlueprintPure)
+	TArray<FGameplayAbilitySpecHandle> GetGrantedAbilitySpecHandles() const;
+
+private:
+	TArray<FGameplayAbilitySpecHandle> GrantedAbilityiesSpecHandles;
 };
