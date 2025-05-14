@@ -2,11 +2,7 @@
 
 #include "AbilitySystem/AbilitySystemComponent_Base.h"
 #include "AbilitySystem/Abilities/GameplayAbility_Player.h"
-
-bool FAbilitySet_Player::IsValid() const
-{
-	return InputTag.IsValid() && AbilityToGrant;
-}
+#include "Types/StructType_Base.h"
 
 void UDataAsset_StartUp_Player::GiveToAbilitySystemComponent(UAbilitySystemComponent_Base* InASCToGive, int32 ApplyLevel)
 {

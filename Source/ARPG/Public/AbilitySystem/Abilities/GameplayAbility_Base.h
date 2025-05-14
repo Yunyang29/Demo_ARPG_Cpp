@@ -36,5 +36,5 @@ protected:
 	UCombatComponent_Base* GetPawnCombatCompFromActorInfo() const;
 	
 	UFUNCTION(BlueprintPure, Category = "Character|Ability")
-	UAbilitySystemComponent_Base* GetASCompFromActorInfo() const;
+	UAbilitySystemComponent_Base* GetAbilitySystemCompFromActorInfo() const;
 };

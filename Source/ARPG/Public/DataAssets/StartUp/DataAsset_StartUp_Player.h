@@ -1,26 +1,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameplayTagContainer.h"
 #include "DataAssets/StartUp/DataAsset_StartUp.h"
+#include "Types/StructType_Base.h"
 #include "DataAsset_StartUp_Player.generated.h"
-
-class UGameplayAbility_Player;
-
-/// @brief 玩家能力的预设数据结构
-USTRUCT(Blueprintable)
-struct FAbilitySet_Player
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (Categories = "InputTag"))
-	FGameplayTag InputTag;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSubclassOf<UGameplayAbility_Player> AbilityToGrant;
-
-	bool IsValid() const;
-};
 
 
 /// @brief 玩家角色的启动数据资产类
