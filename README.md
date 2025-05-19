@@ -1,6 +1,6 @@
 # UE5 高级 Action RPG 项目
 
-🎮 本项目基于 Udemy 教程《Unreal Engine 5 - Action RPG with Multiplayer and GAS》，由开发者自主实践与拓展完成。  
+🎮 本项目基于 Udemy 教程[《Unreal Engine 5 - Action RPG with Multiplayer and GAS》](https://www.udemy.com/course/unreal-engine-5-advanced-action-rpg/?couponCode=CP130525)，由开发者自主实践与拓展完成。  
 
 ## 📌 项目亮点
 
@@ -21,12 +21,6 @@
 - C++ & Blueprint
 - Gameplay Ability System (GAS)
 - Multiplayer Replication
-
-## 🙋‍♂️ 关于我
-
-* 具有 Unity 和 C# 背景，正在向 UE5 和 C++ 转型
-* 目标岗位：游戏开发 / C++
-* 正在构建作品集与技能体系，欢迎交流与合作！
 
 ---
 
