@@ -7,7 +7,7 @@
 
 class AWeapon_Base;
 /**
- * 
+ *
  */
 UCLASS()
 class ARPG_API UCombatComponent_Base : public UPawnExtensionComponent_Base
@@ -15,16 +15,16 @@ class ARPG_API UCombatComponent_Base : public UPawnExtensionComponent_Base
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category ="Character|Combat")
+	UFUNCTION(BlueprintCallable, Category ="A_My|Combat")
 	void RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegister, AWeapon_Base* InWeaponToRegister, bool bRegisterAsEquippedWeapon);
 
-	UFUNCTION(BlueprintCallable, Category ="Character|Combat")
+	UFUNCTION(BlueprintCallable, Category ="A_My|Combat")
 	AWeapon_Base* GetCharacterCarriedWeaponByTag(FGameplayTag InWeaponTagToGet) const;	//此函数是常量成员函数，承诺不会修改类的成员变量（即 UCombatComponent_Base 的状态）。
 
-	UPROPERTY(BlueprintReadWrite, Category="Character|Combat")
+	UPROPERTY(BlueprintReadWrite, Category="A_My|Combat")
 	FGameplayTag CurEquippedWeaponTag;
 
-	UFUNCTION(BlueprintCallable, Category="Character|Combat")
+	UFUNCTION(BlueprintCallable, Category="A_My|Combat")
 	AWeapon_Base* GetCurEquippedWeapon() const;
 
 private:

@@ -31,10 +31,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "MainAbility")
 	EAbilityActivationPolicy_Base AbilityActivationPolicy = EAbilityActivationPolicy_Base::OnTriggered;
-	
-	UFUNCTION(BlueprintPure, Category = "Character|Ability")
+
+	UFUNCTION(BlueprintPure, Category = "A_My|Ability")
 	UCombatComponent_Base* GetPawnCombatCompFromActorInfo() const;
-	
-	UFUNCTION(BlueprintPure, Category = "Character|Ability")
+
+	UFUNCTION(BlueprintPure, Category = "A_My|Ability")
 	UAbilitySystemComponent_Base* GetAbilitySystemCompFromActorInfo() const;
 };

@@ -10,7 +10,7 @@ class UCombatComponent_Player;
 
 
 /**
- * 
+ *
  */
 UCLASS()
 class ARPG_API UGameplayAbility_Player : public UGameplayAbility_Base
@@ -18,13 +18,13 @@ class ARPG_API UGameplayAbility_Player : public UGameplayAbility_Base
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Player|Ability")
+	UFUNCTION(BlueprintPure, Category = "A_My|Player|Ability")
 	ACharacter_Player* GetPlayerFromActorInfo();
 
-	UFUNCTION(BlueprintPure, Category = "Player|Ability")
+	UFUNCTION(BlueprintPure, Category = "A_My|Player|Ability")
 	APlayerController_Base* GetPlayerControllerFromActorInfo();
-	
-	UFUNCTION(BlueprintPure, Category = "Player|Ability")
+
+	UFUNCTION(BlueprintPure, Category = "A_My|Player|Ability")
 	UCombatComponent_Player* GetPlayerCombatCompFromActorInfo();
 
 private:

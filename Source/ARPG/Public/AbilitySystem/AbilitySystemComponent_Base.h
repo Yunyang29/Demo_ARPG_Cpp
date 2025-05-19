@@ -8,7 +8,7 @@
 #include "AbilitySystemComponent_Base.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class ARPG_API UAbilitySystemComponent_Base : public UAbilitySystemComponent
@@ -19,9 +19,9 @@ public:
 	void OnAbilityInputPressed(const FGameplayTag& InInputTag);
 	void OnAbilityInputReleased(const FGameplayTag& InInputTag);
 
-	UFUNCTION(BlueprintCallable, Category = "Character|Ability", meta = (ApplyLevel="1"))
+	UFUNCTION(BlueprintCallable, Category = "A_My|Ability", meta = (ApplyLevel="1"))
 	void GrantWeaponAbilities(const TArray<FAbilitySet_Player>& InDefaultWeaponAbilities, int32 ApplyLevel, TArray<FGameplayAbilitySpecHandle>& OutGrantedAbilitySpecHandles);
 
-	UFUNCTION(BlueprintCallable, Category = "Character|Ability", meta = (ApplyLevel="1"))
+	UFUNCTION(BlueprintCallable, Category = "A_My|Ability", meta = (ApplyLevel="1"))
 	void RemoveGrantedWeaponAbilities(UPARAM(ref) TArray<FGameplayAbilitySpecHandle>& InSpecHandlesToRemove);
 };
