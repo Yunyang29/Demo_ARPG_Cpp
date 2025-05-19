@@ -12,10 +12,6 @@ void UCombatComponent_Base::RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegi
 	{
 		CurEquippedWeaponTag = InWeaponTagToRegister;
 	}
-
-	// 并不是解引用指针的操作，而是 FString 类型的 operator* 重载，用于获取 FString 对象的内部字符数组（TCHAR*）
-	const FString WeaponString = FString::Printf(TEXT("A weapon named %s has been registered using the tag %s"), *InWeaponToRegister->GetName(), *InWeaponTagToRegister.ToString());
-	Debug::Print(WeaponString);
 }
 
 

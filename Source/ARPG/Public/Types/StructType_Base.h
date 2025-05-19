@@ -5,6 +5,7 @@
 
 class ULinkedAnimLayer_Player;
 class UGameplayAbility_Player;
+class UInputMappingContext;
 
 /// @brief 玩家能力的预设数据结构
 USTRUCT(Blueprintable)
