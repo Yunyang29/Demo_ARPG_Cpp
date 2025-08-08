@@ -6,6 +6,7 @@
 
 class UGameplayAbility_Base;
 class UAbilitySystemComponent_Base;
+class UGameplayEffect;
 /**
  * * @brief This class is used to initialize the ability system component when the character is possessed.
  */
@@ -23,6 +24,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "StartUpData")
 	TArray<TSubclassOf<UGameplayAbility_Base>> ReactiveAbilities; /// 被动或反应型能力
+
+	UPROPERTY(EditDefaultsOnly, Category = "StartUpData")
+	TArray<TSubclassOf<UGameplayEffect>> StartUpGameplayEffects; /// 被动或反应型能力
 
 	void GrantAbilities(const TArray<TSubclassOf<UGameplayAbility_Base>>& InAbilitiesToGive, UAbilitySystemComponent_Base* InASCToGive, int32 ApplyLevel = 1);
 };
