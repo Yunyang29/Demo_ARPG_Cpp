@@ -36,6 +36,7 @@ void ACharacter_Player::PossessedBy(AController* NewController)
 		}
 	}
 
+
 	//if (CharacterAbilitySystemComponent && CharacterAttributeSet)
 	//{
 	//	const FString ASCText = FString::Printf(TEXT("Owner Actor: %p, AvatarActor: %s"), *CharacterAbilitySystemComponent->GetOwnerActor()->GetActorLabel(), *CharacterAbilitySystemComponent->GetAvatarActor()->GetActorLabel());

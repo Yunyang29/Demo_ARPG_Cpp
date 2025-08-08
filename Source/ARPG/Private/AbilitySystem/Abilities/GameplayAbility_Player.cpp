@@ -2,7 +2,7 @@
 #include "Characters/Character_Player.h"
 #include "Controllers/PlayerController_Base.h"
 
-ACharacter_Player* UGameplayAbility_Player::GetPlayerFromActorInfo()
+ACharacter_Player* UGameplayAbility_Player::GetPlayerCharacterFromActorInfo()
 {
 	if(!CachedPlayer.IsValid())
 	{
@@ -22,5 +22,5 @@ APlayerController_Base* UGameplayAbility_Player::GetPlayerControllerFromActorInf
 
 UCombatComponent_Player* UGameplayAbility_Player::GetPlayerCombatCompFromActorInfo()
 {
-	return GetPlayerFromActorInfo()->GetPlayerCombatComp();
+	return GetPlayerCharacterFromActorInfo()->GetPlayerCombatComp();
 }

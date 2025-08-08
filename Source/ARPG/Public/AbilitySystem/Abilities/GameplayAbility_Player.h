@@ -19,7 +19,7 @@ class ARPG_API UGameplayAbility_Player : public UGameplayAbility_Base
 
 public:
 	UFUNCTION(BlueprintPure, Category = "A_My|Player|Ability")
-	ACharacter_Player* GetPlayerFromActorInfo();
+	ACharacter_Player* GetPlayerCharacterFromActorInfo();
 
 	UFUNCTION(BlueprintPure, Category = "A_My|Player|Ability")
 	APlayerController_Base* GetPlayerControllerFromActorInfo();
