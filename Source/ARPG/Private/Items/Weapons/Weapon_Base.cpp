@@ -28,11 +28,20 @@ void AWeapon_Base::OnCollisionBeginOverlap(UPrimitiveComponent* OverlappedCompon
 	{
 		if(WeaponOwningPawn != HitPawn)
 		{
-			Debug::Print(GetName() + TEXT(" begin overlap with") + HitPawn->GetName());
+			OnWeaponHitTarget.ExecuteIfBound(OtherActor);
 		}
 	}
 }
 
 void AWeapon_Base::OnCollisionEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+	APawn* WeaponOwningPawn = GetInstigator<APawn>(); // ?
+	checkf(WeaponOwningPawn, TEXT("Forget to assign an instigator as the owning pawn of the weapon: %s"), *GetName());
+	if(APawn* HitPawn = Cast<APawn>(OtherActor))
+	{
+		if(WeaponOwningPawn != HitPawn)
+		{
+			OnWeaponPulledFromTarget.ExecuteIfBound(OtherActor);
+		}
+	}
 }

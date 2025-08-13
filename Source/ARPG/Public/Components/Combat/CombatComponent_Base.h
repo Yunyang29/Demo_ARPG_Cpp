@@ -37,7 +37,13 @@ public:
 	AWeapon_Base* GetCurEquippedWeapon() const;
 
 	UFUNCTION(BlueprintCallable, Category="A_My|Combat")
-	void ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType = EToggleDamageType::CurrentEquippedWeapon) const;
+	void ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType = EToggleDamageType::CurrentEquippedWeapon);
+
+	virtual void OnWeaponHitTargetActor(AActor* HitActor);
+	virtual void OnWeaponPullFromTargetActor(AActor* InteractedActor);
+
+protected:
+	TArray<AActor*> OverlappedActors;
 
 private:
 	TMap<FGameplayTag, AWeapon_Base*> CarriedWeaponMap;
