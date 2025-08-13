@@ -27,8 +27,11 @@ public:
 	UFUNCTION(BlueprintPure, Category = "A_My|Player|Ability")
 	UCombatComponent_Player* GetPlayerCombatCompFromActorInfo();
 
+	UFUNCTION(BlueprintPure, Category = "A_My|Player|Ability")
+	FGameplayEffectSpecHandle MakePlayerDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InCurrentComboCount);
+
 private:
 	// smart pointer holds reference
-	TWeakObjectPtr<ACharacter_Player> CachedPlayer;
+	TWeakObjectPtr<ACharacter_Player>      CachedPlayer;
 	TWeakObjectPtr<APlayerController_Base> CachedPlayerController;
 };

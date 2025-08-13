@@ -1,4 +1,7 @@
 #include "AbilitySystem/Abilities/GameplayAbility_Player.h"
+
+#include "GameplayTags_Base.h"
+#include "AbilitySystem/AbilitySystemComponent_Base.h"
 #include "Characters/Character_Player.h"
 #include "Controllers/PlayerController_Base.h"
 
@@ -23,4 +26,21 @@ APlayerController_Base* UGameplayAbility_Player::GetPlayerControllerFromActorInf
 UCombatComponent_Player* UGameplayAbility_Player::GetPlayerCombatCompFromActorInfo()
 {
 	return GetPlayerCharacterFromActorInfo()->GetPlayerCombatComp();
+}
+
+FGameplayEffectSpecHandle UGameplayAbility_Player::MakePlayerDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InCurrentComboCount)
+{
+	check(EffectClass);
+	FGameplayEffectContextHandle ContextHandle = GetAbilitySystemCompFromActorInfo()->MakeEffectContext();
+	ContextHandle.SetAbility(this);
+	ContextHandle.AddSourceObject(GetAvatarActorFromActorInfo());
+	ContextHandle.AddInstigator(GetAvatarActorFromActorInfo(), GetAvatarActorFromActorInfo());
+	FGameplayEffectSpecHandle Handle = GetAbilitySystemCompFromActorInfo()->MakeOutgoingSpec(EffectClass, GetAbilityLevel(), ContextHandle);
+	// custom data couple to record value with name
+	Handle.Data->SetSetByCallerMagnitude(GameplayTags_Base::Shared_SetByCaller_BaseDamage, InWeaponBaseDamage);
+	if(InCurrentAttackTypeTag.IsValid())
+	{
+		Handle.Data->SetSetByCallerMagnitude(InCurrentAttackTypeTag, InCurrentComboCount);
+	}
+	return Handle;
 }
