@@ -1,5 +1,5 @@
-#include "DebugHelper.h"
 #include "Components/Combat/CombatComponent_Base.h"
+#include "Components/BoxComponent.h"
 #include "Items/Weapons/Weapon_Base.h"
 
 void UCombatComponent_Base::RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegister, AWeapon_Base* InWeaponToRegister, bool bRegisterAsEquippedWeapon)
@@ -29,5 +29,24 @@ AWeapon_Base* UCombatComponent_Base::GetCharacterCarriedWeaponByTag(FGameplayTag
 
 AWeapon_Base* UCombatComponent_Base::GetCurEquippedWeapon() const
 {
-	return nullptr;
+	return GetCharacterCarriedWeaponByTag(CurEquippedWeaponTag);
 }
+
+void UCombatComponent_Base::ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType) const
+{
+	if(ToggleDamageType == EToggleDamageType::CurrentEquippedWeapon)
+	{
+		AWeapon_Base* WeaponToToggle = GetCurEquippedWeapon();
+		check(WeaponToToggle);
+		if(bShouldEnable)
+		{
+			WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+		}
+		else
+		{
+			WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		}
+	}
+}
+
+//

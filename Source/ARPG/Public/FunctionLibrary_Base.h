@@ -4,15 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystem/AbilitySystemComponent_Base.h"
+#include "Components/Combat/CombatComponent_Base.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "Types/CharacterEnumType.h"
 #include "FunctionLibrary_Base.generated.h"
 
-UENUM()
-enum class EConfirmType : uint8
-{
-	Yes,
-	No
-};
 
 /**
  *
@@ -35,4 +31,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "A_My|FunctionLibrary", meta=(DisplayName = "Does Actor Have Tag", ExpandEnumAsExecs="OutConfirmType"))
 	static void BP_DoesActorHaveTag(AActor* InActor, FGameplayTag TagToCheck, EConfirmType& OutConfirmType);
+
+	static UCombatComponent_Base* NativeGetCombatComponentFromActor(AActor* InActor);
+
+	UFUNCTION(BlueprintCallable, Category = "A_My|FunctionLibrary", meta=(DisplayName = "Get Combat Component From Actor", ExpandEnumAsExecs="OutValidType"))
+	static UCombatComponent_Base* BP_GetCombatComponentFromActor(AActor* InActor, EValidType& OutValidType);
 };

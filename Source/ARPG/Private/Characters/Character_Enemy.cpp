@@ -21,6 +21,11 @@ ACharacter_Enemy::ACharacter_Enemy()
 	CombatComponent = CreateDefaultSubobject<UCombatComponent_Enemy>("CharCombatComp");
 }
 
+UCombatComponent_Base* ACharacter_Enemy::GetCombatComponent() const
+{
+	return CombatComponent;
+}
+
 void ACharacter_Enemy::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
@@ -43,8 +48,6 @@ void ACharacter_Enemy::InitEnemyStartUpData()
 				if(UDataAsset_StartUp* LoadedData = StartUpData.Get())
 				{
 					LoadedData->GiveToAbilitySystemComponent(ASC);
-
-					Debug::Print(TEXT("Enemy Start Up Data Loaded"), FColor::Green);
 				}
 			}
 		)

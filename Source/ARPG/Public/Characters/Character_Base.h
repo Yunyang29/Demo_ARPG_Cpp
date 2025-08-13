@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
+#include "Interfaces/PawnCombatInterface.h"
 #include "Character_Base.generated.h"
 
 class UAbilitySystemComponent_Base;
@@ -10,7 +11,7 @@ class UAttributeSet_Base;
 class UDataAsset_StartUp;
 
 UCLASS()
-class ARPG_API ACharacter_Base : public ACharacter, public IAbilitySystemInterface
+class ARPG_API ACharacter_Base : public ACharacter, public IAbilitySystemInterface, public IPawnCombatInterface
 {
 	GENERATED_BODY()
 
@@ -21,6 +22,10 @@ public:
 	//~ Begin IAbilitySystemInterface Interface
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	//~ End IAbilitySystemInterface Interface
+	
+	//~ Begin IPawnCombatInterface Interface
+	virtual UCombatComponent_Base* GetCombatComponent() const override;
+	//~ End IPawnCombatInterface Interface
 
 protected:
 	//~ Begin APawn Interface
@@ -38,5 +43,5 @@ protected:
 
 public:
 	FORCEINLINE UAbilitySystemComponent_Base* GetCharacterAbilitySystemComponent() const { return ASC; } /// 获取角色的能力系统组件
-	FORCEINLINE UAttributeSet_Base* GetCharacterAttributeSet() const { return AS; } /// 获取角色的属性集
+	FORCEINLINE UAttributeSet_Base*           GetCharacterAttributeSet() const { return AS; } /// 获取角色的属性集
 };

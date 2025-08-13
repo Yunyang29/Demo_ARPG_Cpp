@@ -45,6 +45,11 @@ void ACharacter_Player::PossessedBy(AController* NewController)
 	//}
 }
 
+UCombatComponent_Base* ACharacter_Player::GetCombatComponent() const
+{
+	return CombatComponent;
+}
+
 /// @brief 构造函数
 ACharacter_Player::ACharacter_Player()
 {

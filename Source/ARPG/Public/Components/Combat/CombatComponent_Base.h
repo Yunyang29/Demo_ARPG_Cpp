@@ -6,6 +6,15 @@
 #include "CombatComponent_Base.generated.h"
 
 class AWeapon_Base;
+
+UENUM(Blueprintable)
+enum class EToggleDamageType:uint8
+{
+	CurrentEquippedWeapon,
+	LeftHand,
+	RightHand
+};
+
 /**
  *
  */
@@ -19,13 +28,16 @@ public:
 	void RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegister, AWeapon_Base* InWeaponToRegister, bool bRegisterAsEquippedWeapon);
 
 	UFUNCTION(BlueprintCallable, Category ="A_My|Combat")
-	AWeapon_Base* GetCharacterCarriedWeaponByTag(FGameplayTag InWeaponTagToGet) const;	//此函数是常量成员函数，承诺不会修改类的成员变量（即 UCombatComponent_Base 的状态）。
+	AWeapon_Base* GetCharacterCarriedWeaponByTag(FGameplayTag InWeaponTagToGet) const; //此函数是常量成员函数，承诺不会修改类的成员变量（即 UCombatComponent_Base 的状态）。
 
 	UPROPERTY(BlueprintReadWrite, Category="A_My|Combat")
 	FGameplayTag CurEquippedWeaponTag;
 
 	UFUNCTION(BlueprintCallable, Category="A_My|Combat")
 	AWeapon_Base* GetCurEquippedWeapon() const;
+
+	UFUNCTION(BlueprintCallable, Category="A_My|Combat")
+	void ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType = EToggleDamageType::CurrentEquippedWeapon) const;
 
 private:
 	TMap<FGameplayTag, AWeapon_Base*> CarriedWeaponMap;

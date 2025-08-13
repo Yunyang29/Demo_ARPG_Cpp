@@ -15,11 +15,11 @@ class ARPG_API ACharacter_Enemy : public ACharacter_Base
 
 public:
 	ACharacter_Enemy();
+	virtual UCombatComponent_Base* GetCombatComponent() const override;
 
 protected:
 	virtual void PossessedBy(AController* NewController) override;
 
-protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Combat")
 	UCombatComponent_Enemy* CombatComponent;
 

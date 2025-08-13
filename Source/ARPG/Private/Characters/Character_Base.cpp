@@ -18,6 +18,11 @@ UAbilitySystemComponent* ACharacter_Base::GetAbilitySystemComponent() const
 	return GetCharacterAbilitySystemComponent();
 }
 
+UCombatComponent_Base* ACharacter_Base::GetCombatComponent() const
+{
+	return nullptr;
+}
+
 /// @brief 当角色被某个控制器（如玩家控制器或 AI 控制器）控制时调用
 /// @param NewController
 void ACharacter_Base::PossessedBy(AController* NewController)
