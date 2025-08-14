@@ -28,7 +28,7 @@ public:
 	UCombatComponent_Player* GetPlayerCombatCompFromActorInfo();
 
 	UFUNCTION(BlueprintPure, Category = "A_My|Player|Ability")
-	FGameplayEffectSpecHandle MakePlayerDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InCurrentComboCount);
+	FGameplayEffectSpecHandle MakePlayerDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InUsedComboCount);
 
 private:
 	// smart pointer holds reference

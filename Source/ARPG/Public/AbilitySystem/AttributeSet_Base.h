@@ -22,9 +22,12 @@ class ARPG_API UAttributeSet_Base : public UAttributeSet
 public:
 	UAttributeSet_Base();
 
+	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
+
+	// ? 会自动生成？
 	UPROPERTY(BlueprintReadOnly, Category="Health")
 	FGameplayAttributeData CurrentHealth;
-	ATTRIBUTE_ACCESSORS(UAttributeSet_Base, CurrentHealth); // ?
+	ATTRIBUTE_ACCESSORS(UAttributeSet_Base, CurrentHealth);
 
 	UPROPERTY(BlueprintReadOnly, Category="Health")
 	FGameplayAttributeData MaxHealth;
@@ -45,4 +48,8 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category="Damage")
 	FGameplayAttributeData DefensePower;
 	ATTRIBUTE_ACCESSORS(UAttributeSet_Base, DefensePower);
+
+	UPROPERTY(BlueprintReadOnly, Category="Damage")
+	FGameplayAttributeData DamageTaken;
+	ATTRIBUTE_ACCESSORS(UAttributeSet_Base, DamageTaken);
 };

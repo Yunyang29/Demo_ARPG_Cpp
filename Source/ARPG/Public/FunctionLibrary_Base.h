@@ -6,7 +6,7 @@
 #include "AbilitySystem/AbilitySystemComponent_Base.h"
 #include "Components/Combat/CombatComponent_Base.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "Types/CharacterEnumType.h"
+#include "Types\EnumType_Base.h"
 #include "FunctionLibrary_Base.generated.h"
 
 

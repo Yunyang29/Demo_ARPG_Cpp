@@ -1,17 +1,17 @@
 #include "Characters/Character_Player.h"
-#include "Camera/CameraComponent.h"
-#include "Components/CapsuleComponent.h"
-#include "GameFramework/CharacterMovementComponent.h"
-#include "EnhancedInputSubsystems.h"
-#include "GameFramework/SpringArmComponent.h"
-#include "DataAssets/Input/DataAsset_InputConfig.h"
-#include "Components/Input/InputComponent_Base.h"
-#include "GameplayTags_Base.h"
-#include "DataAssets/StartUp/DataAsset_StartUp_Player.h"
-#include "Components/Combat/CombatComponent_Player.h"
 
 #include "DebugHelper.h"
+#include "EnhancedInputSubsystems.h"
+#include "GameplayTags_Base.h"
 #include "AbilitySystem/AbilitySystemComponent_Base.h"
+#include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Components/Combat/CombatComponent_Player.h"
+#include "Components/Input/InputComponent_Base.h"
+#include "DataAssets/Input/DataAsset_InputConfig.h"
+#include "DataAssets/StartUp/DataAsset_StartUp_Player.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/SpringArmComponent.h"
 
 /// @brief 玩家角色类
 void ACharacter_Player::BeginPlay()

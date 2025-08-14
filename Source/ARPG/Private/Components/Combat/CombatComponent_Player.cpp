@@ -5,7 +5,17 @@
 
 AWeapon_Player* UCombatComponent_Player::GetPlayerCarriedWeaponByTag(FGameplayTag InWeaponTag) const
 {
-	return Cast<AWeapon_Player>(GetCharacterCarriedWeaponByTag(InWeaponTag));
+	return Cast<AWeapon_Player>(GetCarriedWeaponByTag(InWeaponTag));
+}
+
+AWeapon_Player* UCombatComponent_Player::GetPlayerCurEquippedWeapon() const
+{
+	return Cast<AWeapon_Player>(GetCurEquippedWeapon());
+}
+
+float UCombatComponent_Player::GetPlayerCurEquippedWeaponDamageAtLevel(float InLevel) const
+{
+	return GetPlayerCurEquippedWeapon()->WeaponData.WeaponBaseDamage.GetValueAtLevel(InLevel);
 }
 
 void UCombatComponent_Player::OnWeaponHitTargetActor(AActor* HitActor)

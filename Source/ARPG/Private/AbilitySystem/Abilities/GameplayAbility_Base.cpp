@@ -1,4 +1,6 @@
 #include "AbilitySystem/Abilities/GameplayAbility_Base.h"
+
+#include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystem/AbilitySystemComponent_Base.h"
 #include "Components/Combat/CombatComponent_Base.h"
@@ -48,4 +50,18 @@ UCombatComponent_Base* UGameplayAbility_Base::GetPawnCombatCompFromActorInfo() c
 UAbilitySystemComponent_Base* UGameplayAbility_Base::GetAbilitySystemCompFromActorInfo() const
 {
 	return Cast<UAbilitySystemComponent_Base>(CurrentActorInfo->AbilitySystemComponent);
+}
+
+FActiveGameplayEffectHandle UGameplayAbility_Base::BP_ApplyEffectSpecHandleToTarget(AActor* TargetActor, const FGameplayEffectSpecHandle& InSpecHandle, ESuccessType& OutSuccessType)
+{
+	FActiveGameplayEffectHandle Handle = NativeApplyEffectSpecHandleToTarget(TargetActor, InSpecHandle);
+	OutSuccessType = Handle.WasSuccessfullyApplied() ? ESuccessType::succeed : ESuccessType::failed;
+	return Handle;
+}
+
+FActiveGameplayEffectHandle UGameplayAbility_Base::NativeApplyEffectSpecHandleToTarget(AActor* TargetActor, const FGameplayEffectSpecHandle& InSpecHandle)
+{
+	UAbilitySystemComponent* ASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
+	check(ASC &&InSpecHandle.IsValid());
+	return GetAbilitySystemCompFromActorInfo()->ApplyGameplayEffectSpecToTarget(*InSpecHandle.Data, ASC);
 }

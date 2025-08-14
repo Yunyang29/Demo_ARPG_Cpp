@@ -17,7 +17,7 @@ void UCombatComponent_Base::RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegi
 }
 
 
-AWeapon_Base* UCombatComponent_Base::GetCharacterCarriedWeaponByTag(FGameplayTag InWeaponTagToGet) const
+AWeapon_Base* UCombatComponent_Base::GetCarriedWeaponByTag(FGameplayTag InWeaponTagToGet) const
 {
 	if(CarriedWeaponMap.Contains(InWeaponTagToGet))
 	{
@@ -31,7 +31,7 @@ AWeapon_Base* UCombatComponent_Base::GetCharacterCarriedWeaponByTag(FGameplayTag
 
 AWeapon_Base* UCombatComponent_Base::GetCurEquippedWeapon() const
 {
-	return GetCharacterCarriedWeaponByTag(CurEquippedWeaponTag);
+	return GetCarriedWeaponByTag(CurEquippedWeaponTag);
 }
 
 void UCombatComponent_Base::ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType)

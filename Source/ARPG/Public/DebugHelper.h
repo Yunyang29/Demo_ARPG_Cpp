@@ -15,12 +15,22 @@ namespace Debug
 	 * 此函数会在屏幕上显示调试消息，同时也会将消息输出到日志中
 	 * 如果GEngine实例存在，消息将显示7秒
 	 */
-	static void Print(const FString &Msg, const FColor &Color = FColor::MakeRandomColor(), int32 InKey = -1)
+	static void Print(const FString& Msg, const FColor& Color = FColor::MakeRandomColor(), int32 InKey = -1)
 	{
-		if (GEngine)
+		if(GEngine)
 		{
-			GEngine->AddOnScreenDebugMessage(InKey, 7.f, Color, Msg);	// 在屏幕上显示调试消息，持续7秒
-			UE_LOG(LogTemp, Warning, TEXT("%s"), *Msg);  // 将消息同时输出到日志系统
+			GEngine->AddOnScreenDebugMessage(InKey, 7.f, Color, Msg); // 在屏幕上显示调试消息，持续7秒
+			UE_LOG(LogTemp, Warning, TEXT("%s"), *Msg); // 将消息同时输出到日志系统
+		}
+	}
+
+	static void Print(const FString& FloatTitle, float FloatValueToPrint, const FColor& Color = FColor::MakeRandomColor(), int32 InKey = -1)
+	{
+		if(GEngine)
+		{
+			const FString FinalMsg = FloatTitle + TEXT(": ") + FString::SanitizeFloat(FloatValueToPrint);
+			GEngine->AddOnScreenDebugMessage(InKey, 7.f, Color, FinalMsg); // 在屏幕上显示调试消息，持续7秒
+			UE_LOG(LogTemp, Warning, TEXT("%s"), *FinalMsg); // 将消息同时输出到日志系统
 		}
 	}
 }
