@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "AbilitySystemBlueprintLibrary.h"
 #include "FunctionLibrary_Base.h"
 

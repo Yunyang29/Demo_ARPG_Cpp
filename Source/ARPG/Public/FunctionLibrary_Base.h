@@ -1,14 +1,11 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "AbilitySystem/AbilitySystemComponent_Base.h"
 #include "Components/Combat/CombatComponent_Base.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "Types\EnumType_Base.h"
+#include "Types/EnumType_Base.h"
 #include "FunctionLibrary_Base.generated.h"
-
 
 /**
  *

@@ -1,7 +1,9 @@
 #include "AbilitySystem/AttributeSet_Base.h"
 
 #include "DebugHelper.h"
+#include "FunctionLibrary_Base.h"
 #include "GameplayEffectExtension.h"
+#include "GameplayTags_Base.h"
 
 UAttributeSet_Base::UAttributeSet_Base()
 {
@@ -37,10 +39,9 @@ void UAttributeSet_Base::PostGameplayEffectExecute(const FGameplayEffectModCallb
 		Debug::Print(TEXT("NewCurrentHealth %s"), NewCurrentHealth);
 
 		// TODO Notify the UI
-		// TODO Handle character death
 		if(NewCurrentHealth == 0.f)
 		{
-
+			UFunctionLibrary_Base::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(), GameplayTags_Base::Shared_Status_Death);
 		}
 	}
 }
