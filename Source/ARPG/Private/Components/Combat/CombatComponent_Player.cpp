@@ -32,9 +32,10 @@ void UCombatComponent_Player::OnWeaponHitTargetActor(AActor* HitActor)
 	Data.Target = HitActor;
 
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPawn(), GameplayTags_Base::Shared_Event_MeleeHit, Data); // ?
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPawn(), GameplayTags_Base::Player_Event_HitPause, FGameplayEventData()); // ?
 }
 
 void UCombatComponent_Player::OnWeaponPullFromTargetActor(AActor* InteractedActor)
 {
-	// Debug::Print(InteractedActor->GetActorNameOrLabel());
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPawn(), GameplayTags_Base::Player_Event_HitPause, FGameplayEventData()); // ?
 }
