@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -7,6 +5,7 @@
 #include "GameplayTagContainer.h"
 #include "Character_Player.generated.h"
 
+class UUIComponent_Player;
 class USpringArmComponent;
 class UCameraComponent;
 class UDataAsset_InputConfig;
@@ -23,6 +22,8 @@ class ARPG_API ACharacter_Player : public ACharacter_Base
 public:
 	ACharacter_Player();
 	virtual UCombatComponent_Base* GetCombatComponent() const override;
+	virtual UUIComponent_Base* GetUIComponent() const override;
+	virtual UUIComponent_Player* GetPlayerUIComponent() const override;
 
 protected:
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
@@ -40,6 +41,10 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "Combat", meta = (ALLowPrivateAccess = "true"))
 	UCombatComponent_Player* CombatComponent; /// 角色的战斗组件
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "UI", meta = (ALLowPrivateAccess = "true"))
+	UUIComponent_Player* UIComponent;
+
 #pragma endregion
 
 #pragma region Inputs

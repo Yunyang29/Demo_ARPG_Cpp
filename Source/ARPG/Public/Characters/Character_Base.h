@@ -4,6 +4,7 @@
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
 #include "Interfaces/PawnCombatInterface.h"
+#include "Interfaces/PawnUIInterface.h"
 #include "Character_Base.generated.h"
 
 class UAbilitySystemComponent_Base;
@@ -11,7 +12,7 @@ class UAttributeSet_Base;
 class UDataAsset_StartUp;
 
 UCLASS()
-class ARPG_API ACharacter_Base : public ACharacter, public IAbilitySystemInterface, public IPawnCombatInterface
+class ARPG_API ACharacter_Base : public ACharacter, public IAbilitySystemInterface, public IPawnCombatInterface, public IPawnUIInterface
 {
 	GENERATED_BODY()
 
@@ -19,13 +20,13 @@ public:
 	// Sets default values for this character's properties
 	ACharacter_Base();
 
-	//~ Begin IAbilitySystemInterface Interface
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
-	//~ End IAbilitySystemInterface Interface
-	
-	//~ Begin IPawnCombatInterface Interface
+
 	virtual UCombatComponent_Base* GetCombatComponent() const override;
-	//~ End IPawnCombatInterface Interface
+	
+	virtual UUIComponent_Base* GetUIComponent() const override;
+	
+	virtual UUIComponent_Player* GetPlayerUIComponent() const override;
 
 protected:
 	//~ Begin APawn Interface

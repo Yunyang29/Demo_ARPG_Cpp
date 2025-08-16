@@ -1,8 +1,10 @@
 #include "Characters/Character_Enemy.h"
+
+#include "Components/Combat/CombatComponent_Enemy.h"
+#include "Components/UI/UIComponent_Enemy.h"
 #include "DataAssets/StartUp/DataAsset_StartUp.h"
 #include "Engine/AssetManager.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "DebugHelper.h"
 
 ACharacter_Enemy::ACharacter_Enemy()
 {
@@ -18,12 +20,18 @@ ACharacter_Enemy::ACharacter_Enemy()
 	GetCharacterMovement()->MaxWalkSpeed = 300.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 1000.f;
 
-	CombatComponent = CreateDefaultSubobject<UCombatComponent_Enemy>("CharCombatComp");
+	CombatComponent = CreateDefaultSubobject<UCombatComponent_Enemy>("CombatComp");
+	UIComponent = CreateDefaultSubobject<UUIComponent_Enemy>(TEXT("UIComp"));
 }
 
 UCombatComponent_Base* ACharacter_Enemy::GetCombatComponent() const
 {
 	return CombatComponent;
+}
+
+UUIComponent_Base* ACharacter_Enemy::GetUIComponent() const
+{
+	return UIComponent;
 }
 
 void ACharacter_Enemy::PossessedBy(AController* NewController)

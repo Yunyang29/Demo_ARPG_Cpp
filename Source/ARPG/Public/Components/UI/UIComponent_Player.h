@@ -10,8 +10,11 @@
  * 
  */
 UCLASS()
-class ARPG_API UUIComponent_Player : public UIComponent_Base
+class ARPG_API UUIComponent_Player : public UUIComponent_Base
 {
 	GENERATED_BODY()
+public:
+	UPROPERTY(BlueprintAssignable)
+	FOnPercentChangeDelegate OnCurrentRageChanged;
 	
 };

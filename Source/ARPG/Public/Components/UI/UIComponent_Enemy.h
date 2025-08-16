@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class ARPG_API UUIComponent_Enemy : public UIComponent_Base
+class ARPG_API UUIComponent_Enemy : public UUIComponent_Base
 {
 	GENERATED_BODY()
 	

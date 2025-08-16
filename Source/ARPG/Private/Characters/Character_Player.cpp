@@ -8,6 +8,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/Combat/CombatComponent_Player.h"
 #include "Components/Input/InputComponent_Base.h"
+#include "Components/UI/UIComponent_Player.h"
 #include "DataAssets/Input/DataAsset_InputConfig.h"
 #include "DataAssets/StartUp/DataAsset_StartUp_Player.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -50,6 +51,16 @@ UCombatComponent_Base* ACharacter_Player::GetCombatComponent() const
 	return CombatComponent;
 }
 
+UUIComponent_Base* ACharacter_Player::GetUIComponent() const
+{
+	return UIComponent;
+}
+
+UUIComponent_Player* ACharacter_Player::GetPlayerUIComponent() const
+{
+	return UIComponent;
+}
+
 /// @brief 构造函数
 ACharacter_Player::ACharacter_Player()
 {
@@ -74,7 +85,8 @@ ACharacter_Player::ACharacter_Player()
 	GetCharacterMovement()->MaxWalkSpeed = 400.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 
-	CombatComponent = CreateDefaultSubobject<UCombatComponent_Player>(TEXT("CharCombatComp"));
+	CombatComponent = CreateDefaultSubobject<UCombatComponent_Player>(TEXT("CombatComp"));
+	UIComponent = CreateDefaultSubobject<UUIComponent_Player>(TEXT("UIComp"));
 }
 
 /// @brief 设置玩家输入组件
