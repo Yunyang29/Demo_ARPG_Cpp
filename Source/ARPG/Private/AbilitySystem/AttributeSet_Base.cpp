@@ -3,6 +3,9 @@
 #include "FunctionLibrary_Base.h"
 #include "GameplayEffectExtension.h"
 #include "GameplayTags_Base.h"
+#include "Components/UI/UIComponent_Base.h"
+#include "Components/UI/UIComponent_Enemy.h"
+#include "Components/UI/UIComponent_Player.h"
 #include "Interfaces/PawnUIInterface.h"
 
 UAttributeSet_Base::UAttributeSet_Base()

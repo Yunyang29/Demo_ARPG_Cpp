@@ -22,8 +22,8 @@ class ARPG_API ACharacter_Player : public ACharacter_Base
 public:
 	ACharacter_Player();
 	virtual UCombatComponent_Base* GetCombatComponent() const override;
-	virtual UUIComponent_Base* GetUIComponent() const override;
-	virtual UUIComponent_Player* GetPlayerUIComponent() const override;
+	virtual UUIComponent_Base*     GetUIComponent() const override;
+	virtual UUIComponent_Player*   GetPlayerUIComponent() const override;
 
 protected:
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;

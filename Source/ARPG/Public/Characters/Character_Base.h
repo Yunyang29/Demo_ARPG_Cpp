@@ -25,8 +25,6 @@ public:
 	virtual UCombatComponent_Base* GetCombatComponent() const override;
 	
 	virtual UUIComponent_Base* GetUIComponent() const override;
-	
-	virtual UUIComponent_Player* GetPlayerUIComponent() const override;
 
 protected:
 	//~ Begin APawn Interface
