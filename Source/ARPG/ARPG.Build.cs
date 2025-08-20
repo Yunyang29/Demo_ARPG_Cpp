@@ -16,7 +16,8 @@ public class ARPG : ModuleRules
             "GameplayTags",
             "EnhancedInput",
             "GameplayTasks",
-            "GameplayAbilities"
+            "GameplayAbilities",
+            "AIModule"
         });
 
         PrivateDependencyModuleNames.AddRange(new string[] { });
