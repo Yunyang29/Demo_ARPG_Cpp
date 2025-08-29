@@ -1,5 +1,6 @@
 #include "AbilitySystem/AbilitySystemComponent_Base.h"
 
+#include "DebugHelper.h"
 #include "AbilitySystem/Abilities/GameplayAbility_Player.h"
 
 void UAbilitySystemComponent_Base::OnAbilityInputPressed(const FGameplayTag& InInputTag)
@@ -56,4 +57,27 @@ void UAbilitySystemComponent_Base::RemoveGrantedWeaponAbilities(UPARAM(ref) TArr
 	}
 
 	InSpecHandlesToRemove.Empty();
+}
+
+bool UAbilitySystemComponent_Base::TryActivateAbilityByTag(FGameplayTag AbilityTagToActivate)
+{
+	check(AbilityTagToActivate.IsValid());
+
+	TArray<FGameplayAbilitySpec*> FoundAbilitySpecs;
+	GetActivatableGameplayAbilitySpecsByAllMatchingTags(AbilityTagToActivate.GetSingleTagContainer(), FoundAbilitySpecs);
+
+	if(!FoundAbilitySpecs.IsEmpty())
+	{
+		const int32           RandomAbilityIndex = FMath::RandRange(0, FoundAbilitySpecs.Num() - 1);
+		FGameplayAbilitySpec* SpecToActivate = FoundAbilitySpecs[RandomAbilityIndex];
+
+		check(SpecToActivate);
+
+		if(!SpecToActivate->IsActive())
+		{
+			Debug::Print("Here");
+			return TryActivateAbility(SpecToActivate->Handle);
+		}
+	}
+	return false;
 }

@@ -33,16 +33,16 @@ protected:
 private:
 #pragma region Components
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "Camera", meta = (ALLowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "A_My|Camera", meta = (ALLowPrivateAccess = "true"))
 	USpringArmComponent* CameraBoom; /// 相机弹簧臂
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "Camera", meta = (ALLowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "A_My|Camera", meta = (ALLowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera; /// 相机组件
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "Combat", meta = (ALLowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "A_My|Combat", meta = (ALLowPrivateAccess = "true"))
 	UCombatComponent_Player* CombatComponent; /// 角色的战斗组件
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "UI", meta = (ALLowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "A_My|UI", meta = (ALLowPrivateAccess = "true"))
 	UUIComponent_Player* UIComponent;
 
 #pragma endregion

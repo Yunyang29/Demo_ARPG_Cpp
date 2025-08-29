@@ -25,13 +25,13 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void PossessedBy(AController* NewController) override;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Combat")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="A_My|Combat")
 	UCombatComponent_Enemy* CombatComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "UI")
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "A_My|UI")
 	UUIComponent_Enemy* UIComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "UI")
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "A_My|UI")
 	UWidgetComponent* HealthWidgetComponent;
 
 private:

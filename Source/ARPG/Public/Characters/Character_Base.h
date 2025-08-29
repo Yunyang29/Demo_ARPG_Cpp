@@ -31,13 +31,13 @@ protected:
 	virtual void PossessedBy(AController* NewController) override;
 	//~ End APawn Interface
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "AbilitySystem")
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "A_My|AbilitySystem")
 	UAbilitySystemComponent_Base* ASC; /// Character's Ability System Component
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "AbilitySystem")
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "A_My|AbilitySystem")
 	UAttributeSet_Base* AS; /// Character's Attribute Set
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadonly, Category = "CharacterData")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadonly, Category = "A_My|CharacterData")
 	TSoftObjectPtr<UDataAsset_StartUp> StartUpData; /// Character's Start Up Data
 
 public:

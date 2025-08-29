@@ -1,5 +1,6 @@
 #include "FunctionLibrary_Base.h"
 #include "AbilitySystemBlueprintLibrary.h"
+#include "GenericTeamAgentInterface.h"
 
 #include "Interfaces/PawnCombatInterface.h"
 
@@ -56,4 +57,17 @@ UCombatComponent_Base* UFunctionLibrary_Base::BP_GetCombatComponentFromActor(AAc
 	UCombatComponent_Base* CombatComponent = NativeGetCombatComponentFromActor(InActor);
 	OutValidType = CombatComponent ? EValidType::Valid : EValidType::Invalid;
 	return CombatComponent;
+}
+
+bool UFunctionLibrary_Base::IsTargetPawnHostile(APawn* QueryPawn, APawn* TargetPawn)
+{
+	check(QueryPawn&&TargetPawn);
+	IGenericTeamAgentInterface* QueryTeamAgent = Cast<IGenericTeamAgentInterface>(QueryPawn->GetController());
+	IGenericTeamAgentInterface* TargetTeamAgent = Cast<IGenericTeamAgentInterface>(TargetPawn->GetController());
+
+	if(QueryTeamAgent && TargetTeamAgent)
+	{
+		return QueryTeamAgent->GetGenericTeamId() != TargetTeamAgent->GetGenericTeamId();
+	}
+	return false;
 }

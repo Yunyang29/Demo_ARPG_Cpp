@@ -1,6 +1,6 @@
 #include "Items/Weapons/Weapon_Base.h"
 
-#include "DebugHelper.h"
+#include "FunctionLibrary_Base.h"
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
 
@@ -24,9 +24,10 @@ void AWeapon_Base::OnCollisionBeginOverlap(UPrimitiveComponent* OverlappedCompon
 {
 	APawn* WeaponOwningPawn = GetInstigator<APawn>(); // ?
 	checkf(WeaponOwningPawn, TEXT("Forget to assign an instigator as the owning pawn of the weapon: %s"), *GetName());
+
 	if(APawn* HitPawn = Cast<APawn>(OtherActor))
 	{
-		if(WeaponOwningPawn != HitPawn)
+		if(UFunctionLibrary_Base::IsTargetPawnHostile(WeaponOwningPawn, HitPawn))
 		{
 			OnWeaponHitTarget.ExecuteIfBound(OtherActor);
 		}
@@ -37,11 +38,12 @@ void AWeapon_Base::OnCollisionEndOverlap(UPrimitiveComponent* OverlappedComponen
 {
 	APawn* WeaponOwningPawn = GetInstigator<APawn>(); // ?
 	checkf(WeaponOwningPawn, TEXT("Forget to assign an instigator as the owning pawn of the weapon: %s"), *GetName());
+
 	if(APawn* HitPawn = Cast<APawn>(OtherActor))
 	{
-		if(WeaponOwningPawn != HitPawn)
+		if(UFunctionLibrary_Base::IsTargetPawnHostile(WeaponOwningPawn, HitPawn))
 		{
-			OnWeaponPulledFromTarget.ExecuteIfBound(OtherActor);
+			OnWeaponHitTarget.ExecuteIfBound(OtherActor);
 		}
 	}
 }
