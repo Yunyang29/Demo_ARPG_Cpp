@@ -1,4 +1,6 @@
 #include <AnimInstance/AnimInstance_Character.h>
+
+#include "KismetAnimationLibrary.h"
 #include "Characters/Character_Base.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -21,4 +23,5 @@ void UAnimInstance_Character::NativeThreadSafeUpdateAnimation(float DeltaSeconds
 
 	GroundSpeed = OwningCharacter->GetVelocity().Size2D();
 	bHasAcceleration = OwningMovementComponent->GetCurrentAcceleration().SizeSquared2D() > 0.f;
+	LocomotionDirection = UKismetAnimationLibrary::CalculateDirection(OwningCharacter->GetVelocity(), OwningCharacter->GetActorRotation());
 }
