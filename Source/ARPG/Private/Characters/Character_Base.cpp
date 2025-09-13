@@ -2,6 +2,7 @@
 
 #include "AbilitySystem/AbilitySystemComponent_Base.h"
 #include "AbilitySystem/AttributeSet_Base.h"
+#include "MotionWarpingComponent.h"
 
 ACharacter_Base::ACharacter_Base()
 {
@@ -12,6 +13,7 @@ ACharacter_Base::ACharacter_Base()
 
 	ASC = CreateDefaultSubobject<UAbilitySystemComponent_Base>(TEXT("CharAbilitySystemComp"));
 	AS = CreateDefaultSubobject<UAttributeSet_Base>(TEXT("CharAttributeSet"));
+	MWC = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("MotionWarpingComponent"));
 }
 
 UAbilitySystemComponent* ACharacter_Base::GetAbilitySystemComponent() const
@@ -35,7 +37,7 @@ void ACharacter_Base::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 
-	if(ASC)
+	if (ASC)
 	{
 		// 初始化能力系统组件的角色信息
 		ASC->InitAbilityActorInfo(this, this);

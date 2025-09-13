@@ -7,7 +7,7 @@
 
 ACharacter_Player* UGameplayAbility_Player::GetPlayerCharacterFromActorInfo()
 {
-	if(!CachedPlayer.IsValid())
+	if (!CachedPlayer.IsValid())
 	{
 		CachedPlayer = Cast<ACharacter_Player>(CurrentActorInfo->AvatarActor);
 	}
@@ -16,7 +16,7 @@ ACharacter_Player* UGameplayAbility_Player::GetPlayerCharacterFromActorInfo()
 
 APlayerController_Base* UGameplayAbility_Player::GetPlayerControllerFromActorInfo()
 {
-	if(!CachedPlayerController.IsValid())
+	if (!CachedPlayerController.IsValid())
 	{
 		CachedPlayerController = Cast<APlayerController_Base>(CurrentActorInfo->PlayerController);
 	}
@@ -31,16 +31,19 @@ UCombatComponent_Player* UGameplayAbility_Player::GetPlayerCombatCompFromActorIn
 FGameplayEffectSpecHandle UGameplayAbility_Player::MakePlayerDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InUsedComboCount)
 {
 	check(EffectClass);
+
 	FGameplayEffectContextHandle ContextHandle = GetAbilitySystemCompFromActorInfo()->MakeEffectContext();
 	ContextHandle.SetAbility(this);
 	ContextHandle.AddSourceObject(GetAvatarActorFromActorInfo());
 	ContextHandle.AddInstigator(GetAvatarActorFromActorInfo(), GetAvatarActorFromActorInfo());
+
 	FGameplayEffectSpecHandle Handle = GetAbilitySystemCompFromActorInfo()->MakeOutgoingSpec(EffectClass, GetAbilityLevel(), ContextHandle);
-	// custom data couple to record value with name
 	Handle.Data->SetSetByCallerMagnitude(GameplayTags_Base::Shared_SetByCaller_BaseDamage, InWeaponBaseDamage);
-	if(InCurrentAttackTypeTag.IsValid())
+
+	if (InCurrentAttackTypeTag.IsValid())
 	{
 		Handle.Data->SetSetByCallerMagnitude(InCurrentAttackTypeTag, InUsedComboCount);
 	}
+
 	return Handle;
 }

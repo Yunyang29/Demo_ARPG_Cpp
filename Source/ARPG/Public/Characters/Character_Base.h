@@ -10,6 +10,7 @@
 class UAbilitySystemComponent_Base;
 class UAttributeSet_Base;
 class UDataAsset_StartUp;
+class UMotionWarpingComponent;
 
 UCLASS()
 class ARPG_API ACharacter_Base : public ACharacter, public IAbilitySystemInterface, public IPawnCombatInterface, public IPawnUIInterface
@@ -23,7 +24,7 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 	virtual UCombatComponent_Base* GetCombatComponent() const override;
-	
+
 	virtual UUIComponent_Base* GetUIComponent() const override;
 
 protected:
@@ -37,10 +38,13 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "A_My|AbilitySystem")
 	UAttributeSet_Base* AS; /// Character's Attribute Set
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "A_My|MotionWarping")
+	UMotionWarpingComponent* MWC;
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadonly, Category = "A_My|CharacterData")
 	TSoftObjectPtr<UDataAsset_StartUp> StartUpData; /// Character's Start Up Data
 
 public:
 	FORCEINLINE UAbilitySystemComponent_Base* GetCharacterAbilitySystemComponent() const { return ASC; } /// 获取角色的能力系统组件
-	FORCEINLINE UAttributeSet_Base*           GetCharacterAttributeSet() const { return AS; } /// 获取角色的属性集
+	FORCEINLINE UAttributeSet_Base* GetCharacterAttributeSet() const { return AS; } /// 获取角色的属性集
 };
