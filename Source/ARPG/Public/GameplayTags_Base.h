@@ -12,6 +12,7 @@ namespace GameplayTags_Base
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_UnequipAxe); // 装备
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_LightAttack_Axe); // 装备
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_HeavyAttack_Axe); // 装备
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Roll); // 装备
 
 	/**Player Tags**/
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Equip_Axe);
@@ -19,6 +20,7 @@ namespace GameplayTags_Base
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Attack_Light_Axe);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Attack_Heavy_Axe);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_HitPause);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Roll);
 
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Weapon_Axe);
 
@@ -27,6 +29,7 @@ namespace GameplayTags_Base
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_HitPause);
 
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_JumpToFinisher);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_Rolling);
 	
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_SetByCaller_AttackType_Light);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_SetByCaller_AttackType_Heavy);
