@@ -1,6 +1,7 @@
 #include "FunctionLibrary_Base.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "GenericTeamAgentInterface.h"
+#include "AbilitySystem/AbilitySystemComponent_Base.h"
 
 #include "Interfaces/PawnCombatInterface.h"
 
@@ -14,7 +15,7 @@ UAbilitySystemComponent_Base* UFunctionLibrary_Base::NativeGetWarriorASCFromActo
 void UFunctionLibrary_Base::AddGameplayTagToActorIfNone(AActor* InActor, FGameplayTag TagToAdd)
 {
 	UAbilitySystemComponent_Base* ASC = NativeGetWarriorASCFromActor(InActor);
-	if(!ASC->HasMatchingGameplayTag(TagToAdd))
+	if (!ASC->HasMatchingGameplayTag(TagToAdd))
 	{
 		ASC->AddLooseGameplayTag(TagToAdd);
 	}
@@ -23,7 +24,7 @@ void UFunctionLibrary_Base::AddGameplayTagToActorIfNone(AActor* InActor, FGamepl
 void UFunctionLibrary_Base::RemoveGameplayFromActorIfFound(AActor* InActor, FGameplayTag TagToRemove)
 {
 	UAbilitySystemComponent_Base* ASC = NativeGetWarriorASCFromActor(InActor);
-	if(ASC->HasMatchingGameplayTag(TagToRemove))
+	if (ASC->HasMatchingGameplayTag(TagToRemove))
 	{
 		ASC->RemoveLooseGameplayTag(TagToRemove);
 	}
@@ -44,7 +45,7 @@ UCombatComponent_Base* UFunctionLibrary_Base::NativeGetCombatComponentFromActor(
 {
 	check(InActor);
 
-	if(IPawnCombatInterface* PawnCombatInterface = Cast<IPawnCombatInterface>(InActor))
+	if (IPawnCombatInterface* PawnCombatInterface = Cast<IPawnCombatInterface>(InActor))
 	{
 		return PawnCombatInterface->GetCombatComponent();
 	}
@@ -65,9 +66,14 @@ bool UFunctionLibrary_Base::IsTargetPawnHostile(APawn* QueryPawn, APawn* TargetP
 	IGenericTeamAgentInterface* QueryTeamAgent = Cast<IGenericTeamAgentInterface>(QueryPawn->GetController());
 	IGenericTeamAgentInterface* TargetTeamAgent = Cast<IGenericTeamAgentInterface>(TargetPawn->GetController());
 
-	if(QueryTeamAgent && TargetTeamAgent)
+	if (QueryTeamAgent && TargetTeamAgent)
 	{
 		return QueryTeamAgent->GetGenericTeamId() != TargetTeamAgent->GetGenericTeamId();
 	}
 	return false;
+}
+
+float UFunctionLibrary_Base::GetScalableFloatValueAtLevel(const FScalableFloat& InScalableFloat, float InLevel)
+{
+	return InScalableFloat.GetValueAtLevel(InLevel);
 }

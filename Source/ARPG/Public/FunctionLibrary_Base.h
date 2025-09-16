@@ -1,11 +1,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AbilitySystem/AbilitySystemComponent_Base.h"
 #include "Components/Combat/CombatComponent_Base.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Types/EnumType_Base.h"
 #include "FunctionLibrary_Base.generated.h"
+
+class UAbilitySystemComponent_Base;
+class UPawnCombatInterface;
+struct FScalableFloat;
 
 /**
  *
@@ -36,4 +39,7 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "A_My|FunctionLibrary")
 	static bool IsTargetPawnHostile(APawn* QueryPawn, APawn* TargetPawn);
+
+	UFUNCTION(BlueprintPure, Category = "A_My|FunctionLibrary", meta=(CompactNodeTitle="Get Value At Level"))
+	static float GetScalableFloatValueAtLevel(const FScalableFloat& InScalableFloat, float InLevel = 1.f);
 };
