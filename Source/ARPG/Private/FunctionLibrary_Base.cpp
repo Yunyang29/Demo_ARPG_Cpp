@@ -1,9 +1,11 @@
 #include "FunctionLibrary_Base.h"
 #include "AbilitySystemBlueprintLibrary.h"
+#include "GameplayTags_Base.h"
 #include "GenericTeamAgentInterface.h"
 #include "AbilitySystem/AbilitySystemComponent_Base.h"
 
 #include "Interfaces/PawnCombatInterface.h"
+#include "Kismet/KismetMathLibrary.h"
 
 UAbilitySystemComponent_Base* UFunctionLibrary_Base::NativeGetWarriorASCFromActor(AActor* InActor)
 {
@@ -76,4 +78,40 @@ bool UFunctionLibrary_Base::IsTargetPawnHostile(APawn* QueryPawn, APawn* TargetP
 float UFunctionLibrary_Base::GetScalableFloatValueAtLevel(const FScalableFloat& InScalableFloat, float InLevel)
 {
 	return InScalableFloat.GetValueAtLevel(InLevel);
+}
+
+/// !!! ???
+FGameplayTag UFunctionLibrary_Base::ComputeHitReactDirectionTag(AActor* InAttacker, AActor* InVictim, float& OutAngleDifference)
+{
+	check(InAttacker&& InVictim);
+	const FVector VictimForward = InVictim->GetActorForwardVector();
+	const FVector VictimToAttackerNormalized = (InAttacker->GetActorLocation() - InVictim->GetActorLocation()).GetSafeNormal();
+
+	const float DotResult = FVector::DotProduct(VictimForward, VictimToAttackerNormalized);
+	OutAngleDifference = UKismetMathLibrary::DegAcos(DotResult);
+
+	const FVector CrossRest = FVector::CrossProduct(VictimForward, VictimToAttackerNormalized);
+	if (CrossRest.Z < 0.f)
+	{
+		OutAngleDifference *= -1.f;
+	}
+
+	if (OutAngleDifference >= -45.f && OutAngleDifference <= 45.f)
+	{
+		return GameplayTags_Base::Shared_Status_HitReact_Front;
+	}
+	if (OutAngleDifference < -45.f && OutAngleDifference >= -135.f)
+	{
+		return GameplayTags_Base::Shared_Status_HitReact_Left;
+	}
+	if (OutAngleDifference > 45.f && OutAngleDifference <= 135.f)
+	{
+		return GameplayTags_Base::Shared_Status_HitReact_Right;
+	}
+	if (OutAngleDifference < -135.f || OutAngleDifference > 135.f)
+	{
+		return GameplayTags_Base::Shared_Status_HitReact_Back;
+	}
+	
+	return GameplayTags_Base::Shared_Status_HitReact_Front;
 }

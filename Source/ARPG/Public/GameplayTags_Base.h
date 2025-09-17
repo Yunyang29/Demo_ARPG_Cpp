@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "NativeGameplayTags.h"
 
+// ? 为什么要这么做
 namespace GameplayTags_Base
 {
 	/**Input Tags**/
@@ -53,4 +54,8 @@ namespace GameplayTags_Base
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_SetByCaller_BaseDamage);
 	
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_Death);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Front);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Back);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Left);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Right);
 }

@@ -29,7 +29,7 @@ void UAttributeSet_Base::PostGameplayEffectExecute(const FGameplayEffectModCallb
 
 	UUIComponent_Base* UIComponent = CachedPawnUIInterface->GetUIComponent();
 
-	checkf(UIComponent, TEXT("Couldn't extrac a UIComponent from %s"), *Data.Target.GetAvatarActor()->GetActorNameOrLabel());
+	checkf(UIComponent, TEXT("Couldn't extract a UIComponent from %s"), *Data.Target.GetAvatarActor()->GetActorNameOrLabel());
 
 	if(Data.EvaluatedData.Attribute == GetCurrentHealthAttribute())
 	{
