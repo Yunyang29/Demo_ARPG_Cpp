@@ -1,18 +1,19 @@
 #include "AbilitySystem/AbilitySystemComponent_Base.h"
 
 #include "DebugHelper.h"
+#include "GameplayTags_Base.h"
 #include "AbilitySystem/Abilities/GameplayAbility_Player.h"
 
 void UAbilitySystemComponent_Base::OnAbilityInputPressed(const FGameplayTag& InInputTag)
 {
-	if(!InInputTag.IsValid())
+	if (!InInputTag.IsValid())
 	{
 		return;
 	}
 
-	for(const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
 	{
-		if(!AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag)) continue;
+		if (!AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag)) continue;
 
 		TryActivateAbility(AbilitySpec.Handle);
 	}
@@ -20,18 +21,30 @@ void UAbilitySystemComponent_Base::OnAbilityInputPressed(const FGameplayTag& InI
 
 void UAbilitySystemComponent_Base::OnAbilityInputReleased(const FGameplayTag& InInputTag)
 {
-}
-
-void UAbilitySystemComponent_Base::GrantWeaponAbilities(const TArray<FAbilitySet_Player>& InDefaultWeaponAbilities, int32 ApplyLevel, TArray<FGameplayAbilitySpecHandle>& OutGrantedAbilitySpecHandles)
-{
-	if(InDefaultWeaponAbilities.IsEmpty())
+	if (!InInputTag.IsValid() || !InInputTag.MatchesTag(GameplayTags_Base::InputTag_MustBeHeld))
 	{
 		return;
 	}
 
-	for(const FAbilitySet_Player& AbilitySet : InDefaultWeaponAbilities)
+	for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
 	{
-		if(!AbilitySet.IsValid()) continue;
+		if (AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag) && AbilitySpec.IsActive())
+		{
+			CancelAbilityHandle(AbilitySpec.Handle);
+		}
+	}
+}
+
+void UAbilitySystemComponent_Base::GrantWeaponAbilities(const TArray<FAbilitySet_Player>& InDefaultWeaponAbilities, int32 ApplyLevel, TArray<FGameplayAbilitySpecHandle>& OutGrantedAbilitySpecHandles)
+{
+	if (InDefaultWeaponAbilities.IsEmpty())
+	{
+		return;
+	}
+
+	for (const FAbilitySet_Player& AbilitySet : InDefaultWeaponAbilities)
+	{
+		if (!AbilitySet.IsValid()) continue;
 
 		FGameplayAbilitySpec AbilitySpec(AbilitySet.AbilityToGrant);
 		AbilitySpec.SourceObject = GetAvatarActor();
@@ -42,16 +55,17 @@ void UAbilitySystemComponent_Base::GrantWeaponAbilities(const TArray<FAbilitySet
 	}
 }
 
-void UAbilitySystemComponent_Base::RemoveGrantedWeaponAbilities(UPARAM(ref) TArray<FGameplayAbilitySpecHandle>& InSpecHandlesToRemove)
+void UAbilitySystemComponent_Base::RemoveGrantedWeaponAbilities(UPARAM(ref)
+	TArray<FGameplayAbilitySpecHandle>& InSpecHandlesToRemove)
 {
-	if(InSpecHandlesToRemove.IsEmpty())
+	if (InSpecHandlesToRemove.IsEmpty())
 	{
 		return;
 	}
 
-	for(const FGameplayAbilitySpecHandle& SpecHandle : InSpecHandlesToRemove)
+	for (const FGameplayAbilitySpecHandle& SpecHandle : InSpecHandlesToRemove)
 	{
-		if(!SpecHandle.IsValid()) continue;
+		if (!SpecHandle.IsValid()) continue;
 
 		ClearAbility(SpecHandle);
 	}
@@ -66,14 +80,14 @@ bool UAbilitySystemComponent_Base::TryActivateAbilityByTag(FGameplayTag AbilityT
 	TArray<FGameplayAbilitySpec*> FoundAbilitySpecs;
 	GetActivatableGameplayAbilitySpecsByAllMatchingTags(AbilityTagToActivate.GetSingleTagContainer(), FoundAbilitySpecs);
 
-	if(!FoundAbilitySpecs.IsEmpty())
+	if (!FoundAbilitySpecs.IsEmpty())
 	{
-		const int32           RandomAbilityIndex = FMath::RandRange(0, FoundAbilitySpecs.Num() - 1);
+		const int32 RandomAbilityIndex = FMath::RandRange(0, FoundAbilitySpecs.Num() - 1);
 		FGameplayAbilitySpec* SpecToActivate = FoundAbilitySpecs[RandomAbilityIndex];
 
 		check(SpecToActivate);
 
-		if(!SpecToActivate->IsActive())
+		if (!SpecToActivate->IsActive())
 		{
 			return TryActivateAbility(SpecToActivate->Handle);
 		}
