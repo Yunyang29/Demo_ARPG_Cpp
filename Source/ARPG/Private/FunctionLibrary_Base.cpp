@@ -1,9 +1,10 @@
 #include "FunctionLibrary_Base.h"
+
 #include "AbilitySystemBlueprintLibrary.h"
+#include "DebugHelper.h"
 #include "GameplayTags_Base.h"
 #include "GenericTeamAgentInterface.h"
 #include "AbilitySystem/AbilitySystemComponent_Base.h"
-
 #include "Interfaces/PawnCombatInterface.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -112,6 +113,15 @@ FGameplayTag UFunctionLibrary_Base::ComputeHitReactDirectionTag(AActor* InAttack
 	{
 		return GameplayTags_Base::Shared_Status_HitReact_Back;
 	}
-	
+
 	return GameplayTags_Base::Shared_Status_HitReact_Front;
+}
+
+bool UFunctionLibrary_Base::IsValidBlock(AActor* InAttacker, AActor* InDefender)
+{
+	check(InAttacker&& InDefender);
+	const float DotResult = FVector::DotProduct(InAttacker->GetActorForwardVector(), InDefender->GetActorForwardVector()); // 0->1
+	// const FString DebugString = FString::Printf(TEXT("Dot Result: %f %s"), DotResult, DotResult < 0.f ? TEXT("Valid Block") : TEXT("InValidBlock"));
+	// Debug::Print(DebugString, DotResult < -0.1f ? FColor::Green : FColor::Red);
+	return DotResult < -0.1f;
 }

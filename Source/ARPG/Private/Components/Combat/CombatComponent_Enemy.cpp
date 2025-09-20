@@ -1,5 +1,7 @@
 #include "Components/Combat/CombatComponent_Enemy.h"
+
 #include "AbilitySystemBlueprintLibrary.h"
+#include "FunctionLibrary_Base.h"
 #include "GameplayTags_Base.h"
 
 void UCombatComponent_Enemy::OnWeaponHitTargetActor(AActor* HitActor)
@@ -11,12 +13,12 @@ void UCombatComponent_Enemy::OnWeaponHitTargetActor(AActor* HitActor)
 
 	OverlappedActors.AddUnique(HitActor);
 	bool bIsValidBlock = false;
-	const bool bIsPlayerBlocking = false;
+	const bool bIsPlayerBlocking = UFunctionLibrary_Base::NativeDoesActorHaveTag(HitActor, GameplayTags_Base::Player_Status_Blocking);
 	const bool bIsMyAttackUnblockable = false;
 
 	if (bIsPlayerBlocking && !bIsMyAttackUnblockable)
 	{
-		// TODO check if the block is valid
+		bIsValidBlock = UFunctionLibrary_Base::IsValidBlock(GetOwningPawn(), HitActor);
 	}
 
 	FGameplayEventData EventData;
@@ -24,14 +26,10 @@ void UCombatComponent_Enemy::OnWeaponHitTargetActor(AActor* HitActor)
 	EventData.Target = HitActor;
 	if (bIsValidBlock)
 	{
-		// TODO handle successful block
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(HitActor, GameplayTags_Base::Player_Event_SuccessfulBlock, EventData);
 	}
 	else
 	{
-		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
-			GetOwningPawn(),
-			GameplayTags_Base::Shared_Event_MeleeHit,
-			EventData
-		);
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPawn(), GameplayTags_Base::Shared_Event_MeleeHit, EventData);
 	}
 }
