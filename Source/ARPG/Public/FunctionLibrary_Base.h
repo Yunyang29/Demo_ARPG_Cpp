@@ -25,7 +25,7 @@ public:
 	static void AddGameplayTagToActorIfNone(AActor* InActor, FGameplayTag TagToAdd);
 
 	UFUNCTION(BlueprintCallable, Category = "A_My|FunctionLibrary")
-	static void RemoveGameplayFromActorIfFound(AActor* InActor, FGameplayTag TagToRemove);
+	static void RemoveGameplayTagFromActorIfFound(AActor* InActor, FGameplayTag TagToRemove);
 
 	static bool NativeDoesActorHaveTag(AActor* InActor, FGameplayTag TagToCheck);
 

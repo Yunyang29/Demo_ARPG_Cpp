@@ -1,6 +1,7 @@
 #include "Components/Combat/CombatComponent_Enemy.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
+#include "DebugHelper.h"
 #include "FunctionLibrary_Base.h"
 #include "GameplayTags_Base.h"
 

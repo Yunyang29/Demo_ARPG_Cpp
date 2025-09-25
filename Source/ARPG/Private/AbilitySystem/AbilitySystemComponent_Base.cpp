@@ -15,7 +15,22 @@ void UAbilitySystemComponent_Base::OnAbilityInputPressed(const FGameplayTag& InI
 	{
 		if (!AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag)) continue;
 
-		TryActivateAbility(AbilitySpec.Handle);
+		// 
+		if (InInputTag.MatchesTag(GameplayTags_Base::InputTag_Toggleable))
+		{
+			if (AbilitySpec.IsActive())
+			{
+				CancelAbilityHandle(AbilitySpec.Handle);
+			}
+			else
+			{
+				TryActivateAbility(AbilitySpec.Handle);;
+			}
+		}
+		else
+		{
+			TryActivateAbility(AbilitySpec.Handle);;
+		}
 	}
 }
 

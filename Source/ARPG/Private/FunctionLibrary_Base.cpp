@@ -24,7 +24,7 @@ void UFunctionLibrary_Base::AddGameplayTagToActorIfNone(AActor* InActor, FGamepl
 	}
 }
 
-void UFunctionLibrary_Base::RemoveGameplayFromActorIfFound(AActor* InActor, FGameplayTag TagToRemove)
+void UFunctionLibrary_Base::RemoveGameplayTagFromActorIfFound(AActor* InActor, FGameplayTag TagToRemove)
 {
 	UAbilitySystemComponent_Base* ASC = NativeGetWarriorASCFromActor(InActor);
 	if (ASC->HasMatchingGameplayTag(TagToRemove))
