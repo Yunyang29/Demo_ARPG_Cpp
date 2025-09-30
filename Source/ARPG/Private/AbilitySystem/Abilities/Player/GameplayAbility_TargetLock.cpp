@@ -1,6 +1,6 @@
 #include "AbilitySystem/Abilities/Player/GameplayAbility_TargetLock.h"
 
-#include "DebugHelper.h"
+#include "EnhancedInputSubsystems.h"
 #include "FunctionLibrary_Base.h"
 #include "GameplayTags_Base.h"
 #include "Blueprint/UserWidget.h"
@@ -11,18 +11,23 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Controllers/PlayerController_Base.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Widgets/Widget_Base.h"
 
 void UGameplayAbility_TargetLock::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)
 {
 	TryLockOnTarget();
+	InitTargetLockMovement();
+	InitTargetLockMappingContext();
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 }
 
 void UGameplayAbility_TargetLock::EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled)
 {
 	CleanUp();
+	ResetTargetLocKMovement();
+	ResetTargetLockMappingContext();
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
 }
 
@@ -51,6 +56,36 @@ void UGameplayAbility_TargetLock::OnTargetLockTick(float DeltaTime)
 
 		GetPlayerControllerFromActorInfo()->SetControlRotation(FRotator(TargetRot.Pitch, TargetRot.Yaw, 0.f));
 		GetPlayerCharacterFromActorInfo()->SetActorRotation(FRotator(0.f, TargetRot.Yaw, 0.f));
+	}
+}
+
+void UGameplayAbility_TargetLock::GetAvailableActorsToLock()
+{
+	TArray<FHitResult> BoxTraceHits;
+	ACharacter_Player* Player = GetPlayerCharacterFromActorInfo();
+	UKismetSystemLibrary::BoxTraceMultiForObjects(
+		Player,
+		Player->GetActorLocation(),
+		Player->GetActorLocation() + Player->GetActorForwardVector() * BoxTraceDistance,
+		BoxTraceSize / 2.f,
+		GetPlayerCharacterFromActorInfo()->GetActorForwardVector().ToOrientationRotator(),
+		BoxTraceChannel,
+		false,
+		TArray<AActor*>(),
+		bShowPersistentDebugShape ? EDrawDebugTrace::Persistent : EDrawDebugTrace::None,
+		BoxTraceHits,
+		true
+	);
+
+	for (const FHitResult& HitResult : BoxTraceHits)
+	{
+		if (AActor* Actor = HitResult.GetActor())
+		{
+			if (Actor != Player)
+			{
+				AvailableActorsToLock.AddUnique(Actor);
+			}
+		}
 	}
 }
 
@@ -102,6 +137,19 @@ void UGameplayAbility_TargetLock::SetTargetLockWidgetPosition()
 	DrawnTargetLockWidget->SetPositionInViewport(ScreenPosition, false);
 }
 
+void UGameplayAbility_TargetLock::InitTargetLockMovement()
+{
+	CachedDefaultMaxWalkSpeed = GetPlayerCharacterFromActorInfo()->GetCharacterMovement()->MaxWalkSpeed;
+	GetPlayerCharacterFromActorInfo()->GetCharacterMovement()->MaxWalkSpeed = TargetLockMaxWalkSpeed;
+}
+
+void UGameplayAbility_TargetLock::InitTargetLockMappingContext()
+{
+	ULocalPlayer* Player = GetPlayerControllerFromActorInfo()->GetLocalPlayer();
+	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(Player);
+	check(Subsystem);
+	Subsystem->AddMappingContext(TargetLockMappingContext, 3);
+}
 
 void UGameplayAbility_TargetLock::TryLockOnTarget()
 {
@@ -126,7 +174,6 @@ void UGameplayAbility_TargetLock::TryLockOnTarget()
 	}
 }
 
-
 void UGameplayAbility_TargetLock::CancelTargetLockAbility()
 {
 	CancelAbility(GetCurrentAbilitySpecHandle(), GetCurrentActorInfo(), GetCurrentActivationInfo(), true);;
@@ -146,32 +193,18 @@ void UGameplayAbility_TargetLock::CleanUp()
 	TargetLockWidgetSize = FVector2D::ZeroVector;
 }
 
-void UGameplayAbility_TargetLock::GetAvailableActorsToLock()
+void UGameplayAbility_TargetLock::ResetTargetLocKMovement()
 {
-	TArray<FHitResult> BoxTraceHits;
-	ACharacter_Player* Player = GetPlayerCharacterFromActorInfo();
-	UKismetSystemLibrary::BoxTraceMultiForObjects(
-		Player,
-		Player->GetActorLocation(),
-		Player->GetActorLocation() + Player->GetActorForwardVector() * BoxTraceDistance,
-		BoxTraceSize / 2.f,
-		GetPlayerCharacterFromActorInfo()->GetActorForwardVector().ToOrientationRotator(),
-		BoxTraceChannel,
-		false,
-		TArray<AActor*>(),
-		bShowPersistentDebugShape ? EDrawDebugTrace::Persistent : EDrawDebugTrace::None,
-		BoxTraceHits,
-		true
-	);
+	if (CachedDefaultMaxWalkSpeed > 0.f)
+		GetPlayerCharacterFromActorInfo()->GetCharacterMovement()->MaxWalkSpeed = CachedDefaultMaxWalkSpeed;
+}
 
-	for (const FHitResult& HitResult : BoxTraceHits)
-	{
-		if (AActor* Actor = HitResult.GetActor())
-		{
-			if (Actor != Player)
-			{
-				AvailableActorsToLock.AddUnique(Actor);
-			}
-		}
-	}
+void UGameplayAbility_TargetLock::ResetTargetLockMappingContext()
+{
+	if (!GetPlayerControllerFromActorInfo())
+		return;
+	ULocalPlayer* Player = GetPlayerControllerFromActorInfo()->GetLocalPlayer();
+	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(Player);
+	check(Subsystem);
+	Subsystem->RemoveMappingContext(TargetLockMappingContext);
 }

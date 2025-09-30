@@ -22,8 +22,8 @@ class ARPG_API ACharacter_Player : public ACharacter_Base
 public:
 	ACharacter_Player();
 	virtual UCombatComponent_Base* GetCombatComponent() const override;
-	virtual UUIComponent_Base*     GetUIComponent() const override;
-	virtual UUIComponent_Player*   GetPlayerUIComponent() const override;
+	virtual UUIComponent_Base* GetUIComponent() const override;
+	virtual UUIComponent_Player* GetPlayerUIComponent() const override;
 
 protected:
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
@@ -54,6 +54,10 @@ private:
 
 	void Input_Move(const FInputActionValue& InputActionValue);
 	void Input_Look(const FInputActionValue& InputActionValue);
+
+	void Input_SwitchTargetTriggered(const FInputActionValue& InputActionValue);
+	void Input_SwitchTargetCompleted(const FInputActionValue& InputActionValue);
+
 	void Input_AbilityInputPressed(FGameplayTag InInputTag);
 	void Input_AbilityInputReleased(FGameplayTag InInputTag);
 

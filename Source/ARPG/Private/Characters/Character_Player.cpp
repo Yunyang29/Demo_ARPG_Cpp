@@ -29,21 +29,13 @@ void ACharacter_Player::PossessedBy(AController* NewController)
 	Super::PossessedBy(NewController);
 
 	// 根据startup数据资产赋予能力
-	if(!StartUpData.IsNull())
+	if (!StartUpData.IsNull())
 	{
-		if(UDataAsset_StartUp* LoadedData = StartUpData.LoadSynchronous())
+		if (UDataAsset_StartUp* LoadedData = StartUpData.LoadSynchronous())
 		{
 			LoadedData->GiveToAbilitySystemComponent(ASC);
 		}
 	}
-
-
-	//if (CharacterAbilitySystemComponent && CharacterAttributeSet)
-	//{
-	//	const FString ASCText = FString::Printf(TEXT("Owner Actor: %p, AvatarActor: %s"), *CharacterAbilitySystemComponent->GetOwnerActor()->GetActorLabel(), *CharacterAbilitySystemComponent->GetAvatarActor()->GetActorLabel());
-	//	Debug::Print(TEXT("Ability system component valid. ") + ASCText, FColor::Green);
-	//	Debug::Print(TEXT("Attribute system component valid. ") + ASCText, FColor::Green);
-	//}
 }
 
 UCombatComponent_Base* ACharacter_Player::GetCombatComponent() const
@@ -93,18 +85,25 @@ ACharacter_Player::ACharacter_Player()
 /// @param PlayerInputComponent
 void ACharacter_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-	// 输入配置数据检查
+	/* 输入配置数据检查 */
 	checkf(InputConfigData, TEXT("Forget to assign a valid data asset as input config"));
-	// 获取本地玩家和输入子系统
-	ULocalPlayer*                       LocalPlayer = GetController<APlayerController>()->GetLocalPlayer();
+
+	/* 获取本地玩家和输入子系统 */
+	ULocalPlayer* LocalPlayer = GetController<APlayerController>()->GetLocalPlayer();
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer);
 	check(Subsystem);
-	// 添加输入映射上下文
+
+	/* 添加输入映射上下文 */
 	Subsystem->AddMappingContext(InputConfigData->DefaultMappingContext, 0);
-	// 绑定具体输入动作
+
+	/* 绑定具体输入动作 */
 	UInputComponent_Base* InputComp = CastChecked<UInputComponent_Base>(PlayerInputComponent);
 	InputComp->BindNativeInputAction(InputConfigData, GameplayTags_Base::InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
 	InputComp->BindNativeInputAction(InputConfigData, GameplayTags_Base::InputTag_Look, ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
+
+	InputComp->BindNativeInputAction(InputConfigData, GameplayTags_Base::InputTag_SwitchTarget, ETriggerEvent::Triggered, this, &ThisClass::Input_SwitchTargetTriggered);
+	InputComp->BindNativeInputAction(InputConfigData, GameplayTags_Base::InputTag_SwitchTarget, ETriggerEvent::Completed, this, &ThisClass::Input_SwitchTargetCompleted);
+
 	InputComp->BindAbilityInputAction(InputConfigData, this, &ThisClass::Input_AbilityInputPressed, &ThisClass::Input_AbilityInputReleased);
 }
 
@@ -113,15 +112,15 @@ void ACharacter_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 void ACharacter_Player::Input_Move(const FInputActionValue& InputActionValue)
 {
 	const FVector2D MovementVector = InputActionValue.Get<FVector2D>();
-	const FRotator  MovementRotation(0.f, Controller->GetControlRotation().Yaw, 0.f);
+	const FRotator MovementRotation(0.f, Controller->GetControlRotation().Yaw, 0.f);
 
-	if(MovementVector.Y != 0.f)
+	if (MovementVector.Y != 0.f)
 	{
 		const FVector ForwardDirection = MovementRotation.RotateVector(FVector::ForwardVector);
 		AddMovementInput(ForwardDirection, MovementVector.Y);
 	}
 
-	if(MovementVector.X != 0.f)
+	if (MovementVector.X != 0.f)
 	{
 		const FVector RightDirection = MovementRotation.RotateVector(FVector::RightVector);
 		AddMovementInput(RightDirection, MovementVector.X);
@@ -133,15 +132,23 @@ void ACharacter_Player::Input_Move(const FInputActionValue& InputActionValue)
 void ACharacter_Player::Input_Look(const FInputActionValue& InputActionValue)
 {
 	const FVector2D LookAxisVector = InputActionValue.Get<FVector2D>();
-	if(LookAxisVector.X != 0.f)
+	if (LookAxisVector.X != 0.f)
 	{
 		AddControllerYawInput(LookAxisVector.X);
 	}
 
-	if(LookAxisVector.Y != 0.f)
+	if (LookAxisVector.Y != 0.f)
 	{
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+void ACharacter_Player::Input_SwitchTargetTriggered(const FInputActionValue& InputActionValue)
+{
+}
+
+void ACharacter_Player::Input_SwitchTargetCompleted(const FInputActionValue& InputActionValue)
+{
 }
 
 /// @brief 玩家输入能力按下事件

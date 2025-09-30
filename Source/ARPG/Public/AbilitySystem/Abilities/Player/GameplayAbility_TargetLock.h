@@ -4,6 +4,7 @@
 #include "AbilitySystem/Abilities/GameplayAbility_Player.h"
 #include "GameplayAbility_TargetLock.generated.h"
 
+class UInputMappingContext;
 class UWidget_Base;
 
 /**
@@ -27,9 +28,13 @@ private:
 	AActor* GetNearestTargetFromAvailableActors(const TArray<AActor*>& InAvailableActors);
 	void DrawTargetLockWidget();
 	void SetTargetLockWidgetPosition();
+	void InitTargetLockMovement();
+	void InitTargetLockMappingContext();
 
 	void CancelTargetLockAbility();
 	void CleanUp();
+	void ResetTargetLocKMovement();
+	void ResetTargetLockMappingContext();
 
 	UPROPERTY(EditDefaultsOnly, Category="Target Lock")
 	float BoxTraceDistance = 500.f;
@@ -49,6 +54,12 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category="Target Lock")
 	float TargetLockRotationInterpSpeed = 5.f;
 
+	UPROPERTY(EditDefaultsOnly, Category="Target Lock")
+	float TargetLockMaxWalkSpeed = 150.f;
+
+	UPROPERTY(EditDefaultsOnly, Category="Target Lock")
+	UInputMappingContext* TargetLockMappingContext;
+
 	UPROPERTY()
 	TArray<AActor*> AvailableActorsToLock;
 
@@ -60,4 +71,7 @@ private:
 
 	UPROPERTY()
 	FVector2D TargetLockWidgetSize = FVector2D::ZeroVector;
+
+	UPROPERTY()
+	float CachedDefaultMaxWalkSpeed = 0.f;
 };
