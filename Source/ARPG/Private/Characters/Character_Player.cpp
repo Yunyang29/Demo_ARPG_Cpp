@@ -1,5 +1,6 @@
 #include "Characters/Character_Player.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
 #include "DebugHelper.h"
 #include "EnhancedInputSubsystems.h"
 #include "GameplayTags_Base.h"
@@ -145,10 +146,18 @@ void ACharacter_Player::Input_Look(const FInputActionValue& InputActionValue)
 
 void ACharacter_Player::Input_SwitchTargetTriggered(const FInputActionValue& InputActionValue)
 {
+	SwitchDirection = InputActionValue.Get<FVector2D>();
 }
 
 void ACharacter_Player::Input_SwitchTargetCompleted(const FInputActionValue& InputActionValue)
 {
+	FGameplayEventData EventData;
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+		this,
+		SwitchDirection.X > 0.f ? GameplayTags_Base::Player_Event_SwitchTarget_Right : GameplayTags_Base::Player_Event_SwitchTarget_Left,
+		EventData
+	);
+	Debug::Print(TEXT("Switch Target") + SwitchDirection.ToString());
 }
 
 /// @brief 玩家输入能力按下事件

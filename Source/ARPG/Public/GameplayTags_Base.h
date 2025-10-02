@@ -18,10 +18,10 @@ namespace GameplayTags_Base
 
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_MustBeHeld); // 
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_MustBeHeld_Block); //
-	
+
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Toggleable); // 
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Toggleable_TargetLock); // 
-	
+
 	/**Player Tags**/
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Equip_Axe);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Unequip_Axe);
@@ -38,6 +38,8 @@ namespace GameplayTags_Base
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_Unquip_Axe);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_HitPause);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_SuccessfulBlock);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_SwitchTarget_Left);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_SwitchTarget_Right);
 
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_JumpToFinisher);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_Rolling);
