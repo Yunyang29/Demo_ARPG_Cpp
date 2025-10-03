@@ -19,8 +19,6 @@
 void ACharacter_Player::BeginPlay()
 {
 	Super::BeginPlay();
-
-	Debug::Print(TEXT("Init Player"));
 }
 
 /// @brief 角色被控制器占有时调用
@@ -157,7 +155,6 @@ void ACharacter_Player::Input_SwitchTargetCompleted(const FInputActionValue& Inp
 		SwitchDirection.X > 0.f ? GameplayTags_Base::Player_Event_SwitchTarget_Right : GameplayTags_Base::Player_Event_SwitchTarget_Left,
 		EventData
 	);
-	Debug::Print(TEXT("Switch Target") + SwitchDirection.ToString());
 }
 
 /// @brief 玩家输入能力按下事件

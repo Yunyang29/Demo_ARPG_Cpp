@@ -47,10 +47,13 @@ void UGameplayAbility_TargetLock::OnTargetLockTick(float DeltaTime)
 		!UFunctionLibrary_Base::NativeDoesActorHaveTag(GetPlayerCharacterFromActorInfo(), GameplayTags_Base::Player_Status_Rolling) &&
 		!UFunctionLibrary_Base::NativeDoesActorHaveTag(GetPlayerCharacterFromActorInfo(), GameplayTags_Base::Player_Status_Blocking);
 
-	// ?
+	// ? UE rotation calculation
 	if (bShouldOverrideRotation)
 	{
-		const FRotator LookAtRot = UKismetMathLibrary::FindLookAtRotation(GetPlayerCharacterFromActorInfo()->GetActorLocation(), CurLockedActor->GetActorLocation());
+		FRotator LookAtRot = UKismetMathLibrary::FindLookAtRotation(GetPlayerCharacterFromActorInfo()->GetActorLocation(), CurLockedActor->GetActorLocation());
+
+		LookAtRot -= FRotator(TargetLockCameraOffsetDistance, 0.f, 0.f);
+
 		const FRotator CurControlRot = GetPlayerControllerFromActorInfo()->GetControlRotation();
 		const FRotator TargetRot = FMath::RInterpTo(CurControlRot, LookAtRot, DeltaTime, TargetLockRotationInterpSpeed);
 
@@ -59,9 +62,35 @@ void UGameplayAbility_TargetLock::OnTargetLockTick(float DeltaTime)
 	}
 }
 
+void UGameplayAbility_TargetLock::SwitchTarget(const FGameplayTag& InSwitchDirectionTag)
+{
+	GetAvailableActorsToLock();
+
+	TArray<AActor*> ActorsOnLeft, ActorsOnRight;
+	AActor* NewActorToLock = nullptr;
+
+	GetAvailableActorsAroundTarget(ActorsOnLeft, ActorsOnRight);
+	if (InSwitchDirectionTag == GameplayTags_Base::Player_Event_SwitchTarget_Left)
+	{
+		NewActorToLock = GetNearestTargetFromAvailableActors(ActorsOnLeft);
+	}
+	else if (InSwitchDirectionTag == GameplayTags_Base::Player_Event_SwitchTarget_Right)
+	{
+		NewActorToLock = GetNearestTargetFromAvailableActors(ActorsOnRight);
+	}
+
+	if (NewActorToLock)
+	{
+		CurLockedActor = NewActorToLock;
+	}
+}
+
 void UGameplayAbility_TargetLock::GetAvailableActorsToLock()
 {
+	AvailableActorsToLock.Empty();
+
 	TArray<FHitResult> BoxTraceHits;
+
 	ACharacter_Player* Player = GetPlayerCharacterFromActorInfo();
 	UKismetSystemLibrary::BoxTraceMultiForObjects(
 		Player,
@@ -93,6 +122,34 @@ AActor* UGameplayAbility_TargetLock::GetNearestTargetFromAvailableActors(const T
 {
 	float ClosestDistance = 0.f;
 	return UGameplayStatics::FindNearestActor(GetPlayerCharacterFromActorInfo()->GetActorLocation(), InAvailableActors, ClosestDistance);
+}
+
+void UGameplayAbility_TargetLock::GetAvailableActorsAroundTarget(TArray<AActor*>& OutActorsLeft, TArray<AActor*>& OutActorsRight)
+{
+	if (!CurLockedActor || AvailableActorsToLock.IsEmpty())
+	{
+		CancelTargetLockAbility();
+		return;
+	}
+
+	const FVector PlayerLocation = GetPlayerCharacterFromActorInfo()->GetActorLocation();
+	const FVector PlayerToCurrentNormalized = (CurLockedActor->GetActorLocation() - PlayerLocation).GetSafeNormal();
+	for (AActor* AvailableActor : AvailableActorsToLock)
+	{
+		if (!AvailableActor || AvailableActor == CurLockedActor)
+			continue;
+
+		const FVector PlayerToAvailableNormalized = (AvailableActor->GetActorLocation() - PlayerLocation).GetSafeNormal();
+		const FVector CrossResult = FVector::CrossProduct(PlayerToCurrentNormalized, PlayerToAvailableNormalized);
+		if (CrossResult.Z > 0.f) // 
+		{
+			OutActorsRight.AddUnique(AvailableActor);
+		}
+		else
+		{
+			OutActorsLeft.AddUnique(AvailableActor);
+		}
+	}
 }
 
 void UGameplayAbility_TargetLock::DrawTargetLockWidget()
