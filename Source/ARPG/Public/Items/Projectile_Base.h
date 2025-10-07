@@ -1,0 +1,48 @@
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "Projectile_Base.generated.h"
+
+class UBoxComponent;
+class UNiagaraComponent;
+class UProjectileMovementComponent;
+
+UENUM(BlueprintType)
+enum class EProjectileMovementMode : uint8
+{
+	OnHit,
+	OnBeginOverlap,
+};
+
+UCLASS()
+class ARPG_API AProjectile_Base : public AActor
+{
+	GENERATED_BODY()
+
+public:
+	// Sets default values for this actor's properties
+	AProjectile_Base();
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="A_MY|Projectile")
+	UBoxComponent* ProjectileCollisionBox;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="A_MY|Projectile")
+	UNiagaraComponent* ProjectileNiagaraComp;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="A_MY|Projectile")
+	UProjectileMovementComponent* ProjectileMovementComp;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="A_MY|Projectile")
+	EProjectileMovementMode ProjectileDamagePolicy = EProjectileMovementMode::OnHit;
+
+	UFUNCTION()
+	virtual void OnProjectHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
+	UFUNCTION()
+	virtual void OnProjectileBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+};

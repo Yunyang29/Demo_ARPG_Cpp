@@ -20,7 +20,8 @@ public class ARPG : ModuleRules
 			"GameplayAbilities",
 			"AIModule",
 			"AnimGraphRuntime",
-			"MotionWarping"
+			"MotionWarping",
+			"Niagara"
 		});
 
 		// Uncomment if you are using Slate UI
