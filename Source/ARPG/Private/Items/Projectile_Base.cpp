@@ -1,8 +1,12 @@
 #include "Items/Projectile_Base.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
 #include "DebugHelper.h"
+#include "FunctionLibrary_Base.h"
+#include "GameplayTags_Base.h"
 #include "Components/BoxComponent.h"
 #include "NiagaraComponent.h"
+#include "Abilities/GameplayAbilityTypes.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
 AProjectile_Base::AProjectile_Base()
@@ -40,11 +44,34 @@ void AProjectile_Base::BeginPlay()
 
 void AProjectile_Base::OnProjectHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (OtherActor != nullptr)
+	BP_OnSpawnProjectileHitFX(Hit.ImpactPoint);
+
+	APawn* HitPawn = Cast<APawn>(OtherActor);
+	if (!HitPawn || !UFunctionLibrary_Base::IsTargetPawnHostile(GetInstigator(), HitPawn))
 	{
-		Debug::Print(OtherActor->GetActorNameOrLabel());
 		Destroy();
+		return;
 	}
+
+	bool bIsValidBlock = false;
+	const bool bIsPlayerBlocking = UFunctionLibrary_Base::NativeDoesActorHaveTag(HitPawn, GameplayTags_Base::Player_Status_Blocking);
+	if (bIsPlayerBlocking)
+	{
+		bIsValidBlock = UFunctionLibrary_Base::IsValidBlock(this, HitPawn);
+	}
+
+	FGameplayEventData EventData;
+	EventData.Instigator = this;
+	EventData.Target = HitPawn;
+	if (bIsValidBlock)
+	{
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(HitPawn, GameplayTags_Base::Player_Event_SuccessfulBlock, EventData);
+	}
+	else
+	{
+		// UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(this, GameplayTags_Base::Shared_Event_MeleeHit, EventData);
+	}
+	Destroy();
 }
 
 void AProjectile_Base::OnProjectileBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
