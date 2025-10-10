@@ -1,9 +1,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayEffectTypes.h"
+#include "Abilities/GameplayAbilityTypes.h"
 #include "GameFramework/Actor.h"
 #include "Projectile_Base.generated.h"
 
+struct FGameplayEffectSpecHandle;
 class UBoxComponent;
 class UNiagaraComponent;
 class UProjectileMovementComponent;
@@ -29,16 +32,19 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="A_MY|Projectile")
-	UBoxComponent* ProjectileCollisionBox;
+	UBoxComponent* CollisionBoxComp;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="A_MY|Projectile")
-	UNiagaraComponent* ProjectileNiagaraComp;
+	UNiagaraComponent* NiagaraComp;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="A_MY|Projectile")
-	UProjectileMovementComponent* ProjectileMovementComp;
+	UProjectileMovementComponent* MovementComp;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="A_MY|Projectile")
-	EProjectileMovementMode ProjectileDamagePolicy = EProjectileMovementMode::OnHit;
+	EProjectileMovementMode DamagePolicy = EProjectileMovementMode::OnHit;
+
+	UPROPERTY(BlueprintReadOnly, Category="A_MY|Projectile", meta=(ExposeOnSpawn="true"))
+	FGameplayEffectSpecHandle DamageEffectSpecHandle;
 
 	UFUNCTION()
 	virtual void OnProjectHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
@@ -48,4 +54,7 @@ protected:
 
 	UFUNCTION(BlueprintImplementableEvent, meta=(AdvancedDisplay="On Spawn Projectile Hit FX"))
 	void BP_OnSpawnProjectileHitFX(const FVector& HitLocation);
+
+private:
+	void HandleApplyProjectileDamage(APawn* InHitPawn, const FGameplayEventData& InPayLoad);
 };

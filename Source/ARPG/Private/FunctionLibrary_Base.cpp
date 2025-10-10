@@ -1,14 +1,13 @@
 #include "FunctionLibrary_Base.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
-#include "DebugHelper.h"
 #include "GameplayTags_Base.h"
 #include "GenericTeamAgentInterface.h"
 #include "AbilitySystem/AbilitySystemComponent_Base.h"
 #include "Interfaces/PawnCombatInterface.h"
 #include "Kismet/KismetMathLibrary.h"
 
-UAbilitySystemComponent_Base* UFunctionLibrary_Base::NativeGetWarriorASCFromActor(AActor* InActor)
+UAbilitySystemComponent_Base* UFunctionLibrary_Base::NativeGetASCFromActor(AActor* InActor)
 {
 	check(InActor);
 	return CastChecked<UAbilitySystemComponent_Base>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(InActor));
@@ -17,7 +16,7 @@ UAbilitySystemComponent_Base* UFunctionLibrary_Base::NativeGetWarriorASCFromActo
 
 void UFunctionLibrary_Base::AddGameplayTagToActorIfNone(AActor* InActor, FGameplayTag TagToAdd)
 {
-	UAbilitySystemComponent_Base* ASC = NativeGetWarriorASCFromActor(InActor);
+	UAbilitySystemComponent_Base* ASC = NativeGetASCFromActor(InActor);
 	if (!ASC->HasMatchingGameplayTag(TagToAdd))
 	{
 		ASC->AddLooseGameplayTag(TagToAdd);
@@ -26,7 +25,7 @@ void UFunctionLibrary_Base::AddGameplayTagToActorIfNone(AActor* InActor, FGamepl
 
 void UFunctionLibrary_Base::RemoveGameplayTagFromActorIfFound(AActor* InActor, FGameplayTag TagToRemove)
 {
-	UAbilitySystemComponent_Base* ASC = NativeGetWarriorASCFromActor(InActor);
+	UAbilitySystemComponent_Base* ASC = NativeGetASCFromActor(InActor);
 	if (ASC->HasMatchingGameplayTag(TagToRemove))
 	{
 		ASC->RemoveLooseGameplayTag(TagToRemove);
@@ -35,16 +34,17 @@ void UFunctionLibrary_Base::RemoveGameplayTagFromActorIfFound(AActor* InActor, F
 
 bool UFunctionLibrary_Base::NativeDoesActorHaveTag(AActor* InActor, FGameplayTag TagToCheck)
 {
-	UAbilitySystemComponent_Base* ASC = NativeGetWarriorASCFromActor(InActor);
+	UAbilitySystemComponent_Base* ASC = NativeGetASCFromActor(InActor);
 	return ASC->HasMatchingGameplayTag(TagToCheck);
 }
 
-void UFunctionLibrary_Base::BP_DoesActorHaveTag(AActor* InActor, FGameplayTag TagToCheck, EConfirmType& OutConfirmType)
+void UFunctionLibrary_Base::BP_DoesActorHaveTag(AActor* InActor, const FGameplayTag TagToCheck, EConfirmType& OutConfirmType)
 {
 	OutConfirmType = NativeDoesActorHaveTag(InActor, TagToCheck) ? EConfirmType::Yes : EConfirmType::No;
 }
 
-UCombatComponent_Base* UFunctionLibrary_Base::NativeGetCombatComponentFromActor(AActor* InActor)
+///@brief Get Combat Comp
+UCombatComponent_Base* UFunctionLibrary_Base::NativeGetCCFromActor(AActor* InActor)
 {
 	check(InActor);
 
@@ -58,12 +58,12 @@ UCombatComponent_Base* UFunctionLibrary_Base::NativeGetCombatComponentFromActor(
 
 UCombatComponent_Base* UFunctionLibrary_Base::BP_GetCombatComponentFromActor(AActor* InActor, EValidType& OutValidType)
 {
-	UCombatComponent_Base* CombatComponent = NativeGetCombatComponentFromActor(InActor);
+	UCombatComponent_Base* CombatComponent = NativeGetCCFromActor(InActor);
 	OutValidType = CombatComponent ? EValidType::Valid : EValidType::Invalid;
 	return CombatComponent;
 }
 
-bool UFunctionLibrary_Base::IsTargetPawnHostile(APawn* QueryPawn, APawn* TargetPawn)
+bool UFunctionLibrary_Base::IsTargetPawnHostile(const APawn* QueryPawn, const APawn* TargetPawn)
 {
 	check(QueryPawn&&TargetPawn);
 	IGenericTeamAgentInterface* QueryTeamAgent = Cast<IGenericTeamAgentInterface>(QueryPawn->GetController());
@@ -81,8 +81,8 @@ float UFunctionLibrary_Base::GetScalableFloatValueAtLevel(const FScalableFloat& 
 	return InScalableFloat.GetValueAtLevel(InLevel);
 }
 
-/// !!! ???
-FGameplayTag UFunctionLibrary_Base::ComputeHitReactDirectionTag(AActor* InAttacker, AActor* InVictim, float& OutAngleDifference)
+// ??
+FGameplayTag UFunctionLibrary_Base::ComputeHitReactDirectionTag(const AActor* InAttacker, const AActor* InVictim, float& OutAngleDifference)
 {
 	check(InAttacker&& InVictim);
 	const FVector VictimForward = InVictim->GetActorForwardVector();
@@ -117,11 +117,17 @@ FGameplayTag UFunctionLibrary_Base::ComputeHitReactDirectionTag(AActor* InAttack
 	return GameplayTags_Base::Shared_Status_HitReact_Front;
 }
 
-bool UFunctionLibrary_Base::IsValidBlock(AActor* InAttacker, AActor* InDefender)
+bool UFunctionLibrary_Base::IsValidBlock(const AActor* InAttacker, const AActor* InDefender)
 {
 	check(InAttacker&& InDefender);
 	const float DotResult = FVector::DotProduct(InAttacker->GetActorForwardVector(), InDefender->GetActorForwardVector()); // 0->1
-	// const FString DebugString = FString::Printf(TEXT("Dot Result: %f %s"), DotResult, DotResult < 0.f ? TEXT("Valid Block") : TEXT("InValidBlock"));
-	// Debug::Print(DebugString, DotResult < -0.1f ? FColor::Green : FColor::Red);
 	return DotResult < -0.1f;
+}
+
+bool UFunctionLibrary_Base::ApplyGameplayEffectSpecHandleToTargetActor(AActor* InInstigator, AActor* InTargetActor, const FGameplayEffectSpecHandle& InSpecHandle)
+{
+	UAbilitySystemComponent_Base* SourceASC = NativeGetASCFromActor(InInstigator);
+	UAbilitySystemComponent_Base* TargetASC = NativeGetASCFromActor(InTargetActor);
+	FActiveGameplayEffectHandle ActiveGameplayEffectHandle = SourceASC->ApplyGameplayEffectSpecToTarget(*InSpecHandle.Data, TargetASC);
+	return ActiveGameplayEffectHandle.WasSuccessfullyApplied();
 }

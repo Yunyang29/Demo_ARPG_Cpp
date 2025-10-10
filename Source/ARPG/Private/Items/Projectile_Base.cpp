@@ -1,7 +1,6 @@
 #include "Items/Projectile_Base.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
-#include "DebugHelper.h"
 #include "FunctionLibrary_Base.h"
 #include "GameplayTags_Base.h"
 #include "Components/BoxComponent.h"
@@ -12,23 +11,23 @@
 AProjectile_Base::AProjectile_Base()
 {
 	PrimaryActorTick.bCanEverTick = false;
-	ProjectileCollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionComp"));
-	SetRootComponent(ProjectileCollisionBox);
-	ProjectileCollisionBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-	ProjectileCollisionBox->SetCollisionResponseToChannel(ECC_Pawn, ECR_Block); // 
-	ProjectileCollisionBox->SetCollisionResponseToChannel(ECC_WorldDynamic, ECR_Block);
-	ProjectileCollisionBox->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
-	ProjectileCollisionBox->OnComponentHit.AddUniqueDynamic(this, &ThisClass::OnProjectHit); // ?
-	ProjectileCollisionBox->OnComponentBeginOverlap.AddUniqueDynamic(this, &ThisClass::OnProjectileBeginOverlap);
+	CollisionBoxComp = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionComp"));
+	SetRootComponent(CollisionBoxComp);
+	CollisionBoxComp->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	CollisionBoxComp->SetCollisionResponseToChannel(ECC_Pawn, ECR_Block); // 
+	CollisionBoxComp->SetCollisionResponseToChannel(ECC_WorldDynamic, ECR_Block);
+	CollisionBoxComp->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
+	CollisionBoxComp->OnComponentHit.AddUniqueDynamic(this, &ThisClass::OnProjectHit); // ?
+	CollisionBoxComp->OnComponentBeginOverlap.AddUniqueDynamic(this, &ThisClass::OnProjectileBeginOverlap);
 
-	ProjectileNiagaraComp = CreateDefaultSubobject<UNiagaraComponent>(TEXT("NiagaraComp"));
-	ProjectileNiagaraComp->SetupAttachment(GetRootComponent());
+	NiagaraComp = CreateDefaultSubobject<UNiagaraComponent>(TEXT("NiagaraComp"));
+	NiagaraComp->SetupAttachment(GetRootComponent());
 
-	ProjectileMovementComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("MovementComp"));
-	ProjectileMovementComp->InitialSpeed = 700.f;
-	ProjectileMovementComp->MaxSpeed = 900.f;
-	ProjectileMovementComp->Velocity = FVector(1.f, 0, 0);
-	ProjectileMovementComp->ProjectileGravityScale = 0.f;
+	MovementComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("MovementComp"));
+	MovementComp->InitialSpeed = 700.f;
+	MovementComp->MaxSpeed = 900.f;
+	MovementComp->Velocity = FVector(1.f, 0, 0);
+	MovementComp->ProjectileGravityScale = 0.f;
 
 	InitialLifeSpan = 4.f;
 }
@@ -36,9 +35,9 @@ AProjectile_Base::AProjectile_Base()
 void AProjectile_Base::BeginPlay()
 {
 	Super::BeginPlay();
-	if (ProjectileDamagePolicy == EProjectileMovementMode::OnBeginOverlap)
+	if (DamagePolicy == EProjectileMovementMode::OnBeginOverlap)
 	{
-		ProjectileCollisionBox->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
+		CollisionBoxComp->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 	}
 }
 
@@ -54,8 +53,7 @@ void AProjectile_Base::OnProjectHit(UPrimitiveComponent* HitComponent, AActor* O
 	}
 
 	bool bIsValidBlock = false;
-	const bool bIsPlayerBlocking = UFunctionLibrary_Base::NativeDoesActorHaveTag(HitPawn, GameplayTags_Base::Player_Status_Blocking);
-	if (bIsPlayerBlocking)
+	if (const bool bIsPlayerBlocking = UFunctionLibrary_Base::NativeDoesActorHaveTag(HitPawn, GameplayTags_Base::Player_Status_Blocking))
 	{
 		bIsValidBlock = UFunctionLibrary_Base::IsValidBlock(this, HitPawn);
 	}
@@ -69,11 +67,22 @@ void AProjectile_Base::OnProjectHit(UPrimitiveComponent* HitComponent, AActor* O
 	}
 	else
 	{
-		// UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(this, GameplayTags_Base::Shared_Event_MeleeHit, EventData);
+		HandleApplyProjectileDamage(HitPawn, EventData);
 	}
 	Destroy();
 }
 
 void AProjectile_Base::OnProjectileBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+}
+
+void AProjectile_Base::HandleApplyProjectileDamage(APawn* InHitPawn, const FGameplayEventData& InPayLoad)
+{
+	checkf(DamageEffectSpecHandle.IsValid(), TEXT("Forget to assign a valid spec handle to the projectile: %s"), *GetActorNameOrLabel());
+
+	// ? why const
+	if (const bool bWasApplied = UFunctionLibrary_Base::ApplyGameplayEffectSpecHandleToTargetActor(GetInstigator(), InHitPawn, DamageEffectSpecHandle))
+	{
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(InHitPawn, GameplayTags_Base::Shared_Event_HitReact, InPayLoad);
+	}
 }
