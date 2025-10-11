@@ -1,7 +1,6 @@
 #include "Components/Combat/CombatComponent_Enemy.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
-#include "DebugHelper.h"
 #include "FunctionLibrary_Base.h"
 #include "GameplayTags_Base.h"
 
@@ -14,8 +13,8 @@ void UCombatComponent_Enemy::OnWeaponHitTargetActor(AActor* HitActor)
 
 	OverlappedActors.AddUnique(HitActor);
 	bool bIsValidBlock = false;
-	const bool bIsPlayerBlocking = UFunctionLibrary_Base::NativeDoesActorHaveTag(HitActor, GameplayTags_Base::Player_Status_Blocking);
-	const bool bIsMyAttackUnblockable = false;
+	bool bIsPlayerBlocking = UFunctionLibrary_Base::NativeDoesActorHaveTag(HitActor, GameplayTags_Base::Player_Status_Blocking);
+	bool bIsMyAttackUnblockable = UFunctionLibrary_Base::NativeDoesActorHaveTag(GetOwningPawn(), GameplayTags_Base::Enemy_Status_Unblockable);
 
 	if (bIsPlayerBlocking && !bIsMyAttackUnblockable)
 	{
