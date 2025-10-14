@@ -8,9 +8,9 @@ void UCombatComponent_Base::RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegi
 	check(InWeaponToRegister);
 
 	CarriedWeaponMap.Emplace(InWeaponTagToRegister, InWeaponToRegister);
-	InWeaponToRegister->OnWeaponHitTarget.BindUObject(this, &ThisClass::OnWeaponHitTargetActor);
-	InWeaponToRegister->OnWeaponPulledFromTarget.BindUObject(this, &ThisClass::OnWeaponPullFromTargetActor); // ?
-	if(bRegisterAsEquippedWeapon)
+	InWeaponToRegister->OnWeaponHitTarget.BindUObject(this, &ThisClass::OnHitTargetActor);
+	InWeaponToRegister->OnWeaponPulledFromTarget.BindUObject(this, &ThisClass::OnPullFromTargetActor); // ?
+	if (bRegisterAsEquippedWeapon)
 	{
 		CurEquippedWeaponTag = InWeaponTagToRegister;
 	}
@@ -19,9 +19,9 @@ void UCombatComponent_Base::RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegi
 
 AWeapon_Base* UCombatComponent_Base::GetCarriedWeaponByTag(FGameplayTag InWeaponTagToGet) const
 {
-	if(CarriedWeaponMap.Contains(InWeaponTagToGet))
+	if (CarriedWeaponMap.Contains(InWeaponTagToGet))
 	{
-		if(AWeapon_Base* const* Result = CarriedWeaponMap.Find(InWeaponTagToGet))
+		if (AWeapon_Base* const* Result = CarriedWeaponMap.Find(InWeaponTagToGet))
 		{
 			return *Result;
 		}
@@ -36,27 +36,40 @@ AWeapon_Base* UCombatComponent_Base::GetCurEquippedWeapon() const
 
 void UCombatComponent_Base::ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType)
 {
-	if(ToggleDamageType == EToggleDamageType::CurrentEquippedWeapon)
+	if (ToggleDamageType == EToggleDamageType::CurrentEquippedWeapon)
 	{
-		AWeapon_Base* WeaponToToggle = GetCurEquippedWeapon();
-		check(WeaponToToggle);
-		if(bShouldEnable)
-		{
-			WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-		}
-		else
-		{
-			WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-			OverlappedActors.Empty();
-		}
+		ToggleCurrentEquippedWeaponCollision(bShouldEnable);
+	}
+	else
+	{
+		ToggleBodyCollision(bShouldEnable, ToggleDamageType);
 	}
 }
 
-void UCombatComponent_Base::OnWeaponHitTargetActor(AActor* HitActor)
+void UCombatComponent_Base::OnHitTargetActor(AActor* HitActor)
 {
 }
 
-void UCombatComponent_Base::OnWeaponPullFromTargetActor(AActor* InteractedActor)
+void UCombatComponent_Base::OnPullFromTargetActor(AActor* InteractedActor)
+{
+}
+
+void UCombatComponent_Base::ToggleCurrentEquippedWeaponCollision(bool bShouldEnable)
+{
+	AWeapon_Base* WeaponToToggle = GetCurEquippedWeapon();
+	check(WeaponToToggle);
+	if (bShouldEnable)
+	{
+		WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	}
+	else
+	{
+		WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		OverlappedActors.Empty();
+	}
+}
+
+void UCombatComponent_Base::ToggleBodyCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType)
 {
 }
 

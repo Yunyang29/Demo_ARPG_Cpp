@@ -22,6 +22,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category="A_My|Player|Combat")
 	float GetPlayerCurEquippedWeaponDamageAtLevel(float InLevel) const;
 
-	virtual void OnWeaponHitTargetActor(AActor* HitActor) override;
-	virtual void OnWeaponPullFromTargetActor(AActor* InteractedActor) override;
+	virtual void OnHitTargetActor(AActor* HitActor) override;
+	virtual void OnPullFromTargetActor(AActor* InteractedActor) override;
 };

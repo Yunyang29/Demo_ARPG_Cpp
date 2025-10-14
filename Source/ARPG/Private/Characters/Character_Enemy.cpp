@@ -1,5 +1,8 @@
 #include "Characters/Character_Enemy.h"
 
+#include "DebugHelper.h"
+#include "FunctionLibrary_Base.h"
+#include "Components/BoxComponent.h"
 #include "Components/WidgetComponent.h"
 #include "Components/Combat/CombatComponent_Enemy.h"
 #include "Components/UI/UIComponent_Enemy.h"
@@ -24,8 +27,19 @@ ACharacter_Enemy::ACharacter_Enemy()
 
 	CombatComponent = CreateDefaultSubobject<UCombatComponent_Enemy>("CombatComp");
 	UIComponent = CreateDefaultSubobject<UUIComponent_Enemy>(TEXT("UIComp"));
+
 	HealthWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("WidgetComp"));
 	HealthWidgetComponent->SetupAttachment(GetMesh());
+
+	LeftHandBox = CreateDefaultSubobject<UBoxComponent>(TEXT("LeftHandBoxComp"));
+	LeftHandBox->SetupAttachment(GetMesh());
+	LeftHandBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	LeftHandBox->OnComponentBeginOverlap.AddUniqueDynamic(this, &ThisClass::OnBodyCollisionBoxBeginOverlap);
+
+	RightHandBox = CreateDefaultSubobject<UBoxComponent>(TEXT("RightHandBoxComp"));
+	RightHandBox->SetupAttachment(GetMesh());
+	RightHandBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	RightHandBox->OnComponentBeginOverlap.AddUniqueDynamic(this, &ThisClass::OnBodyCollisionBoxBeginOverlap);
 }
 
 UCombatComponent_Base* ACharacter_Enemy::GetCombatComponent() const
@@ -46,7 +60,7 @@ UUIComponent_Enemy* ACharacter_Enemy::GetEnemyUIComponent() const
 void ACharacter_Enemy::BeginPlay()
 {
 	Super::BeginPlay();
-	if(UWidget_Base* HealthWidget = Cast<UWidget_Base>(HealthWidgetComponent->GetUserWidgetObject()))
+	if (UWidget_Base* HealthWidget = Cast<UWidget_Base>(HealthWidgetComponent->GetUserWidgetObject()))
 	{
 		HealthWidget->InitEnemyCreatedWidget(this);
 	}
@@ -58,9 +72,35 @@ void ACharacter_Enemy::PossessedBy(AController* NewController)
 	InitEnemyStartUpData();
 }
 
+void ACharacter_Enemy::PostEditChangeProperty(struct FPropertyChangedEvent& PropertyChangedEvent)
+{
+	Super::PostEditChangeProperty(PropertyChangedEvent);
+
+	if (PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, LeftHandBoxSocket))
+	{
+		LeftHandBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, LeftHandBoxSocket);
+	}
+
+	if (PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, RightHandBoxSocket))
+	{
+		RightHandBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, RightHandBoxSocket);
+	}
+}
+
+void ACharacter_Enemy::OnBodyCollisionBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (APawn* HitPawn = Cast<APawn>(OtherActor))
+	{
+		if (UFunctionLibrary_Base::IsTargetPawnHostile(this, HitPawn))
+		{
+			CombatComponent->OnHitTargetActor(HitPawn);
+		}
+	}
+}
+
 void ACharacter_Enemy::InitEnemyStartUpData()
 {
-	if(StartUpData.IsNull())
+	if (StartUpData.IsNull())
 	{
 		return;
 	}
@@ -71,7 +111,7 @@ void ACharacter_Enemy::InitEnemyStartUpData()
 		FStreamableDelegate::CreateLambda(
 			[this]()
 			{
-				if(UDataAsset_StartUp* LoadedData = StartUpData.Get())
+				if (UDataAsset_StartUp* LoadedData = StartUpData.Get())
 				{
 					LoadedData->GiveToAbilitySystemComponent(ASC);
 				}

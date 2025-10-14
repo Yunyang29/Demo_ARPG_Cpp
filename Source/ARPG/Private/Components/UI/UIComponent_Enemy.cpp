@@ -21,4 +21,6 @@ void UUIComponent_Enemy::RemoveWidgetsIfAny()
 			Widget->RemoveFromParent();
 		}
 	}
+
+	Widgets.Empty();
 }

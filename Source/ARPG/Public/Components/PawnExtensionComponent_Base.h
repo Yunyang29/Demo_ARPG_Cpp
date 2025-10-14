@@ -4,18 +4,14 @@
 #include "Components/ActorComponent.h"
 #include "PawnExtensionComponent_Base.generated.h"
 
-/**
- * Pawn扩展组件基类
- */
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
+///@brief Pawn扩展组件基类
 class ARPG_API UPawnExtensionComponent_Base : public UActorComponent
 {
 	GENERATED_BODY()
 
 protected:
-	/**
-	 * 获取所属Pawn的模板方法
-	 */
+	///@brief 获取所属Pawn的模板方法
 	template <class T>
 	T* GetOwningPawn() const
 	{
@@ -23,17 +19,13 @@ protected:
 		return CastChecked<T>(GetOwner());
 	}
 
-	/**
-	 * 获取所属Pawn的非模板重载方法
-	 */
+	///@brief 获取所属Pawn的非模板重载方法
 	APawn* GetOwningPawn() const
 	{
 		return GetOwningPawn<APawn>();
 	}
 
-	/**
-	 * 获取所属Controller的模板方法
-	 */
+	///@brief 获取所属Controller的模板方法
 	template <class T>
 	T* GetOwningController() const
 	{

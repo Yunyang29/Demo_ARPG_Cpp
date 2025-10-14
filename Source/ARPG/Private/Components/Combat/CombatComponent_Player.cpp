@@ -18,7 +18,7 @@ float UCombatComponent_Player::GetPlayerCurEquippedWeaponDamageAtLevel(float InL
 	return GetPlayerCurEquippedWeapon()->WeaponData.WeaponBaseDamage.GetValueAtLevel(InLevel);
 }
 
-void UCombatComponent_Player::OnWeaponHitTargetActor(AActor* HitActor)
+void UCombatComponent_Player::OnHitTargetActor(AActor* HitActor)
 {
 	if(OverlappedActors.Contains(HitActor))
 	{
@@ -35,7 +35,7 @@ void UCombatComponent_Player::OnWeaponHitTargetActor(AActor* HitActor)
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPawn(), GameplayTags_Base::Player_Event_HitPause, FGameplayEventData()); // ?
 }
 
-void UCombatComponent_Player::OnWeaponPullFromTargetActor(AActor* InteractedActor)
+void UCombatComponent_Player::OnPullFromTargetActor(AActor* InteractedActor)
 {
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPawn(), GameplayTags_Base::Player_Event_HitPause, FGameplayEventData()); // ?
 }
