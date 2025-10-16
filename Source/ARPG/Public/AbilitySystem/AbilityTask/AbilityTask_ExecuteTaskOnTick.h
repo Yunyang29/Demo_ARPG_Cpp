@@ -17,7 +17,7 @@ class ARPG_API UAbilityTask_ExecuteTaskOnTick : public UAbilityTask
 public:
 	UAbilityTask_ExecuteTaskOnTick();
 
-	UFUNCTION(BlueprintCallable, Category="My|AbilityTask", meta =(HidePin="OwningAbility", DefaultToSelf="OwningAbility", BlueprintInternalUseOnly="true"))
+	UFUNCTION(BlueprintCallable, Category="A_My|AbilityTask", meta =(HidePin="OwningAbility", DefaultToSelf="OwningAbility", BlueprintInternalUseOnly="true"))
 	static UAbilityTask_ExecuteTaskOnTick* ExecuteTaskOnTick(UGameplayAbility* OwningAbility);
 
 	virtual void TickTask(float DeltaTime) override;

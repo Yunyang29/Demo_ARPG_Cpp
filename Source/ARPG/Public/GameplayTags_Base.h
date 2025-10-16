@@ -3,7 +3,6 @@
 #include "CoreMinimal.h"
 #include "NativeGameplayTags.h"
 
-// ? 为什么要这么做
 namespace GameplayTags_Base
 {
 	/**Input Tags**/
@@ -16,11 +15,11 @@ namespace GameplayTags_Base
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Roll);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_SwitchTarget);
 
-	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_MustBeHeld); 
-	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_MustBeHeld_Block); 
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_MustBeHeld);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_MustBeHeld_Block);
 
-	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Toggleable); 
-	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Toggleable_TargetLock); 
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Toggleable);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Toggleable_TargetLock);
 
 	/**Player Tags**/
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Equip_Axe);
@@ -52,8 +51,11 @@ namespace GameplayTags_Base
 	/**Enemy Tags**/
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Ability_Melee);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Ability_Ranged);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Ability_SummonEnemies);
 
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Weapon);
+
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Event_SummonEnemies);
 
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Status_Strafing);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Status_UnderAttack);
