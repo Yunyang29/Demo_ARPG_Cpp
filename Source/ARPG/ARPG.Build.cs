@@ -21,7 +21,8 @@ public class ARPG : ModuleRules
 			"AIModule",
 			"AnimGraphRuntime",
 			"MotionWarping",
-			"Niagara"
+			"Niagara",
+			"NavigationSystem"
 		});
 
 		// Uncomment if you are using Slate UI
