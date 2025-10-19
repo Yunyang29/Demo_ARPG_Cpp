@@ -7,29 +7,21 @@
 void UAbilitySystemComponent_Base::OnAbilityInputPressed(const FGameplayTag& InInputTag)
 {
 	if (!InInputTag.IsValid())
-	{
 		return;
-	}
 
 	for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
 	{
-		if (!AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag)) continue;
+		if (!AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag))
+			continue;
 
-		// 
-		if (InInputTag.MatchesTag(GameplayTags_Base::InputTag_Toggleable))
+
+		if (InInputTag.MatchesTag(GameplayTags_Base::InputTag_Toggleable) && AbilitySpec.IsActive())
 		{
-			if (AbilitySpec.IsActive())
-			{
-				CancelAbilityHandle(AbilitySpec.Handle);
-			}
-			else
-			{
-				TryActivateAbility(AbilitySpec.Handle);;
-			}
+			CancelAbilityHandle(AbilitySpec.Handle);
 		}
 		else
 		{
-			TryActivateAbility(AbilitySpec.Handle);;
+			TryActivateAbility(AbilitySpec.Handle);
 		}
 	}
 }
@@ -37,9 +29,7 @@ void UAbilitySystemComponent_Base::OnAbilityInputPressed(const FGameplayTag& InI
 void UAbilitySystemComponent_Base::OnAbilityInputReleased(const FGameplayTag& InInputTag)
 {
 	if (!InInputTag.IsValid() || !InInputTag.MatchesTag(GameplayTags_Base::InputTag_MustBeHeld))
-	{
 		return;
-	}
 
 	for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
 	{
