@@ -1,6 +1,5 @@
 #include "AbilitySystem/AbilitySystemComponent_Base.h"
 
-#include "DebugHelper.h"
 #include "GameplayTags_Base.h"
 #include "AbilitySystem/Abilities/GameplayAbility_Player.h"
 
@@ -13,7 +12,6 @@ void UAbilitySystemComponent_Base::OnAbilityInputPressed(const FGameplayTag& InI
 	{
 		if (!AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag))
 			continue;
-
 
 		if (InInputTag.MatchesTag(GameplayTags_Base::InputTag_Toggleable) && AbilitySpec.IsActive())
 		{

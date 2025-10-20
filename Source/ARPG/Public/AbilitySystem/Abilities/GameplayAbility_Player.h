@@ -32,6 +32,6 @@ public:
 
 private:
 	// smart pointer holds reference
-	TWeakObjectPtr<ACharacter_Player>      CachedPlayer;
+	TWeakObjectPtr<ACharacter_Player> CachedPlayer;
 	TWeakObjectPtr<APlayerController_Base> CachedPlayerController;
 };
