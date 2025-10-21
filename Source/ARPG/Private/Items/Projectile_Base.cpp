@@ -74,6 +74,21 @@ void AProjectile_Base::OnProjectHit(UPrimitiveComponent* HitComponent, AActor* O
 
 void AProjectile_Base::OnProjectileBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	if (OverlappedActors.Contains(OtherActor))
+		return;
+
+	OverlappedActors.AddUnique(OtherActor);
+
+	if (APawn* HitPawn = Cast<APawn>(OtherActor))
+	{
+		if (UFunctionLibrary_Base::IsTargetPawnHostile(GetInstigator(), HitPawn))
+		{
+			FGameplayEventData EventData;
+			EventData.Instigator = GetInstigator();
+			EventData.Target = HitPawn;
+			HandleApplyProjectileDamage(HitPawn, EventData);
+		}
+	}
 }
 
 void AProjectile_Base::HandleApplyProjectileDamage(APawn* InHitPawn, const FGameplayEventData& InPayLoad)
