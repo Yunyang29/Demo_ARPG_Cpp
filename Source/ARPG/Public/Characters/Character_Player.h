@@ -49,7 +49,7 @@ private:
 
 #pragma region Inputs
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadonly, Category = "CharacterData", meta = (ALLowPrivateAccess = "true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadonly, Category = "A_My|CharacterData", meta = (ALLowPrivateAccess = "true"))
 	UDataAsset_InputConfig* InputConfigData;
 
 	void Input_Move(const FInputActionValue& InputActionValue);

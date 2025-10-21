@@ -30,7 +30,7 @@ protected:
 	virtual void EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled) override;
 	//~ End UGameplayAbility Interface.
 
-	UPROPERTY(EditDefaultsOnly, Category = "MainAbility")
+	UPROPERTY(EditDefaultsOnly, Category = "A_My|Ability")
 	EAbilityActivationPolicy_Base AbilityActivationPolicy = EAbilityActivationPolicy_Base::OnTriggered;
 
 	UFUNCTION(BlueprintPure, Category = "A_My|Ability")
