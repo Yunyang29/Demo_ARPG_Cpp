@@ -20,11 +20,12 @@ public:
 	void OnAbilityInputReleased(const FGameplayTag& InInputTag);
 
 	UFUNCTION(BlueprintCallable, Category = "A_My|Ability", meta = (ApplyLevel="1"))
-	void GrantWeaponAbilities(const TArray<FAbilitySet_Player>& InDefaultWeaponAbilities, int32 ApplyLevel, TArray<FGameplayAbilitySpecHandle>& OutGrantedAbilitySpecHandles);
+	void GrantWeaponAbilities(const TArray<FAbilitySet_Player>& InWeaponDefaultAbilities, const TArray<FSpecialAbilitySet_Player>& InWeaponSpecialAbilities, int32 ApplyLevel, TArray<FGameplayAbilitySpecHandle>& OutGrantedAbilitySpecHandles);
 
 	UFUNCTION(BlueprintCallable, Category = "A_My|Ability")
-	void RemoveGrantedWeaponAbilities(UPARAM(ref) TArray<FGameplayAbilitySpecHandle>& InSpecHandlesToRemove);
-	
+	void RemoveGrantedWeaponAbilities(UPARAM(ref)
+		TArray<FGameplayAbilitySpecHandle>& InSpecHandlesToRemove);
+
 	UFUNCTION(BlueprintCallable, Category = "A_My|Ability")
 	bool TryActivateAbilityByTag(FGameplayTag AbilityTagToActivate);
 };

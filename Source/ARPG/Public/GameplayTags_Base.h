@@ -14,6 +14,8 @@ namespace GameplayTags_Base
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_HeavyAttack_Axe);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Roll);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_SwitchTarget);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_WeaponSpecialAbility_Light);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_WeaponSpecialAbility_Heavy);
 
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_MustBeHeld);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_MustBeHeld_Block);
@@ -32,7 +34,11 @@ namespace GameplayTags_Base
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Block);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_TargetLock);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Rage);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_WeaponSpecial_Light);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_WeaponSpecial_Heavy);
 
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Cooldown_WeaponSpecialAbility_Light);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Cooldown_WeaponSpecialAbility_Heavy);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Weapon_Axe);
 
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_Equip_Axe);

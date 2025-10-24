@@ -15,7 +15,7 @@ AWeapon_Player* UCombatComponent_Player::GetPlayerCurEquippedWeapon() const
 
 float UCombatComponent_Player::GetPlayerCurEquippedWeaponDamageAtLevel(float InLevel) const
 {
-	return GetPlayerCurEquippedWeapon()->WeaponData.WeaponBaseDamage.GetValueAtLevel(InLevel);
+	return GetPlayerCurEquippedWeapon()->WeaponData.BaseDamage.GetValueAtLevel(InLevel);
 }
 
 void UCombatComponent_Player::OnHitTargetActor(AActor* HitActor)

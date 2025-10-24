@@ -23,6 +23,18 @@ struct FAbilitySet_Player
 	bool IsValid() const;
 };
 
+USTRUCT(Blueprintable)
+struct FSpecialAbilitySet_Player : public FAbilitySet_Player
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSoftObjectPtr<UMaterialInterface> IconMaterial;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (Categories = "Player.Cooldown"))
+	FGameplayTag CooldownTag;
+};
+
 /// @brief 玩家武器
 USTRUCT(BlueprintType)
 struct FWeaponData_Player
@@ -30,17 +42,20 @@ struct FWeaponData_Player
 	GENERATED_BODY()
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSubclassOf<ULinkedAnimLayer_Player> WeaponAnimLayerToLink; // 
+	TSubclassOf<ULinkedAnimLayer_Player> AnimLayerToLink; // 
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UInputMappingContext* WeaponInputMappingContext;
+	UInputMappingContext* InputMappingContext;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (TitleProperty = "InputTag"))
-	TArray<FAbilitySet_Player> DefaultWeaponAbilities;
+	TArray<FAbilitySet_Player> DefaultAbilities;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (TitleProperty = "InputTag"))
+	TArray<FSpecialAbilitySet_Player> SpecialAbilities;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	FScalableFloat WeaponBaseDamage; // 武器基础伤害
+	FScalableFloat BaseDamage; // 武器基础伤害
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSoftObjectPtr<UTexture2D> SoftWeaponIconTexture;
+	TSoftObjectPtr<UTexture2D> SoftIconTexture;
 };
