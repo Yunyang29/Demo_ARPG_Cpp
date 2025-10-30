@@ -5,10 +5,10 @@
 
 void AWeapon_Player::AssignGrantedAbilitySpecHandles(const TArray<FGameplayAbilitySpecHandle>& InSpecHandles)
 {
-	GrantedAbilityiesSpecHandles = InSpecHandles;
+	GrantedAbilitiesSpecHandles = InSpecHandles;
 }
 
 TArray<FGameplayAbilitySpecHandle> AWeapon_Player::GetGrantedAbilitySpecHandles() const
 {
-	return GrantedAbilityiesSpecHandles;
+	return GrantedAbilitiesSpecHandles;
 }

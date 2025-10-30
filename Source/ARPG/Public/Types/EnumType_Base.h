@@ -17,6 +17,21 @@ enum class EValidType : uint8
 UENUM()
 enum class ESuccessType : uint8
 {
-	succeed,
-	failed
+	Succeed,
+	Failed
+};
+
+UENUM()
+enum class ECountdownActionInput : uint8
+{
+	Start,
+	Cancel
+};
+
+UENUM()
+enum class ECountdownActionOutput : uint8
+{
+	Updated,
+	Completed,
+	Cancel
 };

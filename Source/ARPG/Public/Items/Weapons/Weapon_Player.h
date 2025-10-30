@@ -27,5 +27,5 @@ public:
 	TArray<FGameplayAbilitySpecHandle> GetGrantedAbilitySpecHandles() const;
 
 private:
-	TArray<FGameplayAbilitySpecHandle> GrantedAbilityiesSpecHandles;
+	TArray<FGameplayAbilitySpecHandle> GrantedAbilitiesSpecHandles;
 };

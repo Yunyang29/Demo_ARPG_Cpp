@@ -131,3 +131,9 @@ bool UFunctionLibrary_Base::ApplyGameplayEffectSpecHandleToTargetActor(AActor* I
 	FActiveGameplayEffectHandle ActiveGameplayEffectHandle = SourceASC->ApplyGameplayEffectSpecToTarget(*InSpecHandle.Data, TargetASC);
 	return ActiveGameplayEffectHandle.WasSuccessfullyApplied();
 }
+
+void UFunctionLibrary_Base::CountDown(const UObject* WorldContextObject, float totalTime, float UpdateInterval, float& OutRemainingTime, ECountdownActionInput CountdownInput,
+                                      UPARAM(DisplayName="Output")
+                                      ECountdownActionOutput& CountdownOutput, FLatentActionInfo LatenInfo)
+{
+}

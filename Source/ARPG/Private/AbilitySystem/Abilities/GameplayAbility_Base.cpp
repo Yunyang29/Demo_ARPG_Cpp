@@ -55,7 +55,7 @@ UAbilitySystemComponent_Base* UGameplayAbility_Base::GetAbilitySystemCompFromAct
 FActiveGameplayEffectHandle UGameplayAbility_Base::BP_ApplyEffectSpecHandleToTarget(AActor* TargetActor, const FGameplayEffectSpecHandle& InSpecHandle, ESuccessType& OutSuccessType)
 {
 	FActiveGameplayEffectHandle Handle = NativeApplyEffectSpecHandleToTarget(TargetActor, InSpecHandle);
-	OutSuccessType = Handle.WasSuccessfullyApplied() ? ESuccessType::succeed : ESuccessType::failed;
+	OutSuccessType = Handle.WasSuccessfullyApplied() ? ESuccessType::Succeed : ESuccessType::Failed;
 	return Handle;
 }
 

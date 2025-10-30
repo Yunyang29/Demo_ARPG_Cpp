@@ -29,7 +29,7 @@ struct FSpecialAbilitySet_Player : public FAbilitySet_Player
 	GENERATED_BODY()
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSoftObjectPtr<UMaterialInterface> IconMaterial;
+	TSoftObjectPtr<UMaterialInterface> SoftIconMaterial;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (Categories = "Player.Cooldown"))
 	FGameplayTag CooldownTag;
