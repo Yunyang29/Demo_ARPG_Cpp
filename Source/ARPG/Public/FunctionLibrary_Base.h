@@ -56,7 +56,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "A_My|FunctionLibrary", meta=(Latent, WorldContext="WorldContextObject", LatentInfo="LatenInfo",
 		ExpandEnumAsExecs="CountdownInput|CountdownOutput", TotalTime="1.0", UpdateInterval = "0.1"))
 	static void CountDown(const UObject* WorldContextObject,
-	                      float totalTime,
+	                      float TotalTime,
 	                      float UpdateInterval,
 	                      float& OutRemainingTime,
 	                      ECountdownActionInput CountdownInput,

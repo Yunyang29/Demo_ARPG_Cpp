@@ -33,5 +33,5 @@ enum class ECountdownActionOutput : uint8
 {
 	Updated,
 	Completed,
-	Cancel
+	Cancelled
 };

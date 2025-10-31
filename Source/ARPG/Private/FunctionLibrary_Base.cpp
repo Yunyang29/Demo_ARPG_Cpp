@@ -6,6 +6,7 @@
 #include "AbilitySystem/AbilitySystemComponent_Base.h"
 #include "Interfaces/PawnCombatInterface.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Types/CountdownAction.h"
 
 UAbilitySystemComponent_Base* UFunctionLibrary_Base::NativeGetASCFromActor(AActor* InActor)
 {
@@ -132,8 +133,42 @@ bool UFunctionLibrary_Base::ApplyGameplayEffectSpecHandleToTargetActor(AActor* I
 	return ActiveGameplayEffectHandle.WasSuccessfullyApplied();
 }
 
-void UFunctionLibrary_Base::CountDown(const UObject* WorldContextObject, float totalTime, float UpdateInterval, float& OutRemainingTime, ECountdownActionInput CountdownInput,
+void UFunctionLibrary_Base::CountDown(const UObject* WorldContextObject, float TotalTime, float UpdateInterval, float& OutRemainingTime,
+                                      ECountdownActionInput CountdownInput,
                                       UPARAM(DisplayName="Output")
-                                      ECountdownActionOutput& CountdownOutput, FLatentActionInfo LatenInfo)
+                                      ECountdownActionOutput& CountdownOutput,
+                                      FLatentActionInfo LatenInfo)
 {
+	UWorld* World = nullptr;
+	if (GEngine)
+	{
+		World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
+	}
+
+	if (!World)
+	{
+		return;
+	}
+
+	FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
+	FCountdownAction* FoundAction = LatentActionManager.FindExistingAction<FCountdownAction>(LatenInfo.CallbackTarget, LatenInfo.UUID);
+	if (CountdownInput == ECountdownActionInput::Start)
+	{
+		if (!FoundAction)
+		{
+			LatentActionManager.AddNewAction(
+				LatenInfo.CallbackTarget,
+				LatenInfo.UUID,
+				new FCountdownAction(TotalTime, UpdateInterval, OutRemainingTime, CountdownOutput, LatenInfo)
+			);
+		}
+	}
+
+	if (CountdownInput == ECountdownActionInput::Cancel)
+	{
+		if (FoundAction)
+		{
+			FoundAction->CancelAction();
+		}
+	}
 }
