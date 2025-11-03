@@ -2,6 +2,8 @@
 
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
+#include "FunctionLibrary_Base.h"
+#include "GameplayTags_Base.h"
 #include "AbilitySystem/AbilitySystemComponent_Base.h"
 #include "Components/Combat/CombatComponent_Base.h"
 
@@ -11,9 +13,9 @@
 void UGameplayAbility_Base::OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec)
 {
 	Super::OnGiveAbility(ActorInfo, Spec);
-	if(AbilityActivationPolicy == EAbilityActivationPolicy_Base::OnGiven)
+	if (AbilityActivationPolicy == EAbilityActivationPolicy_Base::OnGiven)
 	{
-		if(ActorInfo && !Spec.IsActive())
+		if (ActorInfo && !Spec.IsActive())
 		{
 			ActorInfo->AbilitySystemComponent->TryActivateAbility(Spec.Handle);
 		}
@@ -29,9 +31,9 @@ void UGameplayAbility_Base::OnGiveAbility(const FGameplayAbilityActorInfo* Actor
 void UGameplayAbility_Base::EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled)
 {
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
-	if(AbilityActivationPolicy == EAbilityActivationPolicy_Base::OnGiven)
+	if (AbilityActivationPolicy == EAbilityActivationPolicy_Base::OnGiven)
 	{
-		if(ActorInfo)
+		if (ActorInfo)
 		{
 			ActorInfo->AbilitySystemComponent->ClearAbility(Handle);
 		}
@@ -52,6 +54,14 @@ UAbilitySystemComponent_Base* UGameplayAbility_Base::GetAbilitySystemCompFromAct
 	return Cast<UAbilitySystemComponent_Base>(CurrentActorInfo->AbilitySystemComponent);
 }
 
+FActiveGameplayEffectHandle UGameplayAbility_Base::NativeApplyEffectSpecHandleToTarget(AActor* TargetActor, const FGameplayEffectSpecHandle& InSpecHandle)
+{
+	UAbilitySystemComponent* ASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
+	check(ASC &&InSpecHandle.IsValid());
+	return GetAbilitySystemCompFromActorInfo()->ApplyGameplayEffectSpecToTarget(*InSpecHandle.Data, ASC);
+}
+
+
 FActiveGameplayEffectHandle UGameplayAbility_Base::BP_ApplyEffectSpecHandleToTarget(AActor* TargetActor, const FGameplayEffectSpecHandle& InSpecHandle, ESuccessType& OutSuccessType)
 {
 	FActiveGameplayEffectHandle Handle = NativeApplyEffectSpecHandleToTarget(TargetActor, InSpecHandle);
@@ -59,9 +69,27 @@ FActiveGameplayEffectHandle UGameplayAbility_Base::BP_ApplyEffectSpecHandleToTar
 	return Handle;
 }
 
-FActiveGameplayEffectHandle UGameplayAbility_Base::NativeApplyEffectSpecHandleToTarget(AActor* TargetActor, const FGameplayEffectSpecHandle& InSpecHandle)
+void UGameplayAbility_Base::ApplyGameplayEffectSpecHandleToHitResults(const FGameplayEffectSpecHandle& InSpecHandle, const TArray<FHitResult>& InHitResults)
 {
-	UAbilitySystemComponent* ASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
-	check(ASC &&InSpecHandle.IsValid());
-	return GetAbilitySystemCompFromActorInfo()->ApplyGameplayEffectSpecToTarget(*InSpecHandle.Data, ASC);
+	if (InHitResults.IsEmpty())
+		return;
+
+	APawn* OwningPawn = CastChecked<APawn>(GetAvatarActorFromActorInfo());
+	for (const FHitResult& Hit : InHitResults)
+	{
+		if (APawn* HitPawn = Cast<APawn>(Hit.GetActor()))
+		{
+			if (UFunctionLibrary_Base::IsTargetPawnHostile(OwningPawn, HitPawn))
+			{
+				FActiveGameplayEffectHandle ActiveGameplayEffectHandle = NativeApplyEffectSpecHandleToTarget(HitPawn, InSpecHandle);
+				if (ActiveGameplayEffectHandle.WasSuccessfullyApplied())
+				{
+					FGameplayEventData EventData;
+					EventData.Instigator = OwningPawn;
+					EventData.Target = HitPawn;
+					UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(HitPawn, GameplayTags_Base::Shared_Event_HitReact, EventData);
+				}
+			}
+		}
+	}
 }

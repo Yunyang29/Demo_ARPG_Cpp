@@ -39,8 +39,11 @@ protected:
 	UFUNCTION(BlueprintPure, Category = "A_My|Ability")
 	UAbilitySystemComponent_Base* GetAbilitySystemCompFromActorInfo() const;
 
+	FActiveGameplayEffectHandle NativeApplyEffectSpecHandleToTarget(AActor* TargetActor, const FGameplayEffectSpecHandle& InSpecHandle);
+
 	UFUNCTION(BlueprintCallable, Category = "A_My|Ability", meta=(DisplayName="Apply Gameplay Effect Spec Handle to Target Actor", ExpandEnumAsExecs="OutSuccessType"))
 	FActiveGameplayEffectHandle BP_ApplyEffectSpecHandleToTarget(AActor* TargetActor, const FGameplayEffectSpecHandle& InSpecHandle, ESuccessType& OutSuccessType);
 
-	FActiveGameplayEffectHandle NativeApplyEffectSpecHandleToTarget(AActor* TargetActor, const FGameplayEffectSpecHandle& InSpecHandle);
+	UFUNCTION(BlueprintCallable, Category = "A_My|Ability")
+	void ApplyGameplayEffectSpecHandleToHitResults(const FGameplayEffectSpecHandle& InSpecHandle, const TArray<FHitResult>& InHitResults);
 };

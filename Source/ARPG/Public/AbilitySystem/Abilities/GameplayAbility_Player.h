@@ -30,6 +30,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "A_My|Player|Ability")
 	FGameplayEffectSpecHandle MakePlayerDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InUsedComboCount);
 
+	UFUNCTION(BlueprintCallable, Category = "A_My|Player|Ability")
+	bool GetAbilityRemainingCooldownByTag(FGameplayTag InCooldownTag, float& TotalCooldownTime, float& RemainingCooldownTime);
+
 private:
 	// smart pointer holds reference
 	TWeakObjectPtr<ACharacter_Player> CachedPlayer;
