@@ -1,17 +1,20 @@
 #include "AbilitySystem/Abilities/Player/GameplayAbility_PickUpStones.h"
 
 #include "Characters/Character_Player.h"
+#include "Components/UI/UIComponent_Player.h"
 #include "Items/PickUps/Stone_Base.h"
 #include "Kismet/KismetSystemLibrary.h"
 
 void UGameplayAbility_PickUpStones::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
+	GetPlayerUICompFromActorInfo()->OnStoneInteracted.Broadcast(true);
 }
 
 void UGameplayAbility_PickUpStones::EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled)
 {
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
+	GetPlayerUICompFromActorInfo()->OnStoneInteracted.Broadcast(false);
 }
 
 void UGameplayAbility_PickUpStones::CollectStone()
