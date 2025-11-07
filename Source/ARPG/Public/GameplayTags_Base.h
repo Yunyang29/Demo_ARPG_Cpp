@@ -16,6 +16,7 @@ namespace GameplayTags_Base
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_SwitchTarget);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_WeaponSpecialAbility_Light);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_WeaponSpecialAbility_Heavy);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_PickUp_Stone);
 
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_MustBeHeld);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_MustBeHeld_Block);
@@ -36,6 +37,7 @@ namespace GameplayTags_Base
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Rage);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_WeaponSpecial_Light);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_WeaponSpecial_Heavy);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_PickUp_Stones);
 
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Cooldown_WeaponSpecialAbility_Light);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Cooldown_WeaponSpecialAbility_Heavy);
@@ -49,7 +51,8 @@ namespace GameplayTags_Base
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_SwitchTarget_Right);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_ActivateRage);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_AOE);
-
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_ConsumeStone);
+	
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_JumpToFinisher);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_Rolling);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_Blocking);

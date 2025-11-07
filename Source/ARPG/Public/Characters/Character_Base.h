@@ -40,11 +40,11 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "A_My|MotionWarping")
 	UMotionWarpingComponent* MWC;
-	
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadonly, Category = "A_My|CharacterData")
 	TSoftObjectPtr<UDataAsset_StartUp> StartUpData; /// Character's Start Up Data
 
 public:
-	FORCEINLINE UAbilitySystemComponent_Base* GetCharacterAbilitySystemComponent() const { return ASC; } /// 获取角色的能力系统组件
-	FORCEINLINE UAttributeSet_Base* GetCharacterAttributeSet() const { return AS; } /// 获取角色的属性集
+	FORCEINLINE UAbilitySystemComponent_Base* GetCharacterAbilitySystemComponent() const { return ASC; }
+	FORCEINLINE UAttributeSet_Base* GetCharacterAttributeSet() const { return AS; }
 };

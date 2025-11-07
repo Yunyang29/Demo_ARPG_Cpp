@@ -13,6 +13,7 @@ namespace GameplayTags_Base
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_SwitchTarget, "InputTag.SwitchTarget");
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_WeaponSpecialAbility_Light, "InputTag.WeaponSpecialAbility.Light");
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_WeaponSpecialAbility_Heavy, "InputTag.WeaponSpecialAbility.Heavy");
+	UE_DEFINE_GAMEPLAY_TAG(InputTag_PickUp_Stone, "InputTag.PickUp.Stone");
 
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_MustBeHeld, "InputTag.MustBeHeld");
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_MustBeHeld_Block, "InputTag.MustBeHeld.Block");
@@ -33,6 +34,7 @@ namespace GameplayTags_Base
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Rage, "Player.Ability.Rage");
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_WeaponSpecial_Light, "Player.Ability.WeaponSpecial.Light");
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_WeaponSpecial_Heavy, "Player.Ability.WeaponSpecial.Heavy");
+	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_PickUp_Stones, "Player.Ability.PickUp.Stones");
 
 	UE_DEFINE_GAMEPLAY_TAG(Player_Cooldown_WeaponSpecialAbility_Light, "Player.Cooldown.WeaponSpecialAbility.Light");
 	UE_DEFINE_GAMEPLAY_TAG(Player_Cooldown_WeaponSpecialAbility_Heavy, "Player.Cooldown.WeaponSpecialAbility.Heavy");
@@ -46,6 +48,7 @@ namespace GameplayTags_Base
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_SwitchTarget_Right, "Player.Event.SwitchTarget.Right");
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_ActivateRage, "Player.Event.ActivateRage");
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_AOE, "Player.Event.AOE");
+	UE_DEFINE_GAMEPLAY_TAG(Player_Event_ConsumeStone, "Player.Event.ConsumeStone");
 
 	UE_DEFINE_GAMEPLAY_TAG(Player_Status_JumpToFinisher, "Player.Status.JumpToFinisher")
 	UE_DEFINE_GAMEPLAY_TAG(Player_Status_Rolling, "Player.Status.Rolling")

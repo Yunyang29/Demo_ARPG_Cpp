@@ -103,6 +103,8 @@ void ACharacter_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	InputComp->BindNativeInputAction(InputConfigData, GameplayTags_Base::InputTag_SwitchTarget, ETriggerEvent::Triggered, this, &ThisClass::Input_SwitchTargetTriggered);
 	InputComp->BindNativeInputAction(InputConfigData, GameplayTags_Base::InputTag_SwitchTarget, ETriggerEvent::Completed, this, &ThisClass::Input_SwitchTargetCompleted);
 
+	InputComp->BindNativeInputAction(InputConfigData, GameplayTags_Base::InputTag_PickUp_Stone, ETriggerEvent::Started, this, &ThisClass::Input_PickUpStoneStarted);
+
 	InputComp->BindAbilityInputAction(InputConfigData, this, &ThisClass::Input_AbilityInputPressed, &ThisClass::Input_AbilityInputReleased);
 }
 
@@ -154,6 +156,16 @@ void ACharacter_Player::Input_SwitchTargetCompleted(const FInputActionValue& Inp
 		this,
 		SwitchDirection.X > 0.f ? GameplayTags_Base::Player_Event_SwitchTarget_Right : GameplayTags_Base::Player_Event_SwitchTarget_Left,
 		EventData
+	);
+}
+
+void ACharacter_Player::Input_PickUpStoneStarted(const FInputActionValue& InputActionValue)
+{
+	FGameplayEventData Data;
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+		this,
+		GameplayTags_Base::Player_Event_ConsumeStone,
+		Data
 	);
 }
 
