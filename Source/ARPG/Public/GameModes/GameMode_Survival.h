@@ -65,8 +65,28 @@ private:
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FOnGameModeStateChangedDelegate OnGameModeStateChanged;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "WaveDefinition", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "A_MY|WaveDefinition", meta = (AllowPrivateAccess = "true"))
 	UDataTable* EnemyWaveSpawnerDataTable;
 
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "A_MY|WaveDefinition", meta = (AllowPrivateAccess = "true"))
+	int32 TotalWavesToSpawn;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "A_MY|WaveDefinition", meta = (AllowPrivateAccess = "true"))
+	int32 CurrentWaveCount = 1;
+
+	UPROPERTY()
+	float TimePassedSinceStart = 0.f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "A_MY|WaveDefinition", meta = (AllowPrivateAccess = "true"))
+	float WaitTimeToSpawnNewWave = 5.f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "A_MY|WaveDefinition", meta = (AllowPrivateAccess = "true"))
+	float DelayTimeToSpawnEnemies = 2.f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "A_MY|WaveDefinition", meta = (AllowPrivateAccess = "true"))
+	float WaitTimeToWaveCompleted = 5.f;
+
 	void SetCurrentGameModeState(EGameModeState InState);
+
+	bool HasFinishedAllWaves() const;
 };
