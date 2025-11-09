@@ -33,7 +33,7 @@ private:
 	void DrawTargetLockWidget();
 	void SetTargetLockWidgetPosition();
 	void InitTargetLockMovement();
-	void InitTargetLockMappingContext();
+	void InitInputMappingContext();
 
 	void CancelTargetLockAbility();
 	void CleanUp();
@@ -59,7 +59,7 @@ private:
 	float TargetLockRotationInterpSpeed = 5.f;
 
 	UPROPERTY(EditDefaultsOnly, Category="Target Lock")
-	float TargetLockMaxWalkSpeed = 150.f;
+	float TargetLockMaxWalkSpeed = 200.f;
 
 	UPROPERTY(EditDefaultsOnly, Category="Target Lock")
 	UInputMappingContext* TargetLockMappingContext;

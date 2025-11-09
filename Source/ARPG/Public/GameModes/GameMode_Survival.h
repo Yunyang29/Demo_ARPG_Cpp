@@ -59,6 +59,9 @@ protected:
 	virtual void Tick(float DeltaSeconds) override;
 
 private:
+	UFUNCTION()
+	void OnEnemyDestroyed(AActor* DestroyedActor);
+
 	UPROPERTY()
 	EGameModeState CurrentGameModeState;
 
@@ -74,9 +77,6 @@ private:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "A_MY|WaveDefinition", meta = (AllowPrivateAccess = "true"))
 	int32 CurrentWaveCount = 1;
 
-	UPROPERTY()
-	float TimePassedSinceStart = 0.f;
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "A_MY|WaveDefinition", meta = (AllowPrivateAccess = "true"))
 	float WaitTimeToSpawnNewWave = 5.f;
 
@@ -86,7 +86,29 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "A_MY|WaveDefinition", meta = (AllowPrivateAccess = "true"))
 	float WaitTimeToWaveCompleted = 5.f;
 
-	void SetCurrentGameModeState(EGameModeState InState);
+	UPROPERTY()
+	float TimePassedSinceStart = 0.f;
 
+	UPROPERTY()
+	TMap<TSoftClassPtr<ACharacter_Enemy>, UClass*> PreLoadedEnemyClassMap;
+
+	UPROPERTY()
+	int32 CurrentSpawnedEnemiesCounter = 0;
+
+	UPROPERTY()
+	int32 TotalSpawnedEnemiesThisWaveCounter = 0;
+
+	UPROPERTY()
+	TArray<AActor*> TargetPointsArray;
+
+	void SetCurrentGameModeState(EGameModeState InState);
 	bool HasFinishedAllWaves() const;
+	void PreLoadNextWaveEnemies();
+	FEnemyWaveSpawnerTableRow* GetCurrentWaveSpawnerTableRow() const;
+	int32 TrySpawnWaveEnemies();
+	bool ShouldKeepSpawnEnemies() const;
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void RegisterSpawnedEnemies(const TArray<ACharacter_Enemy*>& InEnemiesToRegister);
 };

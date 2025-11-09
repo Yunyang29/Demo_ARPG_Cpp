@@ -11,4 +11,6 @@ UCLASS()
 class ARPG_API AGameMode_Base : public AGameModeBase
 {
 	GENERATED_BODY()
+public:
+	AGameMode_Base();
 };

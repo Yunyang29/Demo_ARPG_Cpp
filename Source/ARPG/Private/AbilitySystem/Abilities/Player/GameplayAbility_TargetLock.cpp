@@ -18,8 +18,6 @@
 void UGameplayAbility_TargetLock::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)
 {
 	TryLockOnTarget();
-	InitTargetLockMovement();
-	InitTargetLockMappingContext();
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 }
 
@@ -200,7 +198,7 @@ void UGameplayAbility_TargetLock::InitTargetLockMovement()
 	GetPlayerCharacterFromActorInfo()->GetCharacterMovement()->MaxWalkSpeed = TargetLockMaxWalkSpeed;
 }
 
-void UGameplayAbility_TargetLock::InitTargetLockMappingContext()
+void UGameplayAbility_TargetLock::InitInputMappingContext()
 {
 	ULocalPlayer* Player = GetPlayerControllerFromActorInfo()->GetLocalPlayer();
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(Player);
@@ -224,6 +222,8 @@ void UGameplayAbility_TargetLock::TryLockOnTarget()
 	{
 		DrawTargetLockWidget();
 		SetTargetLockWidgetPosition();
+		InitTargetLockMovement();
+		InitInputMappingContext();
 	}
 	else
 	{
