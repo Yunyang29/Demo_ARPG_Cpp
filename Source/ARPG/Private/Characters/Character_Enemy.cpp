@@ -9,7 +9,10 @@
 #include "DataAssets/StartUp/DataAsset_StartUp.h"
 #include "Engine/AssetManager.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "GameModes/GameMode_Base.h"
 #include "Widgets/Widget_Base.h"
+
+class AGameMode_Base;
 
 ACharacter_Enemy::ACharacter_Enemy()
 {
@@ -101,19 +104,38 @@ void ACharacter_Enemy::OnBodyCollisionBoxBeginOverlap(UPrimitiveComponent* Overl
 void ACharacter_Enemy::InitEnemyStartUpData()
 {
 	if (StartUpData.IsNull())
-	{
 		return;
-	}
 
+	int32 AbilityApplyLevel = 1;
+	if (AGameMode_Base* BaseGameMode = GetWorld()->GetAuthGameMode<AGameMode_Base>())
+	{
+		switch (BaseGameMode->GetCurrentGameDifficulty())
+		{
+		case EGameDifficulty::Easy:
+			AbilityApplyLevel = 1;
+			break;
+		case EGameDifficulty::Normal:
+			AbilityApplyLevel = 2;
+			break;
+		case EGameDifficulty::Hard:
+			AbilityApplyLevel = 3;
+			break;
+		case EGameDifficulty::VeryHard:
+			AbilityApplyLevel = 4;
+			break;
+		default:
+			break;
+		}
+	}
 	// ?
 	UAssetManager::GetStreamableManager().RequestAsyncLoad(
 		StartUpData.ToSoftObjectPath(),
 		FStreamableDelegate::CreateLambda(
-			[this]()
+			[this,AbilityApplyLevel]()
 			{
 				if (UDataAsset_StartUp* LoadedData = StartUpData.Get())
 				{
-					LoadedData->GiveToAbilitySystemComponent(ASC);
+					LoadedData->GiveToAbilitySystemComponent(ASC, AbilityApplyLevel);
 				}
 			}
 		)

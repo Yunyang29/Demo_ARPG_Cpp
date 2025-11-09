@@ -14,6 +14,7 @@
 #include "DataAssets/StartUp/DataAsset_StartUp_Player.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "GameModes/GameMode_Base.h"
 
 /// @brief 玩家角色类
 void ACharacter_Player::BeginPlay()
@@ -32,7 +33,29 @@ void ACharacter_Player::PossessedBy(AController* NewController)
 	{
 		if (UDataAsset_StartUp* LoadedData = StartUpData.LoadSynchronous())
 		{
-			LoadedData->GiveToAbilitySystemComponent(ASC);
+			int32 AbilityApplyLevel = 1;
+			if (AGameMode_Base* BaseGameMode = GetWorld()->GetAuthGameMode<AGameMode_Base>())
+			{
+				switch (BaseGameMode->GetCurrentGameDifficulty())
+				{
+				case EGameDifficulty::Easy:
+					AbilityApplyLevel = 4;
+					break;
+				case EGameDifficulty::Normal:
+					AbilityApplyLevel = 3;
+					break;
+				case EGameDifficulty::Hard:
+					AbilityApplyLevel = 2;
+					break;
+				case EGameDifficulty::VeryHard:
+					AbilityApplyLevel = 1;
+					break;
+				default:
+					break;
+				}
+			}
+
+			LoadedData->GiveToAbilitySystemComponent(ASC, AbilityApplyLevel);
 		}
 	}
 }
