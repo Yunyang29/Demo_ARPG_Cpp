@@ -7,6 +7,7 @@
 #include "Interfaces/PawnCombatInterface.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Types/CountdownAction.h"
+#include "GameInstance_Base.h"
 
 UAbilitySystemComponent_Base* UFunctionLibrary_Base::NativeGetASCFromActor(AActor* InActor)
 {
@@ -170,5 +171,51 @@ void UFunctionLibrary_Base::CountDown(const UObject* WorldContextObject, float T
 		{
 			FoundAction->CancelAction();
 		}
+	}
+}
+
+UGameInstance_Base* UFunctionLibrary_Base::GetGameInstance(const UObject* WorldContextObject)
+{
+	if (GEngine)
+	{
+		if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
+		{
+			return World->GetGameInstance<UGameInstance_Base>();
+		}
+	}
+
+	return nullptr;
+}
+
+void UFunctionLibrary_Base::ToggleInputMode(const UObject* WorldContextObject, EInputMode InInputMode)
+{
+	APlayerController* PlayerController = nullptr;
+
+	if (GEngine)
+	{
+		if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
+		{
+			PlayerController = World->GetFirstPlayerController();
+		}
+	}
+
+	if (!PlayerController)
+		return;
+
+	FInputModeGameOnly GameOnlyMode;
+	FInputModeUIOnly UIOnlyMode;
+
+	switch (InInputMode)
+	{
+	case EInputMode::GameOnly:
+		PlayerController->SetInputMode(GameOnlyMode);
+		PlayerController->bShowMouseCursor = false;
+		break;
+	case EInputMode::UIOnly:
+		PlayerController->SetInputMode(UIOnlyMode);
+		PlayerController->bShowMouseCursor = true;
+		break;
+	default:
+		break;
 	}
 }

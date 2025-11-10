@@ -95,4 +95,8 @@ namespace GameplayTags_Base
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Left);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Right);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_Invincible);
+	
+	/** Game Data tags **/
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameData_Level_Survival);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameData_Level_MainMenu);
 }

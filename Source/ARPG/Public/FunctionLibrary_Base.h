@@ -7,6 +7,7 @@
 #include "Types/EnumType_Base.h"
 #include "FunctionLibrary_Base.generated.h"
 
+class UGameInstance_Base;
 class UAbilitySystemComponent_Base;
 class UPawnCombatInterface;
 struct FScalableFloat;
@@ -63,4 +64,10 @@ public:
 	                      UPARAM(DisplayName="Output")
 	                      ECountdownActionOutput& CountdownOutput,
 	                      FLatentActionInfo LatenInfo);
+
+	UFUNCTION(BlueprintPure, Category = "A_My|FunctionLibrary", meta = (WorldContext = "WorldContextObject"))
+	static UGameInstance_Base* GetGameInstance(const UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, Category = "A_My|FunctionLibrary", meta = (WorldContext = "WorldContextObject"))
+	static void ToggleInputMode(const UObject* WorldContextObject, EInputMode InInputMode);
 };

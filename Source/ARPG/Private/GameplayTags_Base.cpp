@@ -92,4 +92,8 @@ namespace GameplayTags_Base
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_HitReact_Left, "Shared.Status.HitReact.Left")
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_HitReact_Right, "Shared.Status.HitReact.Right")
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_Invincible, "Shared.Status.Invincible")
+
+	/** Game Data tags **/
+	UE_DEFINE_GAMEPLAY_TAG(GameData_Level_Survival, "GameData.Level.Survival");
+	UE_DEFINE_GAMEPLAY_TAG(GameData_Level_MainMenu, "GameData.Level.MainMenu");
 }
