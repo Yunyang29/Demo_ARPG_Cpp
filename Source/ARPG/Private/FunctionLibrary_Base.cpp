@@ -8,6 +8,9 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Types/CountdownAction.h"
 #include "GameInstance_Base.h"
+#include "GameFramework/SaveGame.h"
+#include "Kismet/GameplayStatics.h"
+#include "SaveGame/SaveGame_Base.h"
 
 UAbilitySystemComponent_Base* UFunctionLibrary_Base::NativeGetASCFromActor(AActor* InActor)
 {
@@ -218,4 +221,34 @@ void UFunctionLibrary_Base::ToggleInputMode(const UObject* WorldContextObject, E
 	default:
 		break;
 	}
+}
+
+void UFunctionLibrary_Base::SaveCurrentGameDifficulty(EGameDifficulty InDifficultyToSave)
+{
+	USaveGame* SaveGameObject = UGameplayStatics::CreateSaveGameObject(USaveGame_Base::StaticClass());
+
+	if (USaveGame_Base* SaveGame_Base = Cast<USaveGame_Base>(SaveGameObject))
+	{
+		SaveGame_Base->SavedCurrentGameDifficulty = InDifficultyToSave;
+
+		// ! asynchronously, acceptable to save small datas
+		const bool bWasSaved = UGameplayStatics::SaveGameToSlot(SaveGame_Base, GameplayTags_Base::GameData_SaveGame_Slot_1.GetTag().ToString(), 0);
+	}
+}
+
+bool UFunctionLibrary_Base::TryLoadSavedGameDifficulty(EGameDifficulty& OutSavedDifficulty)
+{
+	if (UGameplayStatics::DoesSaveGameExist(GameplayTags_Base::GameData_SaveGame_Slot_1.GetTag().ToString(), 0))
+	{
+		USaveGame* SaveGameObject = UGameplayStatics::LoadGameFromSlot(GameplayTags_Base::GameData_SaveGame_Slot_1.GetTag().ToString(), 0);
+
+		if (USaveGame_Base* SaveGame_Base = Cast<USaveGame_Base>(SaveGameObject))
+		{
+			OutSavedDifficulty = SaveGame_Base->SavedCurrentGameDifficulty;
+
+			return true;
+		}
+	}
+
+	return false;
 }

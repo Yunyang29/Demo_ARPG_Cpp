@@ -55,6 +55,7 @@ class ARPG_API AGameMode_Survival : public AGameMode_Base
 	GENERATED_BODY()
 
 protected:
+	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) override;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 

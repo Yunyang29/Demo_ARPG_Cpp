@@ -99,4 +99,6 @@ namespace GameplayTags_Base
 	/** Game Data tags **/
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameData_Level_Survival);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameData_Level_MainMenu);
+	
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameData_SaveGame_Slot_1);
 }

@@ -1,12 +1,24 @@
 #include "GameModes/GameMode_Survival.h"
 
-#include "DebugHelper.h"
+#include "FunctionLibrary_Base.h"
 #include "NavigationSystem.h"
 #include "Characters/Character_Enemy.h"
 #include "Engine/AssetManager.h"
 #include "Engine/StreamableManager.h"
 #include "Engine/TargetPoint.h"
 #include "Kismet/GameplayStatics.h"
+
+void AGameMode_Survival::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
+{
+	Super::InitGame(MapName, Options, ErrorMessage);
+
+	EGameDifficulty SavedGameDifficulty;
+
+	if (UFunctionLibrary_Base::TryLoadSavedGameDifficulty(SavedGameDifficulty))
+	{
+		CurrentGameDifficulty = SavedGameDifficulty;
+	}
+}
 
 void AGameMode_Survival::BeginPlay()
 {
@@ -197,7 +209,7 @@ void AGameMode_Survival::RegisterSpawnedEnemies(const TArray<ACharacter_Enemy*>&
 		if (SpawnedEnemy)
 		{
 			CurrentSpawnedEnemiesCounter++;
-			SpawnedEnemy->OnDestroyed.AddUniqueDynamic(this,&ThisClass::OnEnemyDestroyed);
+			SpawnedEnemy->OnDestroyed.AddUniqueDynamic(this, &ThisClass::OnEnemyDestroyed);
 		}
 	}
 }

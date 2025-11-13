@@ -40,15 +40,19 @@ void ACharacter_Player::PossessedBy(AController* NewController)
 				{
 				case EGameDifficulty::Easy:
 					AbilityApplyLevel = 4;
+					Debug::Print(TEXT("Current Difficulty: Easy"));
 					break;
 				case EGameDifficulty::Normal:
 					AbilityApplyLevel = 3;
+					Debug::Print(TEXT("Current Difficulty: Normal"));
 					break;
 				case EGameDifficulty::Hard:
 					AbilityApplyLevel = 2;
+					Debug::Print(TEXT("Current Difficulty: Hard"));
 					break;
 				case EGameDifficulty::VeryHard:
 					AbilityApplyLevel = 1;
+					Debug::Print(TEXT("Current Difficulty: VeryHard"));
 					break;
 				default:
 					break;

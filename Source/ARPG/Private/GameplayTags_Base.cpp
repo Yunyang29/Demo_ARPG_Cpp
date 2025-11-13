@@ -96,4 +96,6 @@ namespace GameplayTags_Base
 	/** Game Data tags **/
 	UE_DEFINE_GAMEPLAY_TAG(GameData_Level_Survival, "GameData.Level.Survival");
 	UE_DEFINE_GAMEPLAY_TAG(GameData_Level_MainMenu, "GameData.Level.MainMenu");
+	
+	UE_DEFINE_GAMEPLAY_TAG(GameData_SaveGame_Slot_1,"GameData.SaveGame.Slot.1");
 }
