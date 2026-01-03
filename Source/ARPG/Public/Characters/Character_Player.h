@@ -11,9 +11,7 @@ class UCameraComponent;
 class UDataAsset_InputConfig;
 class UCombatComponent_Player;
 struct FInputActionValue;
-/**
- *
- */
+
 UCLASS()
 class ARPG_API ACharacter_Player : public ACharacter_Base
 {
@@ -22,8 +20,8 @@ class ARPG_API ACharacter_Player : public ACharacter_Base
 public:
 	ACharacter_Player();
 	virtual UCombatComponent_Base* GetCombatComponent() const override;
-	virtual UUIComponent_Base* GetUIComponent() const override;
-	virtual UUIComponent_Player* GetPlayerUIComponent() const override;
+	virtual UUIComponent_Base*     GetUIComponent() const override;
+	virtual UUIComponent_Player*   GetPlayerUIComponent() const override;
 
 protected:
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
@@ -34,13 +32,13 @@ private:
 #pragma region Components
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "A_My|Camera", meta = (ALLowPrivateAccess = "true"))
-	USpringArmComponent* CameraBoom; /// 相机弹簧臂
+	USpringArmComponent* CameraBoom;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "A_My|Camera", meta = (ALLowPrivateAccess = "true"))
-	UCameraComponent* FollowCamera; /// 相机组件
+	UCameraComponent* FollowCamera;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "A_My|Combat", meta = (ALLowPrivateAccess = "true"))
-	UCombatComponent_Player* CombatComponent; /// 角色的战斗组件
+	UCombatComponent_Player* CombatComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "A_My|UI", meta = (ALLowPrivateAccess = "true"))
 	UUIComponent_Player* UIComponent;
@@ -69,5 +67,8 @@ private:
 #pragma endregion
 
 public:
-	FORCEINLINE UCombatComponent_Player* GetPlayerCombatComp() const { return CombatComponent; }
+	FORCEINLINE UCombatComponent_Player* GetPlayerCombatComp() const
+	{
+		return CombatComponent;
+	}
 };

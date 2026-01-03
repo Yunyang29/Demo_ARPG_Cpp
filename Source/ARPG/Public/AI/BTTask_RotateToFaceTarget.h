@@ -6,7 +6,7 @@
 
 struct FRotateToFaceTargetTaskMemory
 {
-	TWeakObjectPtr<APawn> OwningPawn;
+	TWeakObjectPtr<APawn>  OwningPawn;
 	TWeakObjectPtr<AActor> TargetActor;
 
 	bool IsValid() const
@@ -31,11 +31,11 @@ class ARPG_API UBTTask_RotateToFaceTarget : public UBTTaskNode
 
 	UBTTask_RotateToFaceTarget();
 
-	virtual void InitializeFromAsset(UBehaviorTree& Asset) override;
-	virtual uint16 GetInstanceMemorySize() const override;
-	virtual FString GetStaticDescription() const override;
+	virtual void                InitializeFromAsset(UBehaviorTree& Asset) override;
+	virtual uint16              GetInstanceMemorySize() const override;
+	virtual FString             GetStaticDescription() const override;
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-	virtual void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
+	virtual void                TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 
 	bool HasReachedAnglePrecision(APawn* QueryPawn, AActor* TargetActor) const;
 

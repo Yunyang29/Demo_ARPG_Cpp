@@ -6,7 +6,7 @@
 
 ACharacter_Enemy* UGameplayAbility_Enemy::GetEnemyCharacterFromActorInfo()
 {
-	if (!CachedEnemy.IsValid())
+	if(!CachedEnemy.IsValid())
 	{
 		CachedEnemy = Cast<ACharacter_Enemy>(CurrentActorInfo->AvatarActor);
 	}

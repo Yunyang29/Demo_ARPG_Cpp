@@ -102,12 +102,12 @@ private:
 	UPROPERTY()
 	TArray<AActor*> TargetPointsArray;
 
-	void SetCurrentGameModeState(EGameModeState InState);
-	bool HasFinishedAllWaves() const;
-	void PreLoadNextWaveEnemies();
+	void                       SetCurrentGameModeState(EGameModeState InState);
+	bool                       HasFinishedAllWaves() const;
+	void                       PreLoadNextWaveEnemies();
 	FEnemyWaveSpawnerTableRow* GetCurrentWaveSpawnerTableRow() const;
-	int32 TrySpawnWaveEnemies();
-	bool ShouldKeepSpawnEnemies() const;
+	int32                      TrySpawnWaveEnemies();
+	bool                       ShouldKeepSpawnEnemies() const;
 
 public:
 	UFUNCTION(BlueprintCallable)

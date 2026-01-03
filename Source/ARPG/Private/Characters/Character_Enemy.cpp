@@ -63,7 +63,7 @@ UUIComponent_Enemy* ACharacter_Enemy::GetEnemyUIComponent() const
 void ACharacter_Enemy::BeginPlay()
 {
 	Super::BeginPlay();
-	if (UWidget_Base* HealthWidget = Cast<UWidget_Base>(HealthWidgetComponent->GetUserWidgetObject()))
+	if(UWidget_Base* HealthWidget = Cast<UWidget_Base>(HealthWidgetComponent->GetUserWidgetObject()))
 	{
 		HealthWidget->InitEnemyCreatedWidget(this);
 	}
@@ -79,12 +79,12 @@ void ACharacter_Enemy::PostEditChangeProperty(struct FPropertyChangedEvent& Prop
 {
 	Super::PostEditChangeProperty(PropertyChangedEvent);
 
-	if (PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, LeftHandBoxSocket))
+	if(PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, LeftHandBoxSocket))
 	{
 		LeftHandBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, LeftHandBoxSocket);
 	}
 
-	if (PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, RightHandBoxSocket))
+	if(PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, RightHandBoxSocket))
 	{
 		RightHandBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, RightHandBoxSocket);
 	}
@@ -92,9 +92,9 @@ void ACharacter_Enemy::PostEditChangeProperty(struct FPropertyChangedEvent& Prop
 
 void ACharacter_Enemy::OnBodyCollisionBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (APawn* HitPawn = Cast<APawn>(OtherActor))
+	if(APawn* HitPawn = Cast<APawn>(OtherActor))
 	{
-		if (UFunctionLibrary_Base::IsTargetPawnHostile(this, HitPawn))
+		if(UFunctionLibrary_Base::IsTargetPawnHostile(this, HitPawn))
 		{
 			CombatComponent->OnHitTargetActor(HitPawn);
 		}
@@ -103,13 +103,12 @@ void ACharacter_Enemy::OnBodyCollisionBoxBeginOverlap(UPrimitiveComponent* Overl
 
 void ACharacter_Enemy::InitEnemyStartUpData()
 {
-	if (StartUpData.IsNull())
-		return;
+	if(StartUpData.IsNull()) return;
 
 	int32 AbilityApplyLevel = 1;
-	if (AGameMode_Base* BaseGameMode = GetWorld()->GetAuthGameMode<AGameMode_Base>())
+	if(AGameMode_Base* BaseGameMode = GetWorld()->GetAuthGameMode<AGameMode_Base>())
 	{
-		switch (BaseGameMode->GetCurrentGameDifficulty())
+		switch(BaseGameMode->GetCurrentGameDifficulty())
 		{
 		case EGameDifficulty::Easy:
 			AbilityApplyLevel = 1;
@@ -127,13 +126,14 @@ void ACharacter_Enemy::InitEnemyStartUpData()
 			break;
 		}
 	}
+
 	// ?
 	UAssetManager::GetStreamableManager().RequestAsyncLoad(
 		StartUpData.ToSoftObjectPath(),
 		FStreamableDelegate::CreateLambda(
 			[this,AbilityApplyLevel]()
 			{
-				if (UDataAsset_StartUp* LoadedData = StartUpData.Get())
+				if(UDataAsset_StartUp* LoadedData = StartUpData.Get())
 				{
 					LoadedData->GiveToAbilitySystemComponent(ASC, AbilityApplyLevel);
 				}

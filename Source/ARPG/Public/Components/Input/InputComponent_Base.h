@@ -26,7 +26,7 @@ inline void UInputComponent_Base::BindNativeInputAction(const UDataAsset_InputCo
 {
 	checkf(InInputConfig, TEXT("Input config data asset is null, can not proceed with binding"));
 
-	if (UInputAction* FoundAction = InInputConfig->FindNativeInputActionByTag(InInputTag))
+	if(UInputAction* FoundAction = InInputConfig->FindNativeInputActionByTag(InInputTag))
 	{
 		BindAction(FoundAction, TriggerEvent, ContextObject, Func);
 	}
@@ -37,9 +37,9 @@ inline void UInputComponent_Base::BindAbilityInputAction(const UDataAsset_InputC
 {
 	checkf(InInputConfig, TEXT("Input config data asset is null, can not proceed with binding"));
 
-	for (const FARPGInputActionConfig& AbilityInputActionConfig : InInputConfig->AbilityInputActions)
+	for(const FARPGInputActionConfig& AbilityInputActionConfig : InInputConfig->AbilityInputActions)
 	{
-		if (!AbilityInputActionConfig.IsValid()) continue;
+		if(!AbilityInputActionConfig.IsValid()) continue;
 
 		BindAction(AbilityInputActionConfig.InputAction, ETriggerEvent::Started, ContextObject, InputPressedFunc, AbilityInputActionConfig.InputTag);
 		BindAction(AbilityInputActionConfig.InputAction, ETriggerEvent::Completed, ContextObject, InputReleasedFunc, AbilityInputActionConfig.InputTag);

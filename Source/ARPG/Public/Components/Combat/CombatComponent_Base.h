@@ -31,7 +31,7 @@ public:
 	void RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegister, AWeapon_Base* InWeaponToRegister, bool bRegisterAsEquippedWeapon);
 
 	UFUNCTION(BlueprintCallable, Category ="A_My|Combat")
-	AWeapon_Base* GetCarriedWeaponByTag(FGameplayTag InWeaponTagToGet) const; //此函数是常量成员函数，承诺不会修改类的成员变量（即 UCombatComponent_Base 的状态）。
+	AWeapon_Base* GetCarriedWeaponByTag(FGameplayTag InWeaponTagToGet) const;
 
 	UFUNCTION(BlueprintCallable, Category="A_My|Combat")
 	AWeapon_Base* GetCurEquippedWeapon() const;
@@ -43,8 +43,8 @@ public:
 	virtual void OnPullFromTargetActor(AActor* InteractedActor);
 
 protected:
-	virtual void ToggleCurrentEquippedWeaponCollision(bool bShouldEnable);
-	virtual void ToggleBodyCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType);
+	virtual void    ToggleCurrentEquippedWeaponCollision(bool bShouldEnable);
+	virtual void    ToggleBodyCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType);
 	TArray<AActor*> OverlappedActors;
 
 private:

@@ -13,6 +13,7 @@ UCLASS()
 class ARPG_API UUIComponent_Base : public UPawnExtensionComponent_Base
 {
 	GENERATED_BODY()
+
 public:
 	UPROPERTY(BlueprintAssignable)
 	FOnPercentChangeDelegate OnCurrentHealthChanged;

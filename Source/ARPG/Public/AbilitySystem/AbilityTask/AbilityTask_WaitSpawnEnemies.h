@@ -17,7 +17,8 @@ class ARPG_API UAbilityTask_WaitSpawnEnemies : public UAbilityTask
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category="A_My|AbilityTask",
+	UFUNCTION(BlueprintCallable,
+		Category="A_My|AbilityTask",
 		meta=(DisplayName = "Wait Gameplay Event and Spawn Enemeies",
 			HidePin="OwningAbility",
 			DefaultToSelf="OwningAbility",
@@ -26,12 +27,12 @@ public:
 			RandomSpawnRadius ="200"
 		))
 	static UAbilityTask_WaitSpawnEnemies* WaitSpawnEnemies(
-		UGameplayAbility* OwningAbility,
-		FGameplayTag EventTag,
+		UGameplayAbility*               OwningAbility,
+		FGameplayTag                    EventTag,
 		TSoftClassPtr<ACharacter_Enemy> SoftEnemyClassToSpawn,
-		int32 NumToSpawn,
-		const FVector& SpawnOrigin,
-		float RandomSpawnRadius
+		int32                           NumToSpawn,
+		const FVector&                  SpawnOrigin,
+		float                           RandomSpawnRadius
 	);
 
 	UPROPERTY(BlueprintAssignable, Category="A_My|AbilityTask")
@@ -44,12 +45,12 @@ public:
 	virtual void OnDestroy(bool bInOwnerFinished) override;
 
 private:
-	FGameplayTag CachedEventTag;
+	FGameplayTag                    CachedEventTag;
 	TSoftClassPtr<ACharacter_Enemy> CachedSoftEnemyClassToSpawn;
-	FVector CachedSpawnOrigin;
-	int32 CachedNumToSpawn;
-	FDelegateHandle DelegateHandle;
-	float CachedRandomSpawnRadius;
+	FVector                         CachedSpawnOrigin;
+	int32                           CachedNumToSpawn;
+	FDelegateHandle                 DelegateHandle;
+	float                           CachedRandomSpawnRadius;
 
 	void OnGameplayEventReceived(const FGameplayEventData* Data);
 	void OnEnemyClassLoaded();

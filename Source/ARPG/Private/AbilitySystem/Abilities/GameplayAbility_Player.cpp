@@ -7,7 +7,7 @@
 
 ACharacter_Player* UGameplayAbility_Player::GetPlayerCharacterFromActorInfo()
 {
-	if (!CachedPlayer.IsValid())
+	if(!CachedPlayer.IsValid())
 	{
 		CachedPlayer = Cast<ACharacter_Player>(CurrentActorInfo->AvatarActor);
 	}
@@ -16,7 +16,7 @@ ACharacter_Player* UGameplayAbility_Player::GetPlayerCharacterFromActorInfo()
 
 APlayerController_Base* UGameplayAbility_Player::GetPlayerControllerFromActorInfo()
 {
-	if (!CachedPlayerController.IsValid())
+	if(!CachedPlayerController.IsValid())
 	{
 		CachedPlayerController = Cast<APlayerController_Base>(CurrentActorInfo->PlayerController);
 	}
@@ -45,7 +45,7 @@ FGameplayEffectSpecHandle UGameplayAbility_Player::MakePlayerDamageEffectSpecHan
 	FGameplayEffectSpecHandle Handle = GetAbilitySystemCompFromActorInfo()->MakeOutgoingSpec(EffectClass, GetAbilityLevel(), ContextHandle);
 	Handle.Data->SetSetByCallerMagnitude(GameplayTags_Base::Shared_SetByCaller_BaseDamage, InWeaponBaseDamage);
 
-	if (InCurrentAttackTypeTag.IsValid())
+	if(InCurrentAttackTypeTag.IsValid())
 	{
 		Handle.Data->SetSetByCallerMagnitude(InCurrentAttackTypeTag, InUsedComboCount);
 	}
@@ -57,9 +57,9 @@ FGameplayEffectSpecHandle UGameplayAbility_Player::MakePlayerDamageEffectSpecHan
 bool UGameplayAbility_Player::GetAbilityRemainingCooldownByTag(FGameplayTag InCooldownTag, float& TotalCooldownTime, float& RemainingCooldownTime)
 {
 	check(InCooldownTag.IsValid());
-	FGameplayEffectQuery CooldownQuery = FGameplayEffectQuery::MakeQuery_MatchAnyOwningTags(InCooldownTag.GetSingleTagContainer());
+	FGameplayEffectQuery        CooldownQuery = FGameplayEffectQuery::MakeQuery_MatchAnyOwningTags(InCooldownTag.GetSingleTagContainer());
 	TArray<TPair<float, float>> TimeRemainingAndDuration = GetAbilitySystemComponentFromActorInfo()->GetActiveEffectsTimeRemainingAndDuration(CooldownQuery);
-	if (!TimeRemainingAndDuration.IsEmpty())
+	if(!TimeRemainingAndDuration.IsEmpty())
 	{
 		RemainingCooldownTime = TimeRemainingAndDuration[0].Key;
 		TotalCooldownTime = TimeRemainingAndDuration[0].Value;

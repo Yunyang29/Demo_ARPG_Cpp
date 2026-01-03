@@ -19,8 +19,8 @@ class ARPG_API ACharacter_Enemy : public ACharacter_Base
 public:
 	ACharacter_Enemy();
 	virtual UCombatComponent_Base* GetCombatComponent() const override;
-	virtual UUIComponent_Base* GetUIComponent() const override;
-	virtual UUIComponent_Enemy* GetEnemyUIComponent() const override;
+	virtual UUIComponent_Base*     GetUIComponent() const override;
+	virtual UUIComponent_Enemy*    GetEnemyUIComponent() const override;
 
 protected:
 	virtual void BeginPlay() override;
@@ -57,7 +57,18 @@ private:
 	void InitEnemyStartUpData();
 
 public:
-	FORCEINLINE UCombatComponent_Enemy* GetEnemyCombatComp() const { return CombatComponent; }
-	FORCEINLINE UBoxComponent* GetLeftHandBox() const { return LeftHandBox; }
-	FORCEINLINE UBoxComponent* GetRightHandBox() const { return RightHandBox; }
+	FORCEINLINE UCombatComponent_Enemy* GetEnemyCombatComp() const
+	{
+		return CombatComponent;
+	}
+
+	FORCEINLINE UBoxComponent* GetLeftHandBox() const
+	{
+		return LeftHandBox;
+	}
+
+	FORCEINLINE UBoxComponent* GetRightHandBox() const
+	{
+		return RightHandBox;
+	}
 };

@@ -22,7 +22,7 @@ UAbilitySystemComponent_Base* UFunctionLibrary_Base::NativeGetASCFromActor(AActo
 void UFunctionLibrary_Base::AddGameplayTagToActorIfNone(AActor* InActor, FGameplayTag TagToAdd)
 {
 	UAbilitySystemComponent_Base* ASC = NativeGetASCFromActor(InActor);
-	if (!ASC->HasMatchingGameplayTag(TagToAdd))
+	if(!ASC->HasMatchingGameplayTag(TagToAdd))
 	{
 		ASC->AddLooseGameplayTag(TagToAdd);
 	}
@@ -31,7 +31,7 @@ void UFunctionLibrary_Base::AddGameplayTagToActorIfNone(AActor* InActor, FGamepl
 void UFunctionLibrary_Base::RemoveGameplayTagFromActorIfFound(AActor* InActor, FGameplayTag TagToRemove)
 {
 	UAbilitySystemComponent_Base* ASC = NativeGetASCFromActor(InActor);
-	if (ASC->HasMatchingGameplayTag(TagToRemove))
+	if(ASC->HasMatchingGameplayTag(TagToRemove))
 	{
 		ASC->RemoveLooseGameplayTag(TagToRemove);
 	}
@@ -53,7 +53,7 @@ UCombatComponent_Base* UFunctionLibrary_Base::NativeGetCCFromActor(AActor* InAct
 {
 	check(InActor);
 
-	if (IPawnCombatInterface* PawnCombatInterface = Cast<IPawnCombatInterface>(InActor))
+	if(IPawnCombatInterface* PawnCombatInterface = Cast<IPawnCombatInterface>(InActor))
 	{
 		return PawnCombatInterface->GetCombatComponent();
 	}
@@ -74,7 +74,7 @@ bool UFunctionLibrary_Base::IsTargetPawnHostile(const APawn* QueryPawn, const AP
 	IGenericTeamAgentInterface* QueryTeamAgent = Cast<IGenericTeamAgentInterface>(QueryPawn->GetController());
 	IGenericTeamAgentInterface* TargetTeamAgent = Cast<IGenericTeamAgentInterface>(TargetPawn->GetController());
 
-	if (QueryTeamAgent && TargetTeamAgent)
+	if(QueryTeamAgent && TargetTeamAgent)
 	{
 		return QueryTeamAgent->GetGenericTeamId() != TargetTeamAgent->GetGenericTeamId();
 	}
@@ -97,24 +97,24 @@ FGameplayTag UFunctionLibrary_Base::ComputeHitReactDirectionTag(const AActor* In
 	OutAngleDifference = UKismetMathLibrary::DegAcos(DotResult);
 
 	const FVector CrossRest = FVector::CrossProduct(VictimForward, VictimToAttackerNormalized);
-	if (CrossRest.Z < 0.f)
+	if(CrossRest.Z < 0.f)
 	{
 		OutAngleDifference *= -1.f;
 	}
 
-	if (OutAngleDifference >= -45.f && OutAngleDifference <= 45.f)
+	if(OutAngleDifference >= -45.f && OutAngleDifference <= 45.f)
 	{
 		return GameplayTags_Base::Shared_Status_HitReact_Front;
 	}
-	if (OutAngleDifference < -45.f && OutAngleDifference >= -135.f)
+	if(OutAngleDifference < -45.f && OutAngleDifference >= -135.f)
 	{
 		return GameplayTags_Base::Shared_Status_HitReact_Left;
 	}
-	if (OutAngleDifference > 45.f && OutAngleDifference <= 135.f)
+	if(OutAngleDifference > 45.f && OutAngleDifference <= 135.f)
 	{
 		return GameplayTags_Base::Shared_Status_HitReact_Right;
 	}
-	if (OutAngleDifference < -135.f || OutAngleDifference > 135.f)
+	if(OutAngleDifference < -135.f || OutAngleDifference > 135.f)
 	{
 		return GameplayTags_Base::Shared_Status_HitReact_Back;
 	}
@@ -133,32 +133,32 @@ bool UFunctionLibrary_Base::ApplyGameplayEffectSpecHandleToTargetActor(AActor* I
 {
 	UAbilitySystemComponent_Base* SourceASC = NativeGetASCFromActor(InInstigator);
 	UAbilitySystemComponent_Base* TargetASC = NativeGetASCFromActor(InTargetActor);
-	FActiveGameplayEffectHandle ActiveGameplayEffectHandle = SourceASC->ApplyGameplayEffectSpecToTarget(*InSpecHandle.Data, TargetASC);
+	FActiveGameplayEffectHandle   ActiveGameplayEffectHandle = SourceASC->ApplyGameplayEffectSpecToTarget(*InSpecHandle.Data, TargetASC);
 	return ActiveGameplayEffectHandle.WasSuccessfullyApplied();
 }
 
-void UFunctionLibrary_Base::CountDown(const UObject* WorldContextObject, float TotalTime, float UpdateInterval, float& OutRemainingTime,
+void UFunctionLibrary_Base::CountDown(const UObject*        WorldContextObject, float TotalTime, float UpdateInterval, float& OutRemainingTime,
                                       ECountdownActionInput CountdownInput,
                                       UPARAM(DisplayName="Output")
                                       ECountdownActionOutput& CountdownOutput,
-                                      FLatentActionInfo LatenInfo)
+                                      FLatentActionInfo       LatenInfo)
 {
 	UWorld* World = nullptr;
-	if (GEngine)
+	if(GEngine)
 	{
 		World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
 	}
 
-	if (!World)
+	if(!World)
 	{
 		return;
 	}
 
 	FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
-	FCountdownAction* FoundAction = LatentActionManager.FindExistingAction<FCountdownAction>(LatenInfo.CallbackTarget, LatenInfo.UUID);
-	if (CountdownInput == ECountdownActionInput::Start)
+	FCountdownAction*     FoundAction = LatentActionManager.FindExistingAction<FCountdownAction>(LatenInfo.CallbackTarget, LatenInfo.UUID);
+	if(CountdownInput == ECountdownActionInput::Start)
 	{
-		if (!FoundAction)
+		if(!FoundAction)
 		{
 			LatentActionManager.AddNewAction(
 				LatenInfo.CallbackTarget,
@@ -168,9 +168,9 @@ void UFunctionLibrary_Base::CountDown(const UObject* WorldContextObject, float T
 		}
 	}
 
-	if (CountdownInput == ECountdownActionInput::Cancel)
+	if(CountdownInput == ECountdownActionInput::Cancel)
 	{
-		if (FoundAction)
+		if(FoundAction)
 		{
 			FoundAction->CancelAction();
 		}
@@ -179,9 +179,9 @@ void UFunctionLibrary_Base::CountDown(const UObject* WorldContextObject, float T
 
 UGameInstance_Base* UFunctionLibrary_Base::GetGameInstance(const UObject* WorldContextObject)
 {
-	if (GEngine)
+	if(GEngine)
 	{
-		if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
+		if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 		{
 			return World->GetGameInstance<UGameInstance_Base>();
 		}
@@ -194,21 +194,20 @@ void UFunctionLibrary_Base::ToggleInputMode(const UObject* WorldContextObject, E
 {
 	APlayerController* PlayerController = nullptr;
 
-	if (GEngine)
+	if(GEngine)
 	{
-		if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
+		if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 		{
 			PlayerController = World->GetFirstPlayerController();
 		}
 	}
 
-	if (!PlayerController)
-		return;
+	if(!PlayerController) return;
 
 	FInputModeGameOnly GameOnlyMode;
-	FInputModeUIOnly UIOnlyMode;
+	FInputModeUIOnly   UIOnlyMode;
 
-	switch (InInputMode)
+	switch(InInputMode)
 	{
 	case EInputMode::GameOnly:
 		PlayerController->SetInputMode(GameOnlyMode);
@@ -227,7 +226,7 @@ void UFunctionLibrary_Base::SaveCurrentGameDifficulty(EGameDifficulty InDifficul
 {
 	USaveGame* SaveGameObject = UGameplayStatics::CreateSaveGameObject(USaveGame_Base::StaticClass());
 
-	if (USaveGame_Base* SaveGame_Base = Cast<USaveGame_Base>(SaveGameObject))
+	if(USaveGame_Base* SaveGame_Base = Cast<USaveGame_Base>(SaveGameObject))
 	{
 		SaveGame_Base->SavedCurrentGameDifficulty = InDifficultyToSave;
 
@@ -238,11 +237,11 @@ void UFunctionLibrary_Base::SaveCurrentGameDifficulty(EGameDifficulty InDifficul
 
 bool UFunctionLibrary_Base::TryLoadSavedGameDifficulty(EGameDifficulty& OutSavedDifficulty)
 {
-	if (UGameplayStatics::DoesSaveGameExist(GameplayTags_Base::GameData_SaveGame_Slot_1.GetTag().ToString(), 0))
+	if(UGameplayStatics::DoesSaveGameExist(GameplayTags_Base::GameData_SaveGame_Slot_1.GetTag().ToString(), 0))
 	{
 		USaveGame* SaveGameObject = UGameplayStatics::LoadGameFromSlot(GameplayTags_Base::GameData_SaveGame_Slot_1.GetTag().ToString(), 0);
 
-		if (USaveGame_Base* SaveGame_Base = Cast<USaveGame_Base>(SaveGameObject))
+		if(USaveGame_Base* SaveGame_Base = Cast<USaveGame_Base>(SaveGameObject))
 		{
 			OutSavedDifficulty = SaveGame_Base->SavedCurrentGameDifficulty;
 

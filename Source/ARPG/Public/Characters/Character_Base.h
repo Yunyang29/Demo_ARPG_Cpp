@@ -45,6 +45,13 @@ protected:
 	TSoftObjectPtr<UDataAsset_StartUp> StartUpData; /// Character's Start Up Data
 
 public:
-	FORCEINLINE UAbilitySystemComponent_Base* GetCharacterAbilitySystemComponent() const { return ASC; }
-	FORCEINLINE UAttributeSet_Base* GetCharacterAttributeSet() const { return AS; }
+	FORCEINLINE UAbilitySystemComponent_Base* GetCharacterAbilitySystemComponent() const
+	{
+		return ASC;
+	}
+
+	FORCEINLINE UAttributeSet_Base* GetCharacterAttributeSet() const
+	{
+		return AS;
+	}
 };

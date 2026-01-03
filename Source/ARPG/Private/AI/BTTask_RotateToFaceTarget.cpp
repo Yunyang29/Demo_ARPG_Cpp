@@ -11,15 +11,14 @@ UBTTask_RotateToFaceTarget::UBTTask_RotateToFaceTarget()
 	AnglePrecision = 10.f;
 	RotationInterSpeed = 5.f;
 
-	bNotifyTick = true; // ?
-	bNotifyTaskFinished = true; // ?
-	bCreateNodeInstance = false; // ?
+	bNotifyTick = true;
+	bNotifyTaskFinished = true;
+	bCreateNodeInstance = false;
 
 	INIT_TASK_NODE_NOTIFY_FLAGS();
 	InTargetToFaceKey.AddObjectFilter(this,GET_MEMBER_NAME_CHECKED(ThisClass, InTargetToFaceKey), AActor::StaticClass());
 }
 
-// ?
 void UBTTask_RotateToFaceTarget::InitializeFromAsset(UBehaviorTree& Asset)
 {
 	Super::InitializeFromAsset(Asset);
@@ -29,7 +28,6 @@ void UBTTask_RotateToFaceTarget::InitializeFromAsset(UBehaviorTree& Asset)
 	}
 }
 
-// ?
 uint16 UBTTask_RotateToFaceTarget::GetInstanceMemorySize() const
 {
 	return sizeof(FRotateToFaceTargetTaskMemory);
@@ -91,7 +89,6 @@ void UBTTask_RotateToFaceTarget::TickTask(UBehaviorTreeComponent& OwnerComp, uin
 	}
 }
 
-// ?
 bool UBTTask_RotateToFaceTarget::HasReachedAnglePrecision(APawn* QueryPawn, AActor* TargetActor) const
 {
 	const FVector OwnerForward = QueryPawn->GetActorForwardVector();

@@ -34,5 +34,8 @@ protected:
 	virtual void OnCollisionEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 public:
-	FORCEINLINE UBoxComponent* GetWeaponCollisionBox() const { return WeaponCollisionBox; }
+	FORCEINLINE UBoxComponent* GetWeaponCollisionBox() const
+	{
+		return WeaponCollisionBox;
+	}
 };
